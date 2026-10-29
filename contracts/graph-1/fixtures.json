@@ -1,0 +1,418 @@
+{
+	"registryDigest" : "710502049ac1f485589d81eb27482360017ed9d048afb0452694792bf23fc367",
+	"registry" : {
+		"core.motion.integrate" : [
+			1,
+			"entity",
+			"motion",
+			[
+				"bool"
+			],
+			"void",
+			{ }
+		],
+		"core.mode.set" : [
+			1,
+			"entity",
+			"decide",
+			[
+				"bool",
+				"string"
+			],
+			"void",
+			{ }
+		],
+		"core.random.draw" : [
+			1,
+			"entity",
+			"random",
+			[
+				"bool"
+			],
+			"void",
+			{
+				"stream" : "u32"
+			}
+		],
+		"core.entity.field" : [
+			1,
+			"entity",
+			"any",
+			[ ],
+			"field",
+			{
+				"field" : "string"
+			}
+		],
+		"core.i64.add" : [
+			1,
+			"either",
+			"any",
+			[
+				"i64",
+				"i64"
+			],
+			"i64",
+			{ }
+		],
+		"core.constant" : [
+			1,
+			"either",
+			"any",
+			[ ],
+			"declared",
+			{
+				"value" : "declared"
+			}
+		],
+		"core.bool.and" : [
+			1,
+			"either",
+			"any",
+			[
+				"bool",
+				"bool"
+			],
+			"bool",
+			{ }
+		],
+		"core.resource.resolve" : [
+			1,
+			"world",
+			"resolve",
+			[ ],
+			"void",
+			{ }
+		],
+		"core.bool.not" : [
+			1,
+			"either",
+			"any",
+			[
+				"bool"
+			],
+			"bool",
+			{ }
+		],
+		"core.i64.less" : [
+			1,
+			"either",
+			"any",
+			[
+				"i64",
+				"i64"
+			],
+			"bool",
+			{ }
+		],
+		"core.select.i64" : [
+			1,
+			"either",
+			"any",
+			[
+				"bool",
+				"i64",
+				"i64"
+			],
+			"i64",
+			{ }
+		],
+		"core.events.apply" : [
+			1,
+			"world",
+			"events",
+			[ ],
+			"void",
+			{ }
+		],
+		"core.string.equal" : [
+			1,
+			"either",
+			"any",
+			[
+				"string",
+				"string"
+			],
+			"bool",
+			{ }
+		],
+		"core.velocity.set" : [
+			1,
+			"entity",
+			"decide",
+			[
+				"bool",
+				"vec3"
+			],
+			"void",
+			{ }
+		],
+		"core.resource.request" : [
+			1,
+			"entity",
+			"decide",
+			[
+				"bool",
+				"string",
+				"i64"
+			],
+			"void",
+			{ }
+		],
+		"core.tick" : [
+			1,
+			"world",
+			"any",
+			[ ],
+			"i64",
+			{ }
+		]
+	},
+	"models" : [
+		{
+			"checkpoints" : {
+				"6" : "d9:s8:entitiesd2:s32:00000000000000000000000000000001a9:s32:00000000000000000000000000000001a3:i5;i-1;i0;a3:i10;i0;i0;s6:chargei0;s7:runningi6;i2311738920;a3:i300;i700;i0;s32:00000000000000000000000000000002a9:s32:00000000000000000000000000000002a3:i1;i-2;i0;a3:i3;i-3;i0;s0:i0;s4:idlei6;i2218013598;a3:i800;i200;i0;s6:eventsa4:a0:d1:s32:00000000000000000000000000000008i0;i1;i32;s5:modela6:s29:simulation-portable-1/graph-1s17:conditional-graphi100;i16;i32;d3:s18:maxNodeEvaluationsi256;s5:nodesa16:d9:s5:aftera0:s2:ids6:actives6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:actives5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids6:charges6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:charges5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids7:enableds6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuets5:scopes5:worlds5:stages6:eventss4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:eventss6:inputsa0:s9:operations17:core.events.applys10:parametersd0:s5:scopes5:worlds5:stages6:eventss4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids9:is-actives6:inputsa2:s9:mode-reads6:actives9:operations17:core.string.equals10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids9:mode-reads6:inputsa0:s9:operations17:core.entity.fields10:parametersd1:s5:fields4:modes5:scopes6:entitys5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids4:moves6:inputsa1:s7:enableds9:operations21:core.motion.integrates10:parametersd0:s5:scopes6:entitys5:stages6:motions4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids3:ones6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuei1;s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids8:quantitys6:inputsa2:s3:ones3:ones9:operations12:core.i64.adds10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids6:randoms6:inputsa1:s7:enableds9:operations16:core.random.draws10:parametersd1:s6:streami7;s5:scopes6:entitys5:stages6:randoms4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:requests6:inputsa3:s9:is-actives6:charges8:quantitys9:operations21:core.resource.requests10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:resolves6:inputsa0:s9:operations21:core.resource.resolves10:parametersd0:s5:scopes5:worlds5:stages7:resolves4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:runnings6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values7:runnings5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera1:s7:requests2:ids8:set-modes6:inputsa2:s9:is-actives7:runnings9:operations13:core.mode.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids12:set-velocitys6:inputsa2:s9:is-actives8:velocitys9:operations17:core.velocity.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids8:velocitys6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuea3:i10;i0;i0;s5:scopes5:worlds5:stages6:decides4:types4:vec3s7:versioni1;s7:versioni1;s11:modelDigests64:9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0s8:outcomesa0:s9:resourcesd1:s6:chargei1;s4:seedi42;s4:ticki6;s7:versioni2;",
+				"1" : "d9:s8:entitiesd2:s32:00000000000000000000000000000001a9:s32:00000000000000000000000000000001a3:i0;i-1;i0;a3:i3;i-3;i0;s0:i0;s4:idlei1;i1096498566;a3:i300;i700;i0;s32:00000000000000000000000000000002a9:s32:00000000000000000000000000000002a3:i0;i-1;i0;a3:i3;i-3;i0;s0:i0;s4:idlei1;i1383858950;a3:i300;i700;i0;s6:eventsa4:a1:a8:i2;i0;i0;s32:00000000000000000000000000000001i1;s32:00000000000000000000000000000008i0;s6:actived1:s32:00000000000000000000000000000008i0;i1;i32;s5:modela6:s29:simulation-portable-1/graph-1s17:conditional-graphi100;i16;i32;d3:s18:maxNodeEvaluationsi256;s5:nodesa16:d9:s5:aftera0:s2:ids6:actives6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:actives5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids6:charges6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:charges5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids7:enableds6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuets5:scopes5:worlds5:stages6:eventss4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:eventss6:inputsa0:s9:operations17:core.events.applys10:parametersd0:s5:scopes5:worlds5:stages6:eventss4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids9:is-actives6:inputsa2:s9:mode-reads6:actives9:operations17:core.string.equals10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids9:mode-reads6:inputsa0:s9:operations17:core.entity.fields10:parametersd1:s5:fields4:modes5:scopes6:entitys5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids4:moves6:inputsa1:s7:enableds9:operations21:core.motion.integrates10:parametersd0:s5:scopes6:entitys5:stages6:motions4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids3:ones6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuei1;s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids8:quantitys6:inputsa2:s3:ones3:ones9:operations12:core.i64.adds10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids6:randoms6:inputsa1:s7:enableds9:operations16:core.random.draws10:parametersd1:s6:streami7;s5:scopes6:entitys5:stages6:randoms4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:requests6:inputsa3:s9:is-actives6:charges8:quantitys9:operations21:core.resource.requests10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:resolves6:inputsa0:s9:operations21:core.resource.resolves10:parametersd0:s5:scopes5:worlds5:stages7:resolves4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:runnings6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values7:runnings5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera1:s7:requests2:ids8:set-modes6:inputsa2:s9:is-actives7:runnings9:operations13:core.mode.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids12:set-velocitys6:inputsa2:s9:is-actives8:velocitys9:operations17:core.velocity.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids8:velocitys6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuea3:i10;i0;i0;s5:scopes5:worlds5:stages6:decides4:types4:vec3s7:versioni1;s7:versioni1;s11:modelDigests64:9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0s8:outcomesa0:s9:resourcesd1:s6:chargei3;s4:seedi42;s4:ticki1;s7:versioni2;",
+				"2" : "d9:s8:entitiesd2:s32:00000000000000000000000000000001a9:s32:00000000000000000000000000000001a3:i1;i-1;i0;a3:i10;i0;i0;s6:chargei0;s7:runningi2;i807690645;a3:i300;i700;i0;s32:00000000000000000000000000000002a9:s32:00000000000000000000000000000002a3:i0;i-1;i0;a3:i3;i-3;i0;s0:i0;s4:idlei2;i3955620803;a3:i600;i400;i0;s6:eventsa4:a0:d1:s32:00000000000000000000000000000008i0;i1;i32;s5:modela6:s29:simulation-portable-1/graph-1s17:conditional-graphi100;i16;i32;d3:s18:maxNodeEvaluationsi256;s5:nodesa16:d9:s5:aftera0:s2:ids6:actives6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:actives5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids6:charges6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:charges5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids7:enableds6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuets5:scopes5:worlds5:stages6:eventss4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:eventss6:inputsa0:s9:operations17:core.events.applys10:parametersd0:s5:scopes5:worlds5:stages6:eventss4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids9:is-actives6:inputsa2:s9:mode-reads6:actives9:operations17:core.string.equals10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids9:mode-reads6:inputsa0:s9:operations17:core.entity.fields10:parametersd1:s5:fields4:modes5:scopes6:entitys5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids4:moves6:inputsa1:s7:enableds9:operations21:core.motion.integrates10:parametersd0:s5:scopes6:entitys5:stages6:motions4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids3:ones6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuei1;s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids8:quantitys6:inputsa2:s3:ones3:ones9:operations12:core.i64.adds10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids6:randoms6:inputsa1:s7:enableds9:operations16:core.random.draws10:parametersd1:s6:streami7;s5:scopes6:entitys5:stages6:randoms4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:requests6:inputsa3:s9:is-actives6:charges8:quantitys9:operations21:core.resource.requests10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:resolves6:inputsa0:s9:operations21:core.resource.resolves10:parametersd0:s5:scopes5:worlds5:stages7:resolves4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:runnings6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values7:runnings5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera1:s7:requests2:ids8:set-modes6:inputsa2:s9:is-actives7:runnings9:operations13:core.mode.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids12:set-velocitys6:inputsa2:s9:is-actives8:velocitys9:operations17:core.velocity.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids8:velocitys6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuea3:i10;i0;i0;s5:scopes5:worlds5:stages6:decides4:types4:vec3s7:versioni1;s7:versioni1;s11:modelDigests64:9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0s8:outcomesa1:a4:i2;s6:charges32:00000000000000000000000000000001i2;s9:resourcesd1:s6:chargei1;s4:seedi42;s4:ticki2;s7:versioni2;"
+			},
+			"initial" : "d9:s8:entitiesd2:s32:00000000000000000000000000000001a9:s32:00000000000000000000000000000001a3:i0;i0;i0;a3:i3;i-3;i0;s0:i0;s4:idlei0;i0;a3:i0;i0;i0;s32:00000000000000000000000000000002a9:s32:00000000000000000000000000000002a3:i0;i0;i0;a3:i3;i-3;i0;s0:i0;s4:idlei0;i0;a3:i0;i0;i0;s6:eventsa4:a1:a8:i2;i0;i0;s32:00000000000000000000000000000001i1;s32:00000000000000000000000000000008i0;s6:actived1:s32:00000000000000000000000000000008i0;i1;i32;s5:modela6:s29:simulation-portable-1/graph-1s17:conditional-graphi100;i16;i32;d3:s18:maxNodeEvaluationsi256;s5:nodesa16:d9:s5:aftera0:s2:ids6:actives6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:actives5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids6:charges6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:charges5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids7:enableds6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuets5:scopes5:worlds5:stages6:eventss4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:eventss6:inputsa0:s9:operations17:core.events.applys10:parametersd0:s5:scopes5:worlds5:stages6:eventss4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids9:is-actives6:inputsa2:s9:mode-reads6:actives9:operations17:core.string.equals10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids9:mode-reads6:inputsa0:s9:operations17:core.entity.fields10:parametersd1:s5:fields4:modes5:scopes6:entitys5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids4:moves6:inputsa1:s7:enableds9:operations21:core.motion.integrates10:parametersd0:s5:scopes6:entitys5:stages6:motions4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids3:ones6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuei1;s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids8:quantitys6:inputsa2:s3:ones3:ones9:operations12:core.i64.adds10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids6:randoms6:inputsa1:s7:enableds9:operations16:core.random.draws10:parametersd1:s6:streami7;s5:scopes6:entitys5:stages6:randoms4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:requests6:inputsa3:s9:is-actives6:charges8:quantitys9:operations21:core.resource.requests10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:resolves6:inputsa0:s9:operations21:core.resource.resolves10:parametersd0:s5:scopes5:worlds5:stages7:resolves4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:runnings6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values7:runnings5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera1:s7:requests2:ids8:set-modes6:inputsa2:s9:is-actives7:runnings9:operations13:core.mode.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids12:set-velocitys6:inputsa2:s9:is-actives8:velocitys9:operations17:core.velocity.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids8:velocitys6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuea3:i10;i0;i0;s5:scopes5:worlds5:stages6:decides4:types4:vec3s7:versioni1;s7:versioni1;s11:modelDigests64:9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0s8:outcomesa0:s9:resourcesd1:s6:chargei3;s4:seedi42;s4:ticki0;s7:versioni2;",
+			"name" : "conditional-graph",
+			"model" : "a6:s29:simulation-portable-1/graph-1s17:conditional-graphi100;i16;i32;d3:s18:maxNodeEvaluationsi256;s5:nodesa16:d9:s5:aftera0:s2:ids6:actives6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:actives5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids6:charges6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:charges5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids7:enableds6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuets5:scopes5:worlds5:stages6:eventss4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:eventss6:inputsa0:s9:operations17:core.events.applys10:parametersd0:s5:scopes5:worlds5:stages6:eventss4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids9:is-actives6:inputsa2:s9:mode-reads6:actives9:operations17:core.string.equals10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids9:mode-reads6:inputsa0:s9:operations17:core.entity.fields10:parametersd1:s5:fields4:modes5:scopes6:entitys5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids4:moves6:inputsa1:s7:enableds9:operations21:core.motion.integrates10:parametersd0:s5:scopes6:entitys5:stages6:motions4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids3:ones6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuei1;s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids8:quantitys6:inputsa2:s3:ones3:ones9:operations12:core.i64.adds10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids6:randoms6:inputsa1:s7:enableds9:operations16:core.random.draws10:parametersd1:s6:streami7;s5:scopes6:entitys5:stages6:randoms4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:requests6:inputsa3:s9:is-actives6:charges8:quantitys9:operations21:core.resource.requests10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:resolves6:inputsa0:s9:operations21:core.resource.resolves10:parametersd0:s5:scopes5:worlds5:stages7:resolves4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:runnings6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values7:runnings5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera1:s7:requests2:ids8:set-modes6:inputsa2:s9:is-actives7:runnings9:operations13:core.mode.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids12:set-velocitys6:inputsa2:s9:is-actives8:velocitys9:operations17:core.velocity.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids8:velocitys6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuea3:i10;i0;i0;s5:scopes5:worlds5:stages6:decides4:types4:vec3s7:versioni1;s7:versioni1;",
+			"modelDigest" : "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0"
+		},
+		{
+			"checkpoints" : {
+				"6" : "d9:s8:entitiesd2:s32:00000000000000000000000000000001a9:s32:00000000000000000000000000000001a3:i4;i-1;i0;a3:i10;i0;i0;s6:chargei0;s7:runningi6;i2311738920;a3:i600;i400;i0;s32:00000000000000000000000000000002a9:s32:00000000000000000000000000000002a3:i1;i-2;i0;a3:i3;i-3;i0;s0:i0;s4:idlei6;i2218013598;a3:i800;i200;i0;s6:eventsa4:a0:d1:s32:00000000000000000000000000000008i0;i1;i32;s5:modela6:s29:simulation-portable-1/graph-1s16:expression-graphi100;i16;i32;d3:s18:maxNodeEvaluationsi256;s5:nodesa23:d9:s5:aftera0:s2:ids6:actives6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:actives5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids4:boths6:inputsa2:s9:is-actives4:lates9:operations13:core.bool.ands10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:charges6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:charges5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids5:earlys6:inputsa2:s3:nows5:limits9:operations13:core.i64.lesss10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids7:enableds6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuets5:scopes5:worlds5:stages6:eventss4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:eventss6:inputsa0:s9:operations17:core.events.applys10:parametersd0:s5:scopes5:worlds5:stages6:eventss4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids9:is-actives6:inputsa2:s9:mode-reads6:actives9:operations17:core.string.equals10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids4:lates6:inputsa1:s5:earlys9:operations13:core.bool.nots10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids5:limits6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuei3;s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids9:mode-reads6:inputsa0:s9:operations17:core.entity.fields10:parametersd1:s5:fields4:modes5:scopes6:entitys5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids4:moves6:inputsa1:s7:enableds9:operations21:core.motion.integrates10:parametersd0:s5:scopes6:entitys5:stages6:motions4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids3:nows6:inputsa0:s9:operations9:core.ticks10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids3:ones6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuei1;s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids8:quantitys6:inputsa2:s3:ones3:ones9:operations12:core.i64.adds10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids6:randoms6:inputsa1:s7:enableds9:operations16:core.random.draws10:parametersd1:s6:streami7;s5:scopes6:entitys5:stages6:randoms4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:requests6:inputsa3:s4:boths6:charges8:selecteds9:operations21:core.resource.requests10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:resolves6:inputsa0:s9:operations21:core.resource.resolves10:parametersd0:s5:scopes5:worlds5:stages7:resolves4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:runnings6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values7:runnings5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids8:selecteds6:inputsa3:s5:earlys3:ones8:quantitys9:operations15:core.select.i64s10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera1:s7:requests2:ids8:set-modes6:inputsa2:s4:boths7:runnings9:operations13:core.mode.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids12:set-velocitys6:inputsa2:s4:boths8:velocitys9:operations17:core.velocity.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids12:u32-constants6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuei4294967295;s5:scopes5:worlds5:stages6:decides4:types3:u32s7:versioni1;d9:s5:aftera0:s2:ids8:velocitys6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuea3:i10;i0;i0;s5:scopes5:worlds5:stages6:decides4:types4:vec3s7:versioni1;s7:versioni1;s11:modelDigests64:64cd8252cdc957dd8e87bc060ade038bd10f1cd00dfa4e8fb4b1bca487bae470s8:outcomesa0:s9:resourcesd1:s6:chargei1;s4:seedi42;s4:ticki6;s7:versioni2;",
+				"1" : "d9:s8:entitiesd2:s32:00000000000000000000000000000001a9:s32:00000000000000000000000000000001a3:i0;i-1;i0;a3:i3;i-3;i0;s0:i0;s4:idlei1;i1096498566;a3:i300;i700;i0;s32:00000000000000000000000000000002a9:s32:00000000000000000000000000000002a3:i0;i-1;i0;a3:i3;i-3;i0;s0:i0;s4:idlei1;i1383858950;a3:i300;i700;i0;s6:eventsa4:a1:a8:i2;i0;i0;s32:00000000000000000000000000000001i1;s32:00000000000000000000000000000008i0;s6:actived1:s32:00000000000000000000000000000008i0;i1;i32;s5:modela6:s29:simulation-portable-1/graph-1s16:expression-graphi100;i16;i32;d3:s18:maxNodeEvaluationsi256;s5:nodesa23:d9:s5:aftera0:s2:ids6:actives6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:actives5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids4:boths6:inputsa2:s9:is-actives4:lates9:operations13:core.bool.ands10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:charges6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:charges5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids5:earlys6:inputsa2:s3:nows5:limits9:operations13:core.i64.lesss10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids7:enableds6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuets5:scopes5:worlds5:stages6:eventss4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:eventss6:inputsa0:s9:operations17:core.events.applys10:parametersd0:s5:scopes5:worlds5:stages6:eventss4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids9:is-actives6:inputsa2:s9:mode-reads6:actives9:operations17:core.string.equals10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids4:lates6:inputsa1:s5:earlys9:operations13:core.bool.nots10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids5:limits6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuei3;s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids9:mode-reads6:inputsa0:s9:operations17:core.entity.fields10:parametersd1:s5:fields4:modes5:scopes6:entitys5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids4:moves6:inputsa1:s7:enableds9:operations21:core.motion.integrates10:parametersd0:s5:scopes6:entitys5:stages6:motions4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids3:nows6:inputsa0:s9:operations9:core.ticks10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids3:ones6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuei1;s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids8:quantitys6:inputsa2:s3:ones3:ones9:operations12:core.i64.adds10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids6:randoms6:inputsa1:s7:enableds9:operations16:core.random.draws10:parametersd1:s6:streami7;s5:scopes6:entitys5:stages6:randoms4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:requests6:inputsa3:s4:boths6:charges8:selecteds9:operations21:core.resource.requests10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:resolves6:inputsa0:s9:operations21:core.resource.resolves10:parametersd0:s5:scopes5:worlds5:stages7:resolves4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:runnings6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values7:runnings5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids8:selecteds6:inputsa3:s5:earlys3:ones8:quantitys9:operations15:core.select.i64s10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera1:s7:requests2:ids8:set-modes6:inputsa2:s4:boths7:runnings9:operations13:core.mode.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids12:set-velocitys6:inputsa2:s4:boths8:velocitys9:operations17:core.velocity.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids12:u32-constants6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuei4294967295;s5:scopes5:worlds5:stages6:decides4:types3:u32s7:versioni1;d9:s5:aftera0:s2:ids8:velocitys6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuea3:i10;i0;i0;s5:scopes5:worlds5:stages6:decides4:types4:vec3s7:versioni1;s7:versioni1;s11:modelDigests64:64cd8252cdc957dd8e87bc060ade038bd10f1cd00dfa4e8fb4b1bca487bae470s8:outcomesa0:s9:resourcesd1:s6:chargei3;s4:seedi42;s4:ticki1;s7:versioni2;",
+				"2" : "d9:s8:entitiesd2:s32:00000000000000000000000000000001a9:s32:00000000000000000000000000000001a3:i0;i-1;i0;a3:i3;i-3;i0;s0:i0;s6:activei2;i807690645;a3:i600;i400;i0;s32:00000000000000000000000000000002a9:s32:00000000000000000000000000000002a3:i0;i-1;i0;a3:i3;i-3;i0;s0:i0;s4:idlei2;i3955620803;a3:i600;i400;i0;s6:eventsa4:a0:d1:s32:00000000000000000000000000000008i0;i1;i32;s5:modela6:s29:simulation-portable-1/graph-1s16:expression-graphi100;i16;i32;d3:s18:maxNodeEvaluationsi256;s5:nodesa23:d9:s5:aftera0:s2:ids6:actives6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:actives5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids4:boths6:inputsa2:s9:is-actives4:lates9:operations13:core.bool.ands10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:charges6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:charges5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids5:earlys6:inputsa2:s3:nows5:limits9:operations13:core.i64.lesss10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids7:enableds6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuets5:scopes5:worlds5:stages6:eventss4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:eventss6:inputsa0:s9:operations17:core.events.applys10:parametersd0:s5:scopes5:worlds5:stages6:eventss4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids9:is-actives6:inputsa2:s9:mode-reads6:actives9:operations17:core.string.equals10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids4:lates6:inputsa1:s5:earlys9:operations13:core.bool.nots10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids5:limits6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuei3;s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids9:mode-reads6:inputsa0:s9:operations17:core.entity.fields10:parametersd1:s5:fields4:modes5:scopes6:entitys5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids4:moves6:inputsa1:s7:enableds9:operations21:core.motion.integrates10:parametersd0:s5:scopes6:entitys5:stages6:motions4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids3:nows6:inputsa0:s9:operations9:core.ticks10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids3:ones6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuei1;s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids8:quantitys6:inputsa2:s3:ones3:ones9:operations12:core.i64.adds10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids6:randoms6:inputsa1:s7:enableds9:operations16:core.random.draws10:parametersd1:s6:streami7;s5:scopes6:entitys5:stages6:randoms4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:requests6:inputsa3:s4:boths6:charges8:selecteds9:operations21:core.resource.requests10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:resolves6:inputsa0:s9:operations21:core.resource.resolves10:parametersd0:s5:scopes5:worlds5:stages7:resolves4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:runnings6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values7:runnings5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids8:selecteds6:inputsa3:s5:earlys3:ones8:quantitys9:operations15:core.select.i64s10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera1:s7:requests2:ids8:set-modes6:inputsa2:s4:boths7:runnings9:operations13:core.mode.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids12:set-velocitys6:inputsa2:s4:boths8:velocitys9:operations17:core.velocity.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids12:u32-constants6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuei4294967295;s5:scopes5:worlds5:stages6:decides4:types3:u32s7:versioni1;d9:s5:aftera0:s2:ids8:velocitys6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuea3:i10;i0;i0;s5:scopes5:worlds5:stages6:decides4:types4:vec3s7:versioni1;s7:versioni1;s11:modelDigests64:64cd8252cdc957dd8e87bc060ade038bd10f1cd00dfa4e8fb4b1bca487bae470s8:outcomesa0:s9:resourcesd1:s6:chargei3;s4:seedi42;s4:ticki2;s7:versioni2;"
+			},
+			"initial" : "d9:s8:entitiesd2:s32:00000000000000000000000000000001a9:s32:00000000000000000000000000000001a3:i0;i0;i0;a3:i3;i-3;i0;s0:i0;s4:idlei0;i0;a3:i0;i0;i0;s32:00000000000000000000000000000002a9:s32:00000000000000000000000000000002a3:i0;i0;i0;a3:i3;i-3;i0;s0:i0;s4:idlei0;i0;a3:i0;i0;i0;s6:eventsa4:a1:a8:i2;i0;i0;s32:00000000000000000000000000000001i1;s32:00000000000000000000000000000008i0;s6:actived1:s32:00000000000000000000000000000008i0;i1;i32;s5:modela6:s29:simulation-portable-1/graph-1s16:expression-graphi100;i16;i32;d3:s18:maxNodeEvaluationsi256;s5:nodesa23:d9:s5:aftera0:s2:ids6:actives6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:actives5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids4:boths6:inputsa2:s9:is-actives4:lates9:operations13:core.bool.ands10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:charges6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:charges5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids5:earlys6:inputsa2:s3:nows5:limits9:operations13:core.i64.lesss10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids7:enableds6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuets5:scopes5:worlds5:stages6:eventss4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:eventss6:inputsa0:s9:operations17:core.events.applys10:parametersd0:s5:scopes5:worlds5:stages6:eventss4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids9:is-actives6:inputsa2:s9:mode-reads6:actives9:operations17:core.string.equals10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids4:lates6:inputsa1:s5:earlys9:operations13:core.bool.nots10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids5:limits6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuei3;s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids9:mode-reads6:inputsa0:s9:operations17:core.entity.fields10:parametersd1:s5:fields4:modes5:scopes6:entitys5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids4:moves6:inputsa1:s7:enableds9:operations21:core.motion.integrates10:parametersd0:s5:scopes6:entitys5:stages6:motions4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids3:nows6:inputsa0:s9:operations9:core.ticks10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids3:ones6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuei1;s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids8:quantitys6:inputsa2:s3:ones3:ones9:operations12:core.i64.adds10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids6:randoms6:inputsa1:s7:enableds9:operations16:core.random.draws10:parametersd1:s6:streami7;s5:scopes6:entitys5:stages6:randoms4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:requests6:inputsa3:s4:boths6:charges8:selecteds9:operations21:core.resource.requests10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:resolves6:inputsa0:s9:operations21:core.resource.resolves10:parametersd0:s5:scopes5:worlds5:stages7:resolves4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:runnings6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values7:runnings5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids8:selecteds6:inputsa3:s5:earlys3:ones8:quantitys9:operations15:core.select.i64s10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera1:s7:requests2:ids8:set-modes6:inputsa2:s4:boths7:runnings9:operations13:core.mode.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids12:set-velocitys6:inputsa2:s4:boths8:velocitys9:operations17:core.velocity.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids12:u32-constants6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuei4294967295;s5:scopes5:worlds5:stages6:decides4:types3:u32s7:versioni1;d9:s5:aftera0:s2:ids8:velocitys6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuea3:i10;i0;i0;s5:scopes5:worlds5:stages6:decides4:types4:vec3s7:versioni1;s7:versioni1;s11:modelDigests64:64cd8252cdc957dd8e87bc060ade038bd10f1cd00dfa4e8fb4b1bca487bae470s8:outcomesa0:s9:resourcesd1:s6:chargei3;s4:seedi42;s4:ticki0;s7:versioni2;",
+			"name" : "expression-graph",
+			"model" : "a6:s29:simulation-portable-1/graph-1s16:expression-graphi100;i16;i32;d3:s18:maxNodeEvaluationsi256;s5:nodesa23:d9:s5:aftera0:s2:ids6:actives6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:actives5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids4:boths6:inputsa2:s9:is-actives4:lates9:operations13:core.bool.ands10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:charges6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:charges5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids5:earlys6:inputsa2:s3:nows5:limits9:operations13:core.i64.lesss10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids7:enableds6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuets5:scopes5:worlds5:stages6:eventss4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:eventss6:inputsa0:s9:operations17:core.events.applys10:parametersd0:s5:scopes5:worlds5:stages6:eventss4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids9:is-actives6:inputsa2:s9:mode-reads6:actives9:operations17:core.string.equals10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids4:lates6:inputsa1:s5:earlys9:operations13:core.bool.nots10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids5:limits6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuei3;s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids9:mode-reads6:inputsa0:s9:operations17:core.entity.fields10:parametersd1:s5:fields4:modes5:scopes6:entitys5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids4:moves6:inputsa1:s7:enableds9:operations21:core.motion.integrates10:parametersd0:s5:scopes6:entitys5:stages6:motions4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids3:nows6:inputsa0:s9:operations9:core.ticks10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids3:ones6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuei1;s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids8:quantitys6:inputsa2:s3:ones3:ones9:operations12:core.i64.adds10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids6:randoms6:inputsa1:s7:enableds9:operations16:core.random.draws10:parametersd1:s6:streami7;s5:scopes6:entitys5:stages6:randoms4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:requests6:inputsa3:s4:boths6:charges8:selecteds9:operations21:core.resource.requests10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:resolves6:inputsa0:s9:operations21:core.resource.resolves10:parametersd0:s5:scopes5:worlds5:stages7:resolves4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:runnings6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values7:runnings5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids8:selecteds6:inputsa3:s5:earlys3:ones8:quantitys9:operations15:core.select.i64s10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera1:s7:requests2:ids8:set-modes6:inputsa2:s4:boths7:runnings9:operations13:core.mode.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids12:set-velocitys6:inputsa2:s4:boths8:velocitys9:operations17:core.velocity.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids12:u32-constants6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuei4294967295;s5:scopes5:worlds5:stages6:decides4:types3:u32s7:versioni1;d9:s5:aftera0:s2:ids8:velocitys6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuea3:i10;i0;i0;s5:scopes5:worlds5:stages6:decides4:types4:vec3s7:versioni1;s7:versioni1;",
+			"modelDigest" : "64cd8252cdc957dd8e87bc060ade038bd10f1cd00dfa4e8fb4b1bca487bae470"
+		},
+		{
+			"checkpoints" : {
+				"6" : "d9:s8:entitiesd2:s32:00000000000000000000000000000001a9:s32:00000000000000000000000000000001a3:i1;i-2;i0;a3:i3;i-3;i0;s6:chargei0;s6:activei6;i1318804703;a3:i800;i200;i0;s32:00000000000000000000000000000002a9:s32:00000000000000000000000000000002a3:i1;i-2;i0;a3:i3;i-3;i0;s6:chargei2;s4:idlei6;i2629023027;a3:i800;i200;i0;s6:eventsa4:a0:d1:s32:00000000000000000000000000000008i0;i1;i10000;s5:modela6:s29:simulation-portable-1/graph-1s11:graph-probei100;i10000;i10000;d3:s18:maxNodeEvaluationsi1000000;s5:nodesa5:d9:s5:aftera0:s2:ids7:enableds6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuets5:scopes5:worlds5:stages6:eventss4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:eventss6:inputsa0:s9:operations17:core.events.applys10:parametersd0:s5:scopes5:worlds5:stages6:eventss4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids4:moves6:inputsa1:s7:enableds9:operations21:core.motion.integrates10:parametersd0:s5:scopes6:entitys5:stages6:motions4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids6:randoms6:inputsa1:s7:enableds9:operations16:core.random.draws10:parametersd1:s6:streami0;s5:scopes6:entitys5:stages6:randoms4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:resolves6:inputsa0:s9:operations21:core.resource.resolves10:parametersd0:s5:scopes5:worlds5:stages7:resolves4:types4:voids7:versioni1;s7:versioni1;s11:modelDigests64:522786bb192e985cac078db95624a4c3823743003ea7d7c26e7f0c6a6e7f69dbs8:outcomesa0:s9:resourcesd1:s6:chargei1;s4:seedi42;s4:ticki6;s7:versioni2;",
+				"1" : "d9:s8:entitiesd2:s32:00000000000000000000000000000001a9:s32:00000000000000000000000000000001a3:i0;i-1;i0;a3:i3;i-3;i0;s6:chargei0;s4:idlei1;i43202409;a3:i300;i700;i0;s32:00000000000000000000000000000002a9:s32:00000000000000000000000000000002a3:i0;i-1;i0;a3:i3;i-3;i0;s6:chargei2;s4:idlei1;i1711173798;a3:i300;i700;i0;s6:eventsa4:a1:a8:i2;i0;i0;s32:00000000000000000000000000000001i1;s32:00000000000000000000000000000008i0;s6:actived1:s32:00000000000000000000000000000008i0;i1;i10000;s5:modela6:s29:simulation-portable-1/graph-1s11:graph-probei100;i10000;i10000;d3:s18:maxNodeEvaluationsi1000000;s5:nodesa5:d9:s5:aftera0:s2:ids7:enableds6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuets5:scopes5:worlds5:stages6:eventss4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:eventss6:inputsa0:s9:operations17:core.events.applys10:parametersd0:s5:scopes5:worlds5:stages6:eventss4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids4:moves6:inputsa1:s7:enableds9:operations21:core.motion.integrates10:parametersd0:s5:scopes6:entitys5:stages6:motions4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids6:randoms6:inputsa1:s7:enableds9:operations16:core.random.draws10:parametersd1:s6:streami0;s5:scopes6:entitys5:stages6:randoms4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:resolves6:inputsa0:s9:operations21:core.resource.resolves10:parametersd0:s5:scopes5:worlds5:stages7:resolves4:types4:voids7:versioni1;s7:versioni1;s11:modelDigests64:522786bb192e985cac078db95624a4c3823743003ea7d7c26e7f0c6a6e7f69dbs8:outcomesa1:a4:i1;s6:charges32:00000000000000000000000000000001i2;s9:resourcesd1:s6:chargei1;s4:seedi42;s4:ticki1;s7:versioni2;",
+				"2" : "d9:s8:entitiesd2:s32:00000000000000000000000000000001a9:s32:00000000000000000000000000000001a3:i0;i-1;i0;a3:i3;i-3;i0;s6:chargei0;s6:activei2;i553619769;a3:i600;i400;i0;s32:00000000000000000000000000000002a9:s32:00000000000000000000000000000002a3:i0;i-1;i0;a3:i3;i-3;i0;s6:chargei2;s4:idlei2;i2414219100;a3:i600;i400;i0;s6:eventsa4:a0:d1:s32:00000000000000000000000000000008i0;i1;i10000;s5:modela6:s29:simulation-portable-1/graph-1s11:graph-probei100;i10000;i10000;d3:s18:maxNodeEvaluationsi1000000;s5:nodesa5:d9:s5:aftera0:s2:ids7:enableds6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuets5:scopes5:worlds5:stages6:eventss4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:eventss6:inputsa0:s9:operations17:core.events.applys10:parametersd0:s5:scopes5:worlds5:stages6:eventss4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids4:moves6:inputsa1:s7:enableds9:operations21:core.motion.integrates10:parametersd0:s5:scopes6:entitys5:stages6:motions4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids6:randoms6:inputsa1:s7:enableds9:operations16:core.random.draws10:parametersd1:s6:streami0;s5:scopes6:entitys5:stages6:randoms4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:resolves6:inputsa0:s9:operations21:core.resource.resolves10:parametersd0:s5:scopes5:worlds5:stages7:resolves4:types4:voids7:versioni1;s7:versioni1;s11:modelDigests64:522786bb192e985cac078db95624a4c3823743003ea7d7c26e7f0c6a6e7f69dbs8:outcomesa0:s9:resourcesd1:s6:chargei1;s4:seedi42;s4:ticki2;s7:versioni2;"
+			},
+			"initial" : "d9:s8:entitiesd2:s32:00000000000000000000000000000001a9:s32:00000000000000000000000000000001a3:i0;i0;i0;a3:i3;i-3;i0;s6:chargei2;s4:idlei0;i0;a3:i0;i0;i0;s32:00000000000000000000000000000002a9:s32:00000000000000000000000000000002a3:i0;i0;i0;a3:i3;i-3;i0;s6:chargei2;s4:idlei0;i0;a3:i0;i0;i0;s6:eventsa4:a1:a8:i2;i0;i0;s32:00000000000000000000000000000001i1;s32:00000000000000000000000000000008i0;s6:actived1:s32:00000000000000000000000000000008i0;i1;i10000;s5:modela6:s29:simulation-portable-1/graph-1s11:graph-probei100;i10000;i10000;d3:s18:maxNodeEvaluationsi1000000;s5:nodesa5:d9:s5:aftera0:s2:ids7:enableds6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuets5:scopes5:worlds5:stages6:eventss4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:eventss6:inputsa0:s9:operations17:core.events.applys10:parametersd0:s5:scopes5:worlds5:stages6:eventss4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids4:moves6:inputsa1:s7:enableds9:operations21:core.motion.integrates10:parametersd0:s5:scopes6:entitys5:stages6:motions4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids6:randoms6:inputsa1:s7:enableds9:operations16:core.random.draws10:parametersd1:s6:streami0;s5:scopes6:entitys5:stages6:randoms4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:resolves6:inputsa0:s9:operations21:core.resource.resolves10:parametersd0:s5:scopes5:worlds5:stages7:resolves4:types4:voids7:versioni1;s7:versioni1;s11:modelDigests64:522786bb192e985cac078db95624a4c3823743003ea7d7c26e7f0c6a6e7f69dbs8:outcomesa0:s9:resourcesd1:s6:chargei3;s4:seedi42;s4:ticki0;s7:versioni2;",
+			"name" : "graph-probe",
+			"model" : "a6:s29:simulation-portable-1/graph-1s11:graph-probei100;i10000;i10000;d3:s18:maxNodeEvaluationsi1000000;s5:nodesa5:d9:s5:aftera0:s2:ids7:enableds6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuets5:scopes5:worlds5:stages6:eventss4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:eventss6:inputsa0:s9:operations17:core.events.applys10:parametersd0:s5:scopes5:worlds5:stages6:eventss4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids4:moves6:inputsa1:s7:enableds9:operations21:core.motion.integrates10:parametersd0:s5:scopes6:entitys5:stages6:motions4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids6:randoms6:inputsa1:s7:enableds9:operations16:core.random.draws10:parametersd1:s6:streami0;s5:scopes6:entitys5:stages6:randoms4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:resolves6:inputsa0:s9:operations21:core.resource.resolves10:parametersd0:s5:scopes5:worlds5:stages7:resolves4:types4:voids7:versioni1;s7:versioni1;",
+			"modelDigest" : "522786bb192e985cac078db95624a4c3823743003ea7d7c26e7f0c6a6e7f69db"
+		}
+	],
+	"compatibility" : [
+		{
+			"model" : "a6:s29:simulation-portable-1/graph-1s17:conditional-graphi100;i16;i32;d3:s18:maxNodeEvaluationsi256;s5:nodesa16:d9:s5:aftera0:s2:ids6:actives6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:actives5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids6:charges6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:charges5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids7:enableds6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuets5:scopes5:worlds5:stages6:eventss4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:eventss6:inputsa0:s9:operations17:core.events.applys10:parametersd0:s5:scopes5:worlds5:stages6:eventss4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids9:is-actives6:inputsa2:s9:mode-reads6:actives9:operations17:core.string.equals10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids9:mode-reads6:inputsa0:s9:operations17:core.entity.fields10:parametersd1:s5:fields4:modes5:scopes6:entitys5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids4:moves6:inputsa1:s7:enableds9:operations21:core.motion.integrates10:parametersd0:s5:scopes6:entitys5:stages6:motions4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids3:ones6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuei1;s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids8:quantitys6:inputsa2:s3:ones3:ones9:operations12:core.i64.adds10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids6:randoms6:inputsa1:s7:enableds9:operations16:core.random.draws10:parametersd1:s6:streami7;s5:scopes6:entitys5:stages6:randoms4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:requests6:inputsa3:s9:is-actives6:charges8:quantitys9:operations21:core.resource.requests10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:resolves6:inputsa0:s9:operations21:core.resource.resolves10:parametersd0:s5:scopes5:worlds5:stages7:resolves4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:runnings6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values7:runnings5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera1:s7:requests2:ids8:set-modes6:inputsa2:s9:is-actives7:runnings9:operations13:core.mode.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids12:set-velocitys6:inputsa2:s9:is-actives8:velocitys9:operations17:core.velocity.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids8:velocitys6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuea3:i10;i0;i0;s5:scopes5:worlds5:stages6:decides4:types4:vec3s7:versioni1;s7:versioni1;",
+			"name" : "missing-operation",
+			"operations" : [
+				"core.bool.and",
+				"core.bool.not",
+				"core.constant",
+				"core.entity.field",
+				"core.events.apply",
+				"core.i64.add",
+				"core.i64.less",
+				"core.mode.set",
+				"core.motion.integrate",
+				"core.resource.request",
+				"core.resource.resolve",
+				"core.select.i64",
+				"core.string.equal",
+				"core.tick",
+				"core.velocity.set"
+			],
+			"report" : {
+				"compatible" : false,
+				"registryDigest" : "86fc4b29e38388627afb15534ff843979ae460c0ff58701a96e08c2d6725c7ef",
+				"issues" : [
+					{
+						"path" : "model/graph/nodes/random/operation",
+						"message" : "Backend does not implement core.random.draw",
+						"code" : "unsupported-operation"
+					}
+				],
+				"modelDigest" : "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+				"profile" : "simulation-portable-1/graph-1"
+			}
+		},
+		{
+			"model" : "a6:s29:simulation-portable-1/graph-1s17:conditional-graphi100;i16;i32;d3:s18:maxNodeEvaluationsi256;s5:nodesa16:d9:s5:aftera0:s2:ids6:actives6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:actives5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids6:charges6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:charges5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids7:enableds6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuets5:scopes5:worlds5:stages6:eventss4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:eventss6:inputsa0:s9:operations17:core.events.applys10:parametersd0:s5:scopes5:worlds5:stages6:eventss4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids9:is-actives6:inputsa2:s9:mode-reads6:actives9:operations17:core.string.equals10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids9:mode-reads6:inputsa0:s9:operations17:core.entity.fields10:parametersd1:s5:fields4:modes5:scopes6:entitys5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids4:moves6:inputsa1:s7:enableds9:operations21:core.motion.integrates10:parametersd0:s5:scopes6:entitys5:stages6:motions4:types4:voids7:versioni2;d9:s5:aftera0:s2:ids3:ones6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuei1;s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids8:quantitys6:inputsa2:s3:ones3:ones9:operations12:core.i64.adds10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids6:randoms6:inputsa1:s7:enableds9:operations16:core.random.draws10:parametersd1:s6:streami7;s5:scopes6:entitys5:stages6:randoms4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:requests6:inputsa3:s9:is-actives6:charges8:quantitys9:operations21:core.resource.requests10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:resolves6:inputsa0:s9:operations21:core.resource.resolves10:parametersd0:s5:scopes5:worlds5:stages7:resolves4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:runnings6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values7:runnings5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera1:s7:requests2:ids8:set-modes6:inputsa2:s9:is-actives7:runnings9:operations13:core.mode.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids12:set-velocitys6:inputsa2:s9:is-actives8:velocitys9:operations17:core.velocity.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids8:velocitys6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuea3:i10;i0;i0;s5:scopes5:worlds5:stages6:decides4:types4:vec3s7:versioni1;s7:versioni1;",
+			"name" : "version",
+			"operations" : [
+				"core.bool.and",
+				"core.bool.not",
+				"core.constant",
+				"core.entity.field",
+				"core.events.apply",
+				"core.i64.add",
+				"core.i64.less",
+				"core.mode.set",
+				"core.motion.integrate",
+				"core.random.draw",
+				"core.resource.request",
+				"core.resource.resolve",
+				"core.select.i64",
+				"core.string.equal",
+				"core.tick",
+				"core.velocity.set"
+			],
+			"report" : {
+				"compatible" : false,
+				"registryDigest" : "710502049ac1f485589d81eb27482360017ed9d048afb0452694792bf23fc367",
+				"issues" : [
+					{
+						"path" : "model/graph/nodes/move/version",
+						"message" : "Backend requires operation version 1",
+						"code" : "unsupported-version"
+					}
+				],
+				"modelDigest" : "9b5213dd06b0dac40d76afce511920c82379395b0d02a8ced9d169ee4308f53c",
+				"profile" : "simulation-portable-1/graph-1"
+			}
+		},
+		{
+			"model" : "a6:s29:simulation-portable-1/graph-1s17:conditional-graphi100;i16;i32;d3:s18:maxNodeEvaluationsi256;s5:nodesa16:d9:s5:aftera0:s2:ids6:actives6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:actives5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids6:charges6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:charges5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids7:enableds6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuets5:scopes5:worlds5:stages6:eventss4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:eventss6:inputsa0:s9:operations17:core.events.applys10:parametersd0:s5:scopes5:worlds5:stages6:eventss4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids9:is-actives6:inputsa2:s9:mode-reads6:actives9:operations17:core.string.equals10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids9:mode-reads6:inputsa0:s9:operations17:core.entity.fields10:parametersd1:s5:fields4:modes5:scopes6:entitys5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids4:moves6:inputsa1:s7:enableds9:operations11:future.moves10:parametersd0:s5:scopes6:entitys5:stages6:motions4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids3:ones6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuei1;s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids8:quantitys6:inputsa2:s3:ones3:ones9:operations12:core.i64.adds10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids6:randoms6:inputsa1:s7:enableds9:operations16:core.random.draws10:parametersd1:s6:streami7;s5:scopes6:entitys5:stages6:randoms4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:requests6:inputsa3:s9:is-actives6:charges8:quantitys9:operations21:core.resource.requests10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:resolves6:inputsa0:s9:operations21:core.resource.resolves10:parametersd0:s5:scopes5:worlds5:stages7:resolves4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:runnings6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values7:runnings5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera1:s7:requests2:ids8:set-modes6:inputsa2:s9:is-actives7:runnings9:operations13:core.mode.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids12:set-velocitys6:inputsa2:s9:is-actives8:velocitys9:operations17:core.velocity.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids8:velocitys6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuea3:i10;i0;i0;s5:scopes5:worlds5:stages6:decides4:types4:vec3s7:versioni1;s7:versioni1;",
+			"name" : "unknown",
+			"operations" : [
+				"core.bool.and",
+				"core.bool.not",
+				"core.constant",
+				"core.entity.field",
+				"core.events.apply",
+				"core.i64.add",
+				"core.i64.less",
+				"core.mode.set",
+				"core.motion.integrate",
+				"core.random.draw",
+				"core.resource.request",
+				"core.resource.resolve",
+				"core.select.i64",
+				"core.string.equal",
+				"core.tick",
+				"core.velocity.set"
+			],
+			"report" : {
+				"compatible" : false,
+				"registryDigest" : "710502049ac1f485589d81eb27482360017ed9d048afb0452694792bf23fc367",
+				"issues" : [
+					{
+						"path" : "model/graph/nodes/move/operation",
+						"message" : "Backend does not implement future.move",
+						"code" : "unsupported-operation"
+					}
+				],
+				"modelDigest" : "ad85426880b2b1806e0df820f5071a700737f83e9d61337a818d77d839d50e68",
+				"profile" : "simulation-portable-1/graph-1"
+			}
+		},
+		{
+			"model" : "a6:s29:simulation-portable-1/graph-1s17:conditional-graphi100;i16;i32;d3:s18:maxNodeEvaluationsi256;s5:nodesa16:d9:s5:aftera0:s2:ids6:actives6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:actives5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids6:charges6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:charges5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids7:enableds6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuets5:scopes5:worlds5:stages6:eventss4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:eventss6:inputsa0:s9:operations17:core.events.applys10:parametersd0:s5:scopes5:worlds5:stages6:eventss4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids9:is-actives6:inputsa2:s9:mode-reads6:actives9:operations17:core.string.equals10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids9:mode-reads6:inputsa0:s9:operations17:core.entity.fields10:parametersd1:s5:fields4:modes5:scopes6:entitys5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids4:moves6:inputsa1:s8:quantitys9:operations21:core.motion.integrates10:parametersd0:s5:scopes6:entitys5:stages6:motions4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids3:ones6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuei1;s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids8:quantitys6:inputsa2:s3:ones3:ones9:operations12:core.i64.adds10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids6:randoms6:inputsa1:s7:enableds9:operations16:core.random.draws10:parametersd1:s6:streami7;s5:scopes6:entitys5:stages6:randoms4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:requests6:inputsa3:s9:is-actives6:charges8:quantitys9:operations21:core.resource.requests10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:resolves6:inputsa0:s9:operations21:core.resource.resolves10:parametersd0:s5:scopes5:worlds5:stages7:resolves4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:runnings6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values7:runnings5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera1:s7:requests2:ids8:set-modes6:inputsa2:s9:is-actives7:runnings9:operations13:core.mode.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids12:set-velocitys6:inputsa2:s9:is-actives8:velocitys9:operations17:core.velocity.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids8:velocitys6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuea3:i10;i0;i0;s5:scopes5:worlds5:stages6:decides4:types4:vec3s7:versioni1;s7:versioni1;",
+			"name" : "type",
+			"operations" : [
+				"core.bool.and",
+				"core.bool.not",
+				"core.constant",
+				"core.entity.field",
+				"core.events.apply",
+				"core.i64.add",
+				"core.i64.less",
+				"core.mode.set",
+				"core.motion.integrate",
+				"core.random.draw",
+				"core.resource.request",
+				"core.resource.resolve",
+				"core.select.i64",
+				"core.string.equal",
+				"core.tick",
+				"core.velocity.set"
+			],
+			"report" : {
+				"compatible" : false,
+				"registryDigest" : "710502049ac1f485589d81eb27482360017ed9d048afb0452694792bf23fc367",
+				"issues" : [
+					{
+						"path" : "model/graph/nodes/move/inputs/1",
+						"message" : "Expected bool",
+						"code" : "input-type"
+					}
+				],
+				"modelDigest" : "2ea5467fa58bfaf438e68e04cf1517ab2d23855eb5fcb00ca7ccd7d5e499a29c",
+				"profile" : "simulation-portable-1/graph-1"
+			}
+		},
+		{
+			"model" : "a6:s29:simulation-portable-1/graph-1s17:conditional-graphi100;i16;i32;d3:s18:maxNodeEvaluationsi1;s5:nodesa16:d9:s5:aftera0:s2:ids6:actives6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:actives5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids6:charges6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values6:charges5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids7:enableds6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuets5:scopes5:worlds5:stages6:eventss4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:eventss6:inputsa0:s9:operations17:core.events.applys10:parametersd0:s5:scopes5:worlds5:stages6:eventss4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids9:is-actives6:inputsa2:s9:mode-reads6:actives9:operations17:core.string.equals10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids9:mode-reads6:inputsa0:s9:operations17:core.entity.fields10:parametersd1:s5:fields4:modes5:scopes6:entitys5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids4:moves6:inputsa1:s7:enableds9:operations21:core.motion.integrates10:parametersd0:s5:scopes6:entitys5:stages6:motions4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids3:ones6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuei1;s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids8:quantitys6:inputsa2:s3:ones3:ones9:operations12:core.i64.adds10:parametersd0:s5:scopes5:worlds5:stages6:decides4:types3:i64s7:versioni1;d9:s5:aftera0:s2:ids6:randoms6:inputsa1:s7:enableds9:operations16:core.random.draws10:parametersd1:s6:streami7;s5:scopes6:entitys5:stages6:randoms4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:requests6:inputsa3:s9:is-actives6:charges8:quantitys9:operations21:core.resource.requests10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:resolves6:inputsa0:s9:operations21:core.resource.resolves10:parametersd0:s5:scopes5:worlds5:stages7:resolves4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:runnings6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values7:runnings5:scopes5:worlds5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera1:s7:requests2:ids8:set-modes6:inputsa2:s9:is-actives7:runnings9:operations13:core.mode.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids12:set-velocitys6:inputsa2:s9:is-actives8:velocitys9:operations17:core.velocity.sets10:parametersd0:s5:scopes6:entitys5:stages6:decides4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids8:velocitys6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuea3:i10;i0;i0;s5:scopes5:worlds5:stages6:decides4:types4:vec3s7:versioni1;s7:versioni1;",
+			"name" : "budget",
+			"operations" : [
+				"core.bool.and",
+				"core.bool.not",
+				"core.constant",
+				"core.entity.field",
+				"core.events.apply",
+				"core.i64.add",
+				"core.i64.less",
+				"core.mode.set",
+				"core.motion.integrate",
+				"core.random.draw",
+				"core.resource.request",
+				"core.resource.resolve",
+				"core.select.i64",
+				"core.string.equal",
+				"core.tick",
+				"core.velocity.set"
+			],
+			"report" : {
+				"compatible" : false,
+				"registryDigest" : "710502049ac1f485589d81eb27482360017ed9d048afb0452694792bf23fc367",
+				"issues" : [
+					{
+						"path" : "model/graph/maxNodeEvaluations",
+						"message" : "Worst-case node evaluations exceed the model budget",
+						"code" : "evaluation-budget"
+					}
+				],
+				"modelDigest" : "146c828f495d6a812cefff500089b61deef27c990174e59e6de849a5253f4a8f",
+				"profile" : "simulation-portable-1/graph-1"
+			}
+		},
+		{
+			"model" : "a6:s29:simulation-portable-1/graph-1s18:value-budget-probei100;i10000;i10000;d3:s18:maxNodeEvaluationsi1000000;s5:nodesa7:d9:s5:aftera0:s2:ids7:enableds6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:valuets5:scopes5:worlds5:stages6:eventss4:types4:bools7:versioni1;d9:s5:aftera0:s2:ids6:eventss6:inputsa0:s9:operations17:core.events.applys10:parametersd0:s5:scopes5:worlds5:stages6:eventss4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:large-as6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values4096:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaas5:scopes6:entitys5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids7:large-bs6:inputsa0:s9:operations13:core.constants10:parametersd1:s5:values4096:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaas5:scopes6:entitys5:stages6:decides4:types6:strings7:versioni1;d9:s5:aftera0:s2:ids4:moves6:inputsa1:s7:enableds9:operations21:core.motion.integrates10:parametersd0:s5:scopes6:entitys5:stages6:motions4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids6:randoms6:inputsa1:s7:enableds9:operations16:core.random.draws10:parametersd1:s6:streami0;s5:scopes6:entitys5:stages6:randoms4:types4:voids7:versioni1;d9:s5:aftera0:s2:ids7:resolves6:inputsa0:s9:operations21:core.resource.resolves10:parametersd0:s5:scopes5:worlds5:stages7:resolves4:types4:voids7:versioni1;s7:versioni1;",
+			"name" : "value-budget",
+			"operations" : [
+				"core.bool.and",
+				"core.bool.not",
+				"core.constant",
+				"core.entity.field",
+				"core.events.apply",
+				"core.i64.add",
+				"core.i64.less",
+				"core.mode.set",
+				"core.motion.integrate",
+				"core.random.draw",
+				"core.resource.request",
+				"core.resource.resolve",
+				"core.select.i64",
+				"core.string.equal",
+				"core.tick",
+				"core.velocity.set"
+			],
+			"report" : {
+				"compatible" : false,
+				"registryDigest" : "710502049ac1f485589d81eb27482360017ed9d048afb0452694792bf23fc367",
+				"issues" : [
+					{
+						"path" : "model/graph/nodes",
+						"message" : "Worst-case retained value encoding exceeds 64 MiB",
+						"code" : "value-budget"
+					}
+				],
+				"modelDigest" : "fc8c7fd1a50e4e1f7c11be282f3b42098bdba5d0e41df2d96b57eca0cd76c1be",
+				"profile" : "simulation-portable-1/graph-1"
+			}
+		}
+	],
+	"profile" : "simulation-portable-1/graph-1"
+}

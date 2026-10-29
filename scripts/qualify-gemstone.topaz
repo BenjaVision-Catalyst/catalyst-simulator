@@ -20,7 +20,7 @@ true
 commit
 expectvalue true
 run
-| source directory selectors proofs expected actual fixture input report file backend root version metadata text |
+| source directory selectors proofs expected actual fixture graphFixture input report file backend root version metadata text tests worlds graphWorlds |
 System abortTransaction. System transactionMode: #manualBegin.
 source := System gemEnvironmentVariable: 'BVC_SIMULATOR_SOURCE'.
 directory := MetacelloPlatform current fileHandleOn: source.
@@ -30,14 +30,32 @@ proofs := OrderedCollection new.
  actual := (MCPackage named: name) snapshot definitions reject: [:d | d isOrganizationDefinition].
  (expected size = actual size and: [expected allSatisfy: [:d | actual includes: d]]) ifFalse: [self error: 'Native source mismatch: ', name].
  proofs add: {name. expected size}].
-selectors := (CSKernelExamples selectors select: [:s | s asString beginsWith: 'test']) asArray sort.
-selectors do: [:selector | CSKernelExamples new perform: selector].
+tests := OrderedCollection new.
+#(CSKernelExamples CSGraphExamples) do: [:className | | testClass |
+ testClass := Smalltalk at: className.
+ selectors := (testClass selectors select: [:s | s asString beginsWith: 'test']) asArray sort.
+ selectors do: [:selector | testClass new perform: selector. tests add: className asString, '>>', selector asString]].
 input := GsFile openReadOnServer: source, '/../contracts/probe-1/fixtures.json'.
 [fixture := STON fromString: input contents] ensure: [input close].
 backend := CSKernelExamples new probe.
 backend checkpoint = (fixture at: 'initial') ifFalse: [self error: 'Initial canonical checkpoint differs from GT'].
 backend advance.
 backend checkpoint = ((fixture at: 'checkpoints') at: '1') ifFalse: [self error: 'Tick 1 canonical checkpoint differs from GT'].
+input := GsFile openReadOnServer: source, '/../contracts/graph-1/fixtures.json'.
+[graphFixture := STON fromString: input contents] ensure: [input close].
+CSOperationRegistry portable digest = (graphFixture at: 'registryDigest') ifFalse: [self error: 'Registry digest differs from GT'].
+graphWorlds := CSGraphExamples new fixtureWorlds.
+(graphFixture at: 'models') do: [:record | | graphBackend model |
+ graphBackend := graphWorlds at: (record at: 'name'). model := graphBackend model.
+ (model canonicalBytes = (record at: 'model') and: [model digest = (record at: 'modelDigest')]) ifFalse: [self error: 'Native normalized model/digest differs from GT'].
+ graphBackend checkpoint = (record at: 'initial') ifFalse: [self error: 'Initial graph checkpoint differs from GT'].
+ graphBackend advance.
+ graphBackend checkpoint = ((record at: 'checkpoints') at: '1') ifFalse: [self error: 'Tick 1 graph checkpoint differs from GT']].
+(graphFixture at: 'compatibility') do: [:record | | model capabilities actualReport |
+ model := CSModelBundle fromSnapshot: (CSCanonicalCodec decode: (record at: 'model')).
+ capabilities := CSOperationRegistry supporting: (record at: 'operations').
+ actualReport := model compatibilityReportFor: capabilities.
+ actualReport = (record at: 'report') ifFalse: [self error: 'Native compatibility report differs from GT']].
 metadata := Dictionary new.
 #('rowan/project.ston' 'rowan/components/Core.ston' 'rowan/components/Tests.ston' 'rowan/specs/CatalystSimulatorCore.ston' 'rowan/specs/CatalystSimulatorTests.ston') do: [:path |
  input := GsFile openReadOnServer: source, '/../', path.
@@ -50,14 +68,18 @@ version := BaselineOfCatalystSimulator new project version.
 root := (System gemEnvironmentVariable: 'BVC_SIMULATOR_ROOT') asSymbol.
 (UserGlobals includesKey: root) ifTrue: [self error: 'Qualification root already exists; choose a fresh root'].
 System beginTransaction.
-UserGlobals at: root put: backend.
+worlds := Dictionary new at: 'legacy' put: backend; at: 'graphs' put: graphWorlds; yourself.
+UserGlobals at: root put: worlds.
 System commitTransaction ifFalse: [self error: 'Qualification fixture commit failed'].
 report := Dictionary new
  at: 'stone' put: (System gemEnvironmentVariable: 'STONE');
- at: 'tests' put: selectors;
- at: 'passed' put: selectors size;
+ at: 'tests' put: tests asArray;
+ at: 'passed' put: tests size;
  at: 'sourceDefinitions' put: proofs asArray;
  at: 'crossDialectTick1Equal' put: true;
+ at: 'graphModels' put: graphWorlds size;
+ at: 'compatibilityFixtures' put: (graphFixture at: 'compatibility') size;
+ at: 'registryDigestEqual' put: true;
  at: 'rowanMetadataFiles' put: metadata size;
  at: 'directRowanLoadQualified' put: false;
  at: 'loadMechanism' put: 'Native Tonel snapshot definitions';

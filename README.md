@@ -2,9 +2,9 @@
 
 Catalyst Simulator is the home of the GemStone-first CatalystSimulation kernel,
 its Runtime service, portable model contracts and future external execution
-adapters. The first P0/P1 increment implements a headless portable kernel probe
-in GT and GemStone. Runtime service integration and external adapters remain
-planned.
+adapters. P0/P1 now includes a headless portable graph interpreter, versioned
+operation registry, model digests and compatibility checks, qualified in GT and
+GemStone. Runtime service integration and external adapters remain planned.
 
 Models cover ecosystems, NPC behaviour, circuits and factory automation. The
 intended workflow is to author a model once in Smalltalk, run it entirely in
@@ -68,17 +68,24 @@ GT-local worlds can use the same contracts with an explicitly volatile authority
 
 ## Implementation
 
-The bounded [`probe-1` contract](contracts/probe-1/README.md) covers fixed-step
-integer movement, deterministic finite-resource contention, cancellable timers,
-mode changes, addressed Philox randomness and canonical checkpoints. It is the
-starting conformance target for a future Repast adapter. It does not close the
-full P0/P1 gates or provide one-click external execution yet.
+The bounded [`graph-1` contract](contracts/graph-1/README.md) adds typed value/effect
+nodes, staged reads, deterministic scheduling, 16 versioned primitives, SHA-256
+model identity and node-specific capability reports. A Smalltalk builder produces
+immutable data that the backend interprets, with pre-launch operation and retained
+value budgets. The original [`probe-1` contract](contracts/probe-1/README.md) and
+its checkpoint bytes remain supported.
+
+Three neutral models and their model digests, state traces and compatibility
+fixtures match in GT and native GemStone. This provides an input for a future
+Repast feasibility adapter; full P0/P1 gates and one-click migration remain open.
 
 Core loads without Runtime, GT UI or ecosystem dependencies. Load Metacello
 baseline `CatalystSimulator` from this repository's `src`, group `Core` (default)
 or optional group `Tests`. Rowan Core/Tests specifications are also supplied.
 See [qualification and usage](conformance/README.md) for the SUnit suite, native
-runner, inspectable probe and independent Python fixture oracle.
+runner, inspectable models and independent Python fixture oracles. The
+[rebuild readiness record](docs/Rebuild-Readiness.md) defines the next fresh-image
+and fresh-stone checks before Repast work begins.
 
 The [prototype mining ledger](docs/Prototype-Mining-Ledger.md) records what was
 adapted and deferred. All shared Smalltalk source is compiled and exported through
@@ -88,8 +95,8 @@ the live GT image; exported files must not be edited externally.
 
 | Area | Responsibility |
 | --- | --- |
-| `src/` | Implemented headless portable probe and optional tests; Runtime adapters/GT tools follow; sources authored/exported through GT |
-| `contracts/` | Implemented probe model/state/numeric contract and canonical fixtures; service/read/migration protocols follow |
+| `src/` | Headless portable kernel, graph builder/interpreter, registry, digests and optional tests; Runtime adapters/GT tools follow; sources authored/exported through GT |
+| `contracts/` | Probe and graph model/state/numeric/capability contracts and fixtures; service/read/migration protocols follow |
 | `native/` | Shared C++ operations/codecs and external adapters, starting with a Repast feasibility probe |
 | `conformance/` | GT, native GemStone, external-backend, migration and scale evidence |
 

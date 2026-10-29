@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'bundle',
 		'accepted',
-		'advancing'
+		'advancing',
+		'registry'
 	],
 	#category : 'BVC-Simulator-Core',
 	#package : 'BVC-Simulator-Core'
@@ -18,9 +19,19 @@ CSSmalltalkBackend class >> fromCheckpoint: encoded [
  ^ self new initializeCheckpoint: encoded
 ]
 
+{ #category : 'portable graph' }
+CSSmalltalkBackend class >> fromCheckpoint: encoded registry: capabilities [
+ ^ self new initializeCheckpoint: encoded registry: capabilities
+]
+
 { #category : 'portable kernel' }
 CSSmalltalkBackend class >> model: model seed: seed [
  ^ self new initializeModel: model seed: seed
+]
+
+{ #category : 'portable graph' }
+CSSmalltalkBackend class >> model: model seed: seed registry: capabilities [
+ ^ self new initializeModel: model seed: seed registry: capabilities
 ]
 
 { #category : 'portable kernel' }
@@ -37,20 +48,20 @@ CSSmalltalkBackend >> addResource: key quantity: quantity [
   (candidate at: 'resources') at: key put: quantity ]
 ]
 
-{ #category : 'portable kernel' }
+{ #category : 'portable graph' }
 CSSmalltalkBackend >> advance [
  | candidate |
  CSKernelMath require: advancing ~= true message: 'Backend is already advancing'.
  advancing := true.
- [ candidate := self snapshot.
-   candidate at: 'tick' put: (CSKernelMath nonnegative: (candidate at: 'tick') + 1).
-   self applyEventsTo: candidate.
-   self applyMotionTo: candidate.
-   self applyContentionTo: candidate.
-   self applyRandomTo: candidate.
-   self validate: candidate.
-   accepted := candidate
- ] ensure: [ advancing := false ].
+ [candidate := self snapshot.
+  candidate at: 'tick' put: (CSKernelMath nonnegative: (candidate at: 'tick') + 1).
+  bundle isGraph
+   ifTrue: [candidate at: 'outcomes' put: #(). self executeGraphOn: candidate]
+   ifFalse: [
+    self applyEventsTo: candidate. self applyMotionTo: candidate.
+    self applyContentionTo: candidate. self applyRandomTo: candidate].
+  self validate: candidate. accepted := candidate
+ ] ensure: [advancing := false].
  ^ self tick
 ]
 
@@ -75,6 +86,23 @@ CSSmalltalkBackend >> applyContentionTo: state [
     entity at: 5 put: 0.
     outcomes add: { (state at: 'tick'). key. id. quantity } ] ] ].
  state at: 'outcomes' put: outcomes asArray
+]
+
+{ #category : 'portable graph' }
+CSSmalltalkBackend >> applyEffect: op inputs: inputs parameters: params state: state entity: id [
+ | entity |
+ op = 'core.events.apply' ifTrue: [self applyEventsTo: state. ^ nil].
+ op = 'core.resource.resolve' ifTrue: [self applyContentionTo: state. ^ nil].
+ inputs first ifFalse: [^ nil].
+ entity := (state at: 'entities') at: id.
+ op = 'core.velocity.set' ifTrue: [entity at: 3 put: inputs second copy. ^ nil].
+ op = 'core.mode.set' ifTrue: [entity at: 6 put: inputs second copy. ^ nil].
+ op = 'core.resource.request' ifTrue: [
+  CSKernelMath nonnegative: inputs third.
+  entity at: 4 put: inputs second copy; at: 5 put: inputs third. ^ nil].
+ op = 'core.motion.integrate' ifTrue: [self integrateEntity: entity. ^ nil].
+ op = 'core.random.draw' ifTrue: [self drawEntity: entity seed: (state at: 'seed') stream: (params at: 'stream'). ^ nil].
+ CSKernelError signal: 'No executable handler for declared operation'
 ]
 
 { #category : 'portable kernel' }
@@ -128,36 +156,118 @@ CSSmalltalkBackend >> checkpoint [
  ^ CSCanonicalCodec encode: accepted
 ]
 
+{ #category : 'portable graph' }
+CSSmalltalkBackend >> compatibilityReport [
+ ^ bundle compatibilityReportFor: (registry ifNil: [CSOperationRegistry portable])
+]
+
+{ #category : 'portable graph' }
+CSSmalltalkBackend >> drawEntity: entity seed: seed stream: stream [
+ | draw |
+ draw := entity seventh.
+ entity at: 8 put: (CSPhilox sampleFor: entity first seed: seed stream: stream draw: draw).
+ entity at: 7 put: (CSKernelMath uint32: draw + 1)
+]
+
 { #category : 'portable kernel' }
 CSSmalltalkBackend >> entityIdsIn: state [
  ^ (state at: 'entities') keys asArray sorted: [ :a :b | CSKernelMath string: a precedes: b ]
 ]
 
-{ #category : 'portable kernel' }
+{ #category : 'portable graph' }
+CSSmalltalkBackend >> evaluateNode: node inputs: inputs state: state read: read entity: id [
+ | op params index |
+ op := node at: 'operation'. params := node at: 'parameters'.
+ op = 'core.constant' ifTrue: [^ CSCanonicalCodec copy: (params at: 'value')].
+ op = 'core.tick' ifTrue: [^ read at: 'tick'].
+ op = 'core.entity.field' ifTrue: [
+  index := #('id' 'position' 'velocity' 'requestedResource' 'requestedQuantity' 'mode' 'drawIndex' 'sample' 'motionRemainders') indexOf: (params at: 'field').
+  ^ CSCanonicalCodec copy: (((read at: 'entities') at: id) at: index)].
+ op = 'core.i64.add' ifTrue: [^ CSKernelMath int64: inputs first + inputs second].
+ op = 'core.i64.less' ifTrue: [^ inputs first < inputs second].
+ op = 'core.select.i64' ifTrue: [^ inputs first ifTrue: [inputs second] ifFalse: [inputs third]].
+ op = 'core.string.equal' ifTrue: [^ inputs first = inputs second].
+ op = 'core.bool.and' ifTrue: [^ inputs first and: [inputs second]].
+ op = 'core.bool.not' ifTrue: [^ inputs first not].
+ ^ self applyEffect: op inputs: inputs parameters: params state: state entity: id
+]
+
+{ #category : 'portable graph' }
+CSSmalltalkBackend >> executeGraphOn: state [
+ | graph nodes byId values ids stage read |
+ graph := bundle graph. nodes := graph orderedNodes. byId := Dictionary new.
+ nodes do: [:node | byId at: (node at: 'id') put: node].
+ ids := self entityIdsIn: state.
+ CSKernelMath require: ((nodes count: [:node | (node at: 'scope') = 'world']) + ((nodes count: [:node | (node at: 'scope') = 'entity']) * ids size)) <= (graph snapshot at: 'maxNodeEvaluations') message: 'Node evaluation budget exceeded'.
+ values := Dictionary new. stage := nil.
+ nodes do: [:node |
+  stage = (node at: 'stage') ifFalse: [
+   stage := node at: 'stage'. read := CSCanonicalCodec copy: state].
+  (node at: 'scope') = 'world'
+   ifTrue: [| result |
+    result := self evaluateNode: node inputs: (self inputsFor: node entity: nil values: values nodes: byId) state: state read: read entity: nil.
+    (node at: 'type') = 'void' ifFalse: [values at: (node at: 'id') put: result]]
+   ifFalse: [| results |
+    results := Dictionary new.
+    ids do: [:id | | result |
+     result := self evaluateNode: node inputs: (self inputsFor: node entity: id values: values nodes: byId) state: state read: read entity: id.
+     (node at: 'type') = 'void' ifFalse: [results at: id put: result]].
+    (node at: 'type') = 'void' ifFalse: [values at: (node at: 'id') put: results]] ]
+]
+
+{ #category : 'portable graph' }
 CSSmalltalkBackend >> initializeCheckpoint: encoded [
+ ^ self initializeCheckpoint: encoded registry: CSOperationRegistry portable
+]
+
+{ #category : 'portable graph' }
+CSSmalltalkBackend >> initializeCheckpoint: encoded registry: capabilities [
  | candidate |
  candidate := CSCanonicalCodec decode: encoded.
- CSKernelMath require: (candidate isKindOf: Dictionary) message: 'Checkpoint dictionary required'.
+ CSKernelMath require: ((candidate isKindOf: Dictionary) and: [candidate includesKey: 'model']) message: 'Checkpoint model is required'.
  bundle := CSModelBundle fromSnapshot: (candidate at: 'model').
- CSKernelMath require: bundle compatibilityIssues isEmpty message: 'Unsupported model stages'.
+ registry := CSOperationRegistry supporting: capabilities snapshot keys asArray.
+ self requireCompatible: (bundle compatibilityReportFor: registry).
  advancing := false. self validate: candidate. accepted := candidate. ^ self
 ]
 
-{ #category : 'portable kernel' }
+{ #category : 'portable graph' }
 CSSmalltalkBackend >> initializeModel: model seed: seed [
- CSKernelMath require: model compatibilityIssues isEmpty message: 'Unsupported model stages'.
+ ^ self initializeModel: model seed: seed registry: CSOperationRegistry portable
+]
+
+{ #category : 'portable graph' }
+CSSmalltalkBackend >> initializeModel: model seed: seed registry: capabilities [
+ | report |
+ registry := CSOperationRegistry supporting: capabilities snapshot keys asArray.
+ report := model compatibilityReportFor: registry.
+ self requireCompatible: report.
  CSKernelMath uint64: seed. bundle := CSModelBundle fromSnapshot: model snapshot. advancing := false.
  accepted := Dictionary new
-  at: 'version' put: 1;
-  at: 'model' put: bundle snapshot;
-  at: 'tick' put: 0;
-  at: 'seed' put: seed;
-  at: 'entities' put: Dictionary new;
-  at: 'resources' put: Dictionary new;
+  at: 'version' put: (bundle isGraph ifTrue: [2] ifFalse: [1]);
+  at: 'model' put: bundle snapshot; at: 'tick' put: 0; at: 'seed' put: seed;
+  at: 'entities' put: Dictionary new; at: 'resources' put: Dictionary new;
   at: 'events' put: (CSEventQueue limit: bundle eventLimit) snapshot;
-  at: 'outcomes' put: #();
-  yourself.
+  at: 'outcomes' put: #(); yourself.
+ bundle isGraph ifTrue: [accepted at: 'modelDigest' put: bundle digest].
  self validate: accepted. ^ self
+]
+
+{ #category : 'portable graph' }
+CSSmalltalkBackend >> inputsFor: node entity: id values: values nodes: byId [
+ ^ (node at: 'inputs') collect: [:ref | | value |
+  value := values at: ref.
+  ((byId at: ref) at: 'scope') = 'entity' ifTrue: [value at: id] ifFalse: [value]]
+]
+
+{ #category : 'portable graph' }
+CSSmalltalkBackend >> integrateEntity: entity [
+ | position remainder wide |
+ position := entity second. remainder := entity at: 9.
+ 1 to: 3 do: [:i |
+  wide := (entity third at: i) * bundle tickMilliseconds + (remainder at: i).
+  position at: i put: (CSKernelMath int64: (position at: i) + (wide // 1000)).
+  remainder at: i put: wide \\ 1000]
 ]
 
 { #category : 'portable kernel' }
@@ -170,6 +280,13 @@ CSSmalltalkBackend >> requestResource: key quantity: quantity for: id [
  self change: [ :candidate | | entity |
   entity := (candidate at: 'entities') at: id.
   entity at: 4 put: key copy; at: 5 put: quantity ]
+]
+
+{ #category : 'portable graph' }
+CSSmalltalkBackend >> requireCompatible: report [
+ (report at: 'compatible') ifFalse: [| first |
+  first := (report at: 'issues') first.
+  CSKernelError signal: (first at: 'path'), ': ', (first at: 'message')]
 ]
 
 { #category : 'portable kernel' }
@@ -199,12 +316,15 @@ CSSmalltalkBackend >> tick [
  ^ accepted at: 'tick'
 ]
 
-{ #category : 'portable kernel' }
+{ #category : 'portable graph' }
 CSSmalltalkBackend >> validate: state [
- | entities resources queue |
+ | entities resources queue expectedKeys |
  CSKernelMath require: (state isKindOf: Dictionary) message: 'Invalid state'.
- CSKernelMath require: state keys asSet = #('version' 'model' 'tick' 'seed' 'entities' 'resources' 'events' 'outcomes') asSet message: 'Unknown or missing checkpoint fields'.
- CSKernelMath require: ((state at: 'version') = 1 and: [ (state at: 'model') = bundle snapshot ]) message: 'Checkpoint version or model mismatch'.
+ expectedKeys := #('version' 'model' 'tick' 'seed' 'entities' 'resources' 'events' 'outcomes') asSet.
+ bundle isGraph ifTrue: [expectedKeys add: 'modelDigest'].
+ CSKernelMath require: state keys asSet = expectedKeys message: 'Unknown or missing checkpoint fields'.
+ CSKernelMath require: ((state at: 'version') = (bundle isGraph ifTrue: [2] ifFalse: [1]) and: [(state at: 'model') = bundle snapshot]) message: 'Checkpoint version or model mismatch'.
+ bundle isGraph ifTrue: [CSKernelMath require: (state at: 'modelDigest') = bundle digest message: 'Checkpoint model digest mismatch'].
  CSKernelMath nonnegative: (state at: 'tick'). CSKernelMath uint64: (state at: 'seed').
  entities := state at: 'entities'. resources := state at: 'resources'.
  CSKernelMath require: ((entities isKindOf: Dictionary) and: [ entities size <= bundle entityLimit ]) message: 'Entity capacity exceeded'.

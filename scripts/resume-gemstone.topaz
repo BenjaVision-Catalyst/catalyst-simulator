@@ -1,18 +1,28 @@
 expectvalue true
 run
-| source root backend fixture input report file |
+| source root backend fixture graphFixture input report file worlds |
 System abortTransaction. System transactionMode: #manualBegin.
 source := System gemEnvironmentVariable: 'BVC_SIMULATOR_SOURCE'.
 root := (System gemEnvironmentVariable: 'BVC_SIMULATOR_ROOT') asSymbol.
 input := GsFile openReadOnServer: source, '/../contracts/probe-1/fixtures.json'.
 [fixture := STON fromString: input contents] ensure: [input close].
-backend := UserGlobals at: root.
+worlds := UserGlobals at: root. backend := worlds at: 'legacy'.
 backend checkpoint = ((fixture at: 'checkpoints') at: '1') ifFalse: [self error: 'Committed tick 1 did not survive logout/login'].
 System beginTransaction.
 5 timesRepeat: [backend advance].
 backend checkpoint = ((fixture at: 'checkpoints') at: '6') ifFalse: [self error: 'Native continuation differs from GT'].
+input := GsFile openReadOnServer: source, '/../contracts/graph-1/fixtures.json'.
+[graphFixture := STON fromString: input contents] ensure: [input close].
+(graphFixture at: 'models') do: [:record | | graphBackend |
+ graphBackend := (worlds at: 'graphs') at: (record at: 'name').
+ graphBackend checkpoint = ((record at: 'checkpoints') at: '1') ifFalse: [self error: 'Graph tick 1 did not survive logout/login'].
+ 5 timesRepeat: [graphBackend advance].
+ graphBackend checkpoint = ((record at: 'checkpoints') at: '6') ifFalse: [self error: 'Native graph continuation differs from GT']].
 System abortTransaction.
-(UserGlobals at: root) checkpoint = ((fixture at: 'checkpoints') at: '1') ifFalse: [self error: 'Abort did not restore accepted backend state'].
+worlds := UserGlobals at: root.
+(worlds at: 'legacy') checkpoint = ((fixture at: 'checkpoints') at: '1') ifFalse: [self error: 'Abort did not restore accepted backend state'].
+(graphFixture at: 'models') do: [:record |
+ ((worlds at: 'graphs') at: (record at: 'name')) checkpoint = ((record at: 'checkpoints') at: '1') ifFalse: [self error: 'Abort did not restore graph state']].
 System beginTransaction.
 UserGlobals removeKey: root.
 System commitTransaction ifFalse: [self error: 'Qualification root cleanup commit failed'].
@@ -21,6 +31,9 @@ report := Dictionary new
  at: 'crossSessionRestore' put: true;
  at: 'crossDialectTick6Equal' put: true;
  at: 'transactionAbortRestoredTick1' put: true;
+ at: 'graphModels' put: (graphFixture at: 'models') size;
+ at: 'graphContinuationEqual' put: true;
+ at: 'graphAbortRestoredTick1' put: true;
  at: 'qualificationRootRemoved' put: true;
  yourself.
 file := GsFile openWriteOnServer: (System gemEnvironmentVariable: 'BVC_SIMULATOR_RESUME_REPORT').

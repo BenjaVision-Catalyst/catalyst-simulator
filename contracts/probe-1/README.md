@@ -6,6 +6,11 @@ This is a bounded implementation of selected P0/P1 semantics, identified as
 and pass the same fixtures before accepting this profile. No Repast backend is
 implemented or qualified yet.
 
+This legacy profile remains readable with byte-identical checkpoints. The later
+[`graph-1` profile](../graph-1/README.md) implements the first typed operation graph,
+model digests and compatibility reports; statements below about later work record
+the original probe's scope, rather than the current graph implementation.
+
 The kernel contains generic mechanisms. Species, predation, metabolism and
 habitat rules belong in CatalystEcosystem; appearance belongs in its UE plugin.
 NPC and automation model packages will compose kernel operations separately.

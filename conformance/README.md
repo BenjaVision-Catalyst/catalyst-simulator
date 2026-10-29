@@ -1,13 +1,17 @@
-# Kernel probe qualification
+# Portable kernel qualification
 
-30 October 2026: **18/18 GT tests and 18/18 native GemStone tests passed**.
+30 October 2026: **32/32 GT tests and 32/32 native GemStone tests passed**
+(18 probe contracts plus 14 graph contracts).
 The tested hosts were Pharo 13.1.0SNAPSHOT in the connected GT image and GemStone
 3.7.5 arm64 in `bvc_foundation_portable`. GT export and native snapshot comparisons
-matched every class/method. Canonical ticks 0/1 matched natively; a fresh native
-session matched continuation to tick 6, then proved real abort restoration and
-removed its disposable root. The independent Python oracle matched four canonical
-checkpoints, three Random123 vectors and the full-width random-address vector.
-Direct Rowan installation, Repast, Runtime service routing and scale remain open.
+matched every class/method. The legacy probe and three graph models matched
+canonical ticks 0/1 natively; a fresh native session matched continuation to tick
+6, then proved real abort restoration and removed its disposable root. Model
+and registry digests and six compatibility reports matched across platforms.
+Independent Python oracles matched four legacy and twelve graph checkpoints,
+three model digests, the registry digest, three Random123 vectors and the
+full-width random-address vector. Fresh image/stone rebuilds, direct Rowan
+installation, Repast, Runtime service routing and scale remain open.
 
 The GT image is authoritative for shared source. Author/compile/test through GT
 MCP, then export with TonelWriter and compare every class/method definition with
@@ -21,23 +25,28 @@ for its optional SUnit contracts. Default loads Core only. No Runtime, Connect,
 GT UI, ecosystem, Unreal or MPI dependency is required by Core. Rowan Core/Tests
 metadata is supplied separately; direct Rowan loading needs its own qualification.
 
-Run `CSKernelExamples suite run` and require no failures/errors. A small inspectable
-world is `CSKernelExamples new probe`; send `advance`, `advanceThrough: 6`,
+Run `CSKernelExamples suite run` and `CSGraphExamples suite run` and require no
+failures/errors. A small legacy world is `CSKernelExamples new probe`; a graph
+world is `CSGraphExamples new worldFor: CSGraphExamples new conditionalModel`.
+Send `advance`, `advanceThrough: 6`,
 `snapshot`, `checkpoint` or `spatialGridWithWidth: 1000` to it. Restore with
 `CSSmalltalkBackend fromCheckpoint: savedBytes`. `advanceThrough:` accepts at most
 1000 future ticks per call, accepting each step separately.
 
 `gt.json` records executed tests and export snapshot definition counts (including
 the organization definition). Fixture canonical bytes are emitted by that tested
-GT probe at ticks 0, 1, 2 and 6. `check_probe.py` independently checks the same
-bytes with Python integer arithmetic, event ordering and Philox. Run:
+GT models at ticks 0, 1, 2 and 6. `check_probe.py` checks the legacy bytes with
+independent integer arithmetic, event ordering and Philox. `check_graph.py`
+interprets the same graph data independently and uses hashlib to check all model
+and registry digests. Run:
 
 ```sh
 python3 conformance/check_probe.py
+python3 conformance/check_graph.py
 ```
 
-This oracle covers the fixed probe and three upstream random vectors. It is not
-an external backend, nor evidence of MPI rank-count independence.
+These are conformance oracles rather than supported execution backends. MPI
+rank-count independence remains unqualified.
 
 ## Native GemStone
 
@@ -60,16 +69,17 @@ loads the unchanged snapshot definitions in superclass order through GsDeployer,
 then verifies all native class/method definitions against the exported snapshots.
 It requires the host's Tonel reader, SUnit, STON, Metacello and BaselineOf.
 
-The runner executes the contracts, matches canonical tick 0/1 fixtures and commits
-the tick 1 backend under the qualification root. It also checks default load-group
+The runner executes both suites, matches canonical tick 0/1 model/state fixtures,
+model/registry digests and all compatibility reports, then commits the four tick 1
+backends under one qualification root. It also checks default load-group
 selection and parses/checks Rowan metadata; this does not qualify direct Rowan
 installation. If the run fails, inspect its logs and named root before retrying.
 It never stops/reconfigures an existing Runtime or stone.
 
 In a **new Topaz session**, retain SOURCE/ROOT and set
 `BVC_SIMULATOR_RESUME_REPORT`, then run `scripts/resume-gemstone.topaz`. It checks
-that committed tick 1 survived logout/login, advances to the GT tick 6 bytes,
-aborts and verifies restoration to committed tick 1, then removes and commits
+that every committed tick 1 survived logout/login, advances each to the GT tick 6
+bytes, aborts and verifies restoration of every model to committed tick 1, then removes and commits
 removal of its own root. Both process exit status and reports must pass. This
 tests real repository persistence/abort separately from GT candidate publication.
 
@@ -79,7 +89,9 @@ fixture ownership; it must be absent after successful cleanup. The scripts do no
 claim multi-owner fencing, Runtime transactional delivery, stone-process restart,
 production crash recovery, external migration or performance qualification.
 
-Native testing found two dialect assumptions before acceptance: large negative
+The first probe qualification found two dialect assumptions: large negative
 decimal parsing and the ninth ordinal accessor. The shared GT-authored source now
 parses decimal digits explicitly and accesses that record field by index. No
 GemStone-specific fork of the kernel was introduced.
+
+The [rebuild record](../docs/Rebuild-Readiness.md) explains the next clean-load gate.

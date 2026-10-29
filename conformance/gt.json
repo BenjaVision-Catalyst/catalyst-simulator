@@ -1,27 +1,43 @@
 {
-	"profile" : "simulation-portable-1/probe-1",
-	"passed" : 18,
+	"profile" : "simulation-portable-1/graph-1",
+	"passed" : 32,
+	"graphModels" : 3,
 	"exportRoundTripEqual" : true,
+	"compatibilityFixtures" : 6,
 	"platform" : "Pharo13.1.0SNAPSHOT",
 	"tests" : [
-		"testBoundedRunUntil",
-		"testCanonicalEncoding",
-		"testCanonicalRejections",
-		"testCapacityAndInvalidAdmission",
-		"testCheckpointContinuation",
-		"testClockAndDrawExhaustion",
-		"testContentionAndMotion",
-		"testEventOrderAndCancelledCheckpoint",
-		"testFailedStepDoesNotPublish",
-		"testIterationOrderIndependence",
-		"testMalformedRestore",
-		"testModelCompatibilityAndIsolation",
-		"testMotionConservesFractionalDisplacement",
-		"testOverflowDoesNotPublish",
-		"testPhiloxKnownAnswers",
-		"testSnapshotsDoNotAliasAcceptedState",
-		"testSpatialQueriesAgainstDistance",
-		"testTimerCancellationAndReschedule"
+		"CSKernelExamples>>testBoundedRunUntil",
+		"CSKernelExamples>>testCanonicalEncoding",
+		"CSKernelExamples>>testCanonicalRejections",
+		"CSKernelExamples>>testCapacityAndInvalidAdmission",
+		"CSKernelExamples>>testCheckpointContinuation",
+		"CSKernelExamples>>testClockAndDrawExhaustion",
+		"CSKernelExamples>>testContentionAndMotion",
+		"CSKernelExamples>>testEventOrderAndCancelledCheckpoint",
+		"CSKernelExamples>>testFailedStepDoesNotPublish",
+		"CSKernelExamples>>testIterationOrderIndependence",
+		"CSKernelExamples>>testMalformedRestore",
+		"CSKernelExamples>>testModelCompatibilityAndIsolation",
+		"CSKernelExamples>>testMotionConservesFractionalDisplacement",
+		"CSKernelExamples>>testOverflowDoesNotPublish",
+		"CSKernelExamples>>testPhiloxKnownAnswers",
+		"CSKernelExamples>>testSnapshotsDoNotAliasAcceptedState",
+		"CSKernelExamples>>testSpatialQueriesAgainstDistance",
+		"CSKernelExamples>>testTimerCancellationAndReschedule",
+		"CSGraphExamples>>testCanonicalGraphIdentityAndIsolation",
+		"CSGraphExamples>>testCompatibilityBeforeLaunchAndRestore",
+		"CSGraphExamples>>testConditionalGraphAndContinuation",
+		"CSGraphExamples>>testDigestTamperingAndSchemaFence",
+		"CSGraphExamples>>testGraphFailureKeepsAcceptedState",
+		"CSGraphExamples>>testGraphMatchesLegacyMechanics",
+		"CSGraphExamples>>testInvalidGraphStructure",
+		"CSGraphExamples>>testOperationValidation",
+		"CSGraphExamples>>testRegistryAndBuilderIsolation",
+		"CSGraphExamples>>testRetainedValueByteBudget",
+		"CSGraphExamples>>testSha256KnownAnswers",
+		"CSGraphExamples>>testStageReadsRemainImmutable",
+		"CSGraphExamples>>testStructuralBudgets",
+		"CSGraphExamples>>testTypedExpressionsDriveEffects"
 	],
 	"sourceDefinitions" : [
 		[
@@ -30,11 +46,11 @@
 		],
 		[
 			"BVC-Simulator-Core",
-			76
+			125
 		],
 		[
 			"BVC-Simulator-Tests",
-			24
+			50
 		]
 	]
 }
