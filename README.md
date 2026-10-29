@@ -11,6 +11,20 @@ GemStone or GT, then move the same supported model to a configured external
 backend through one GT action. Repast HPC is the first distributed feasibility
 target.
 
+## Simulator and ecosystem split
+
+| Component | Responsibility |
+| --- | --- |
+| CatalystSimulation kernel | Shared execution, state, Runtime service and external backend contracts |
+| CatalystSimulatorPlugin | Shared UE simulation feature set, data/cache/lifecycle management, Mass/instance adapters, interpolation and representation budgets |
+| CatalystEcosystem | Actual ecosystem behaviour, species/habitat definitions and ecological rules over the kernel |
+| CatalystEcosystemPlugin | Ecosystem presentation: meshes, textures, materials, animation, appearance variants and ecosystem-specific visual/interaction policy |
+
+The ecosystem UE plugin depends on the Simulator UE plugin. It supplies domain
+presentation providers and content; the Simulator plugin manages the common data
+and rendering mechanisms. See [component boundaries](docs/Component-Boundaries.md)
+for the provider contract and acceptance checks.
+
 ## Runtime remains the client endpoint
 
 Clients always use the Simulation service hosted by CatalystRuntime through
@@ -55,10 +69,10 @@ GT-local worlds can use the same contracts with an explicitly volatile authority
 
 | Area | Responsibility |
 | --- | --- |
-| `src/` | Portable Smalltalk kernel, domain model packages, Runtime/GemStone integration and GT tooling; sources authored/exported through GT |
+| `src/` | Portable Smalltalk kernel, Runtime/GemStone integration and GT tooling; ecosystem behaviour belongs to CatalystEcosystem packages; sources authored/exported through GT |
 | `contracts/` | Versioned model, state, backend and read protocols plus canonical fixtures |
 | `native/` | Shared C++ operations/codecs and external adapters, starting with a Repast feasibility probe |
-| `unreal/` | Planned compact accepted-state projection, optional Mass adapters and representation/animation qualification |
+| `unreal/` | Planned CatalystSimulatorPlugin: compact accepted-state management and generic presentation adapters; domain content belongs to plugins such as CatalystEcosystemPlugin |
 | `conformance/` | GT, native GemStone, external-backend, migration and scale evidence |
 
 These are planned directories, not implemented packages. The workspace checkout is
