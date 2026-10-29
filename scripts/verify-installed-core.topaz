@@ -1,0 +1,44 @@
+expectvalue true
+run
+| source fixture input registryCount passedCases reports report file prerequisites |
+System abortTransaction.
+#(CSModelBundle CSModelBuilder CSModelGraph CSOperationRegistry CSSha256 CSCanonicalCodec CSSmalltalkBackend CSEventQueue CSSpatialGrid CSPhilox CSKernelMath CSKernelError) do: [:name |
+ (Smalltalk includesKey: name) ifFalse: [self error: 'Installer did not load Simulator Core: ', name asString]].
+source := System gemEnvironmentVariable: 'BVC_SIMULATOR_SOURCE'.
+source isNil ifTrue: [self error: 'BVC_SIMULATOR_SOURCE is required'].
+input := GsFile openReadOnServer: source, '/../contracts/graph-1/fixtures.json'.
+[fixture := STON fromString: input contents] ensure: [input close].
+CSOperationRegistry portable digest = (fixture at: 'registryDigest') ifFalse: [self error: 'Installed operation registry differs from GT fixture'].
+registryCount := CSOperationRegistry portable snapshot size.
+reports := OrderedCollection new.
+(fixture at: 'models') do: [:record | | model backend |
+ model := CSModelBundle fromSnapshot: (CSCanonicalCodec decode: (record at: 'model')).
+ model digest = (record at: 'modelDigest') ifFalse: [self error: 'Installed model digest differs from GT fixture'].
+ backend := CSSmalltalkBackend fromCheckpoint: (record at: 'initial').
+ backend checkpoint = (record at: 'initial') ifFalse: [self error: 'Installed Core changed initial checkpoint'].
+ 1 to: 6 do: [:tick |
+  backend advance.
+  (#(1 2 6) includes: tick) ifTrue: [
+   backend checkpoint = ((record at: 'checkpoints') at: tick printString) ifFalse: [self error: 'Installed Core trace differs from GT fixture']]].
+ reports add: (Dictionary new at: 'name' put: (record at: 'name'); at: 'modelDigest' put: model digest; at: 'checkpoints' put: 4; yourself)].
+passedCases := 0.
+(fixture at: 'compatibility') do: [:record | | model capabilities |
+ model := CSModelBundle fromSnapshot: (CSCanonicalCodec decode: (record at: 'model')).
+ capabilities := CSOperationRegistry supporting: (record at: 'operations').
+ (model compatibilityReportFor: capabilities) = (record at: 'report') ifFalse: [self error: 'Installed compatibility report differs from GT fixture'].
+ passedCases := passedCases + 1].
+prerequisites := Dictionary new.
+#(Rowan TestCase TonelMCReader BaselineOf MCPackage Metacello CSKernelExamples CSGraphExamples) do: [:name | prerequisites at: name asString put: (Smalltalk includesKey: name)].
+report := Dictionary new
+ at: 'stone' put: (System gemEnvironmentVariable: 'STONE');
+ at: 'corePresentBeforeTestLoad' put: true;
+ at: 'operationDeclarations' put: registryCount;
+ at: 'registryDigest' put: CSOperationRegistry portable digest;
+ at: 'models' put: reports asArray;
+ at: 'compatibilityFixtures' put: passedCases;
+ at: 'prerequisites' put: prerequisites;
+ yourself.
+file := GsFile openWriteOnServer: (System gemEnvironmentVariable: 'BVC_REBUILD_REPORT').
+[file nextPutAll: (STON toJsonString: report)] ensure: [file close].
+true
+%

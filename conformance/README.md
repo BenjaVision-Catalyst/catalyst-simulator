@@ -10,8 +10,11 @@ canonical ticks 0/1 natively; a fresh native session matched continuation to tic
 and registry digests and six compatibility reports matched across platforms.
 Independent Python oracles matched four legacy and twelve graph checkpoints,
 three model digests, the registry digest, three Random123 vectors and the
-full-width random-address vector. Fresh image/stone rebuilds, direct Rowan
-installation, Repast, Runtime service routing and scale remain open.
+full-width random-address vector. The same 32 contracts now pass after a fresh
+GT rebuild and GemStone 3.7.5 `--with-seaside` rebuild; see the workspace
+[fresh-load record](https://github.com/BenjaVisionPro/catalyst-workspace/blob/main/Simulation/evidence/rebuild-2026-10-30.md).
+Current devkit stones do not use Rowan; that migration is deferred to GemStone 4
+in 2027. Repast, Runtime service routing and scale remain open.
 
 The GT image is authoritative for shared source. Author/compile/test through GT
 MCP, then export with TonelWriter and compare every class/method definition with
@@ -55,6 +58,12 @@ directory. Choose a unique qualification root and absolute output paths. Keep
 login credentials in the existing bvc login configuration, never in these scripts.
 The load script mutates only the new Simulator packages and its named fixture
 root; do not run it concurrently with another Simulator source load.
+
+For a fresh build, run `scripts/verify-installed-core.topaz` before the qualifier.
+It loads no Simulator source and compares the already installed Core against all
+three graph traces/digests and six compatibility cases. Set SOURCE as below and
+`BVC_REBUILD_REPORT` to a fresh JSON output path. Its prerequisite flags record
+whether Simulator test classes and Rowan were present before qualification.
 
 Set these environment variables for `bvc topaz <deployment> --script
 <simulator>/scripts/qualify-gemstone.topaz`:

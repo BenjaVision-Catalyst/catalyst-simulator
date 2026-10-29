@@ -84,8 +84,9 @@ baseline `CatalystSimulator` from this repository's `src`, group `Core` (default
 or optional group `Tests`. Rowan Core/Tests specifications are also supplied.
 See [qualification and usage](conformance/README.md) for the SUnit suite, native
 runner, inspectable models and independent Python fixture oracles. The
-[rebuild readiness record](docs/Rebuild-Readiness.md) defines the next fresh-image
-and fresh-stone checks before Repast work begins.
+[rebuild record](docs/Rebuild-Readiness.md) records the passing fresh GT/devkit
+checks. Current GemStone 3.7 development uses `--with-seaside`; Rowan is deferred
+until the later GemStone 4 migration.
 
 The [prototype mining ledger](docs/Prototype-Mining-Ledger.md) records what was
 adapted and deferred. All shared Smalltalk source is compiled and exported through
