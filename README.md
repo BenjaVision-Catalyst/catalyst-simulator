@@ -58,6 +58,7 @@ GT-local worlds can use the same contracts with an explicitly volatile authority
 | `src/` | Portable Smalltalk kernel, domain model packages, Runtime/GemStone integration and GT tooling; sources authored/exported through GT |
 | `contracts/` | Versioned model, state, backend and read protocols plus canonical fixtures |
 | `native/` | Shared C++ operations/codecs and external adapters, starting with a Repast feasibility probe |
+| `unreal/` | Planned compact accepted-state projection, optional Mass adapters and representation/animation qualification |
 | `conformance/` | GT, native GemStone, external-backend, migration and scale evidence |
 
 These are planned directories, not implemented packages. The workspace checkout is
@@ -71,6 +72,12 @@ The workspace contains the
 and [implementation plan](https://github.com/BenjaVisionPro/catalyst-workspace/blob/main/Simulation/Catalyst-Simulation-Implementation-Plan.md).
 The plan defines the native kernel, ecosystem/NPC/automation vertical slices,
 early Repast round-trip test, Runtime read integration and one-click migration.
+
+The [UE projection research](https://github.com/BenjaVisionPro/catalyst-workspace/blob/main/Simulation/UE-Projection-Research-and-Design.md)
+recommends a Mass-based hybrid presentation layer and compares instanced skinned
+meshes, ISM/VAT and pooled Actors for desktop/console. The
+[source review](docs/ue-projection-source-review.json) records the inspected UE
+5.8.4 build and API/descriptor files; it is not runtime or performance qualification.
 
 ## License
 

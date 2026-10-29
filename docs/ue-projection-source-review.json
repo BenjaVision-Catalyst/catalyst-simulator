@@ -1,0 +1,96 @@
+{
+  "date": "2026-10-30",
+  "scope": "Read-only source/API review; no UE build, execution or performance benchmark performed",
+  "engine_build": {
+    "MajorVersion": 5,
+    "MinorVersion": 8,
+    "PatchVersion": 4,
+    "Changelist": 58902052,
+    "CompatibleChangelist": 55116800,
+    "IsLicenseeVersion": 0,
+    "IsPromotedBuild": 1,
+    "BranchName": "++UE5+Release-5.8"
+  },
+  "files": [
+    {
+      "path": "Build/Build.version",
+      "sha256": "80a6af0f427f373b43a1c373082acf2b3de07305d215a67c27f18272e6dff24f"
+    },
+    {
+      "path": "Plugins/Runtime/MassGameplay/MassGameplay.uplugin",
+      "sha256": "97a9e8a0d2f5f5ee625ca5826908b32e53c013f595373cc0a04f5464c036192a",
+      "experimental_descriptor_flag": true
+    },
+    {
+      "path": "Plugins/AI/MassAI/MassAI.uplugin",
+      "sha256": "9ede1c96820526e530fa6968238d8e8e4a3bdf464f7e6be063fe468659cc8fe2",
+      "experimental_descriptor_flag": true
+    },
+    {
+      "path": "Plugins/AI/MassCrowd/MassCrowd.uplugin",
+      "sha256": "fb982e6db2a8f77c1b151bc82db779e8bcdc978f9d8a06e0d4642e10c5e0dfae",
+      "experimental_descriptor_flag": true
+    },
+    {
+      "path": "Plugins/Runtime/InstancedActors/InstancedActors.uplugin",
+      "sha256": "b23c07459e13a8f6871af307878d00c395f6d5135ae60d2ba35cff78fe1723d4",
+      "experimental_descriptor_flag": true
+    },
+    {
+      "path": "Plugins/Experimental/AnimToTexture/AnimToTexture.uplugin",
+      "sha256": "c7281fbb5395b4a6f5c22c948aeb124dfc43d34bc4ff2e7d0d03466464a25696",
+      "experimental_descriptor_flag": true
+    },
+    {
+      "path": "Plugins/Experimental/UAF/UAFMass/UAFMass.uplugin",
+      "sha256": "ba1d8d0df30921002d2771294e62916c42a5eadaff9d3f9ec4ad24bd212548bb",
+      "experimental_descriptor_flag": true
+    },
+    {
+      "path": "Plugins/Runtime/MassGameplay/Source/MassRepresentation/Public/MassRepresentationTypes.h",
+      "sha256": "130b424abe36ce48c5acf88038079af27e0431014257cda9c953570a7ff68155"
+    },
+    {
+      "path": "Plugins/Runtime/MassGameplay/Source/MassRepresentation/Public/MassRepresentationFragments.h",
+      "sha256": "e665a95b5c893cdcad0f481138bdf7d822cf1c2558bb501c2b4416a328d3f7c1"
+    },
+    {
+      "path": "Plugins/Runtime/MassGameplay/Source/MassRepresentation/Public/MassSkinnedMeshRepresentationTypes.h",
+      "sha256": "27e58b98e66763fe47a32cbe37099ab782dbedaa6e1c4ddf561cb279fcfeb95b"
+    },
+    {
+      "path": "Plugins/Runtime/MassGameplay/Source/MassRepresentation/Public/MassVisualizationTrait.h",
+      "sha256": "6675e2f95afca62faa0b8225474e7637fd0cd6eaa8f8c648f143c72b6f31f2fb"
+    },
+    {
+      "path": "Plugins/Runtime/MassGameplay/Source/MassRepresentation/Public/MassMovableVisualizationTrait.h",
+      "sha256": "afbc583fdb5ff86702d3a096e6c5dbefcb9c7a0aec1d98e3ce5fe18a66b8464e"
+    },
+    {
+      "path": "Plugins/Runtime/MassGameplay/Source/MassRepresentation/Private/MassMovableVisualizationTrait.cpp",
+      "sha256": "4db25c39e276b35802ef10bb67c724dd3ff5ce0adfebf0a72a85e8db4ae84d66"
+    },
+    {
+      "path": "Plugins/Runtime/MassGameplay/Source/MassRepresentation/MassRepresentation.Build.cs",
+      "sha256": "df2d52b49f6ad76aa1d084d9218c839d8d4736a7a858a36c4881695aef93631c"
+    },
+    {
+      "path": "Source/Runtime/Engine/Classes/Components/InstancedSkinnedMeshComponent.h",
+      "sha256": "6e7614524b767a5f486c29c0076d5da2e675448062a99b8b5275f835bd28116b"
+    },
+    {
+      "path": "Source/Runtime/Engine/Classes/Animation/AnimBank.h",
+      "sha256": "a0fda963b27ff8fc6a40574be72c05c64b4646436da70a9cfa7dd4d165dd8dd0"
+    },
+    {
+      "path": "Source/Runtime/Engine/Classes/Animation/AnimSequenceTransformProviderData.h",
+      "sha256": "0f36150d2a2756a65f288c862d4034e7d5074aabc76b691da474a7a3c1426ba6"
+    }
+  ],
+  "observations": [
+    "Mass representation enum includes actor, instanced skinned mesh, instanced static mesh and no representation paths.",
+    "UMassVisualizationTrait is soft-deprecated; movable/stationary traits are the documented successors.",
+    "Mass skinned descriptors use UInstancedSkinnedMeshComponent and transform-provider assets.",
+    "Selected gameplay/animation plugins have experimental descriptor flags; these are not per-feature shipping qualification."
+  ]
+}
