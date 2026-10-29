@@ -86,8 +86,8 @@ or require the simulator to select UE content.
 Keep production ecosystem behaviour in CatalystEcosystem packages from the first
 vertical slice. Kernel conformance uses small generic probe models. Integration
 fixtures can depend on the domain components without introducing a reverse
-production dependency. Keeping early code in one checkout is a packaging choice,
-not permission to put domain rules into the shared kernel/plugin.
+production dependency. The registered kernel, generic UE plugin, ecosystem model
+and ecosystem UE plugin repositories keep these production boundaries separate.
 
 Qualify these boundaries with two fixtures: an ecosystem provider with representative
 animal content and a non-ecosystem provider using the same data/Mass/pooling APIs.
@@ -97,5 +97,14 @@ and external-backend migration while ecosystem visuals remain active.
 
 `CatalystSimulatorPlugin` and `CatalystEcosystemPlugin` are the target UE plugin
 names. Existing DevKit ecosystem scaffolding is a migration input; this design
-does not silently rename or replace its current modules. Repository creation or
-relocation beyond the registered Simulator repository is a separate packaging task.
+does not silently rename or replace its current modules. Workspace locations are:
+
+| Component | Registered checkout |
+| --- | --- |
+| Kernel/service | `Simulation/catalyst-simulator` |
+| CatalystSimulatorPlugin | `Simulation/catalyst-simulator-ue-plugin` |
+| CatalystEcosystem | `Ecosystems/catalyst-ecosystem` |
+| CatalystEcosystemPlugin | `Ecosystems/catalyst-ecosystem-ue-plugin` |
+
+Live GT experiments are mining inputs. Recover and verify selected source through
+GT MCP before adoption; do not externally copy or relocate GT-managed source.

@@ -72,12 +72,22 @@ GT-local worlds can use the same contracts with an explicitly volatile authority
 | `src/` | Portable Smalltalk kernel, Runtime/GemStone integration and GT tooling; ecosystem behaviour belongs to CatalystEcosystem packages; sources authored/exported through GT |
 | `contracts/` | Versioned model, state, backend and read protocols plus canonical fixtures |
 | `native/` | Shared C++ operations/codecs and external adapters, starting with a Repast feasibility probe |
-| `unreal/` | Planned CatalystSimulatorPlugin: compact accepted-state management and generic presentation adapters; domain content belongs to plugins such as CatalystEcosystemPlugin |
 | `conformance/` | GT, native GemStone, external-backend, migration and scale evidence |
 
 These are planned directories, not implemented packages. The workspace checkout is
 `Simulation/catalyst-simulator`. Upstream source references live in the workspace's
 `Simulation/References/`, separately from this component's dependencies.
+
+The shared UE binding has its own registered repository at
+`Simulation/catalyst-simulator-ue-plugin`. Ecosystem behaviour and presentation
+live separately at `Ecosystems/catalyst-ecosystem` and
+`Ecosystems/catalyst-ecosystem-ue-plugin`. The kernel repository does not contain
+those UE plugins or production ecosystem rules.
+
+Existing live GT `CESim*` code is experimental mining input. The
+[GT inventory](https://github.com/BenjaVisionPro/catalyst-workspace/blob/main/Simulation/GT-Prototype-Mining-Inventory.md)
+records useful candidates and concrete gaps; source recovery must go through GT
+MCP before any adoption into these repositories.
 
 ## Design and implementation
 
