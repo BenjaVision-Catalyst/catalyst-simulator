@@ -13,8 +13,10 @@ For the rebuild:
 1. Use the pushed workspace commit and its `Simulation/catalyst-simulator` gitlink.
    Clone/check out into fresh independent directories. Keep any running image and
    its registered checkouts intact until pending image edits have been recovered
-   and verified through GT MCP. This increment does not change project selection
-   in other components' bvc configurations.
+   and verified through GT MCP. bvc's bundled project set now includes Simulator;
+   its GT loader selects Tests, the Rowan installer selects Core, and the Seaside
+   installer loads Core after Foundation. Use the updated bvc checkout and merge
+   these entries into any project-local configuration overrides before rebuilding.
 2. Load Metacello baseline `CatalystSimulator`, group `Core` (default) or `Tests`,
    from the pinned Simulator commit's `src`. In a clean GT build, use the repository
    URL `github://BenjaVision-Catalyst/catalyst-simulator:<component-commit>/src`.
