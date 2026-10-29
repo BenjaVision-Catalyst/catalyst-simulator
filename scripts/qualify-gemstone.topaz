@@ -1,0 +1,69 @@
+expectvalue true
+run
+| source |
+source := System gemEnvironmentVariable: 'BVC_SIMULATOR_SOURCE'.
+source isNil ifTrue: [self error: 'Source directory is required'].
+#(TestCase TonelMCReader BaselineOf) do: [:name |
+ (Smalltalk includesKey: name) ifFalse: [self error: 'Missing prerequisite: ', name asString]].
+GsDeployer deploy: [| directory expected pending ready |
+ directory := MetacelloPlatform current fileHandleOn: source.
+ #('BaselineOfCatalystSimulator' 'BVC-Simulator-Core' 'BVC-Simulator-Tests') do: [:name |
+  expected := (TonelMCReader on: directory fileName: name) snapshot definitions reject: [:d | d isOrganizationDefinition].
+  pending := (expected select: [:d | d isClassDefinition]) asOrderedCollection.
+  [pending notEmpty] whileTrue: [
+   ready := pending reject: [:d | pending anySatisfy: [:parent | parent className asString = d superclassName asString]].
+   ready isEmpty ifTrue: [self error: 'Cyclic source dependencies'].
+   ready do: [:d | d load]. pending removeAll: ready].
+  (expected select: [:d | d isMethodDefinition]) do: [:d | d load]]].
+true
+%
+commit
+expectvalue true
+run
+| source directory selectors proofs expected actual fixture input report file backend root version metadata text |
+System abortTransaction. System transactionMode: #manualBegin.
+source := System gemEnvironmentVariable: 'BVC_SIMULATOR_SOURCE'.
+directory := MetacelloPlatform current fileHandleOn: source.
+proofs := OrderedCollection new.
+#('BaselineOfCatalystSimulator' 'BVC-Simulator-Core' 'BVC-Simulator-Tests') do: [:name |
+ expected := (TonelMCReader on: directory fileName: name) snapshot definitions reject: [:d | d isOrganizationDefinition].
+ actual := (MCPackage named: name) snapshot definitions reject: [:d | d isOrganizationDefinition].
+ (expected size = actual size and: [expected allSatisfy: [:d | actual includes: d]]) ifFalse: [self error: 'Native source mismatch: ', name].
+ proofs add: {name. expected size}].
+selectors := (CSKernelExamples selectors select: [:s | s asString beginsWith: 'test']) asArray sort.
+selectors do: [:selector | CSKernelExamples new perform: selector].
+input := GsFile openReadOnServer: source, '/../contracts/probe-1/fixtures.json'.
+[fixture := STON fromString: input contents] ensure: [input close].
+backend := CSKernelExamples new probe.
+backend checkpoint = (fixture at: 'initial') ifFalse: [self error: 'Initial canonical checkpoint differs from GT'].
+backend advance.
+backend checkpoint = ((fixture at: 'checkpoints') at: '1') ifFalse: [self error: 'Tick 1 canonical checkpoint differs from GT'].
+metadata := Dictionary new.
+#('rowan/project.ston' 'rowan/components/Core.ston' 'rowan/components/Tests.ston' 'rowan/specs/CatalystSimulatorCore.ston' 'rowan/specs/CatalystSimulatorTests.ston') do: [:path |
+ input := GsFile openReadOnServer: source, '/../', path.
+ [text := input contents] ensure: [input close].
+ metadata at: path put: (STON fromString: (text copyFrom: (text indexOf: ${) to: text size))].
+((metadata at: 'rowan/components/Core.ston') at: #packageNames) = #('BVC-Simulator-Core') ifFalse: [self error: 'Core package selection differs'].
+((metadata at: 'rowan/components/Tests.ston') at: #componentNames) = #('Core') ifFalse: [self error: 'Tests require Core'].
+version := BaselineOfCatalystSimulator new project version.
+((version packagesForSpecNamed: 'default') collect: [:spec | spec name]) asArray = #('BVC-Simulator-Core') ifFalse: [self error: 'Default must load Core only'].
+root := (System gemEnvironmentVariable: 'BVC_SIMULATOR_ROOT') asSymbol.
+(UserGlobals includesKey: root) ifTrue: [self error: 'Qualification root already exists; choose a fresh root'].
+System beginTransaction.
+UserGlobals at: root put: backend.
+System commitTransaction ifFalse: [self error: 'Qualification fixture commit failed'].
+report := Dictionary new
+ at: 'stone' put: (System gemEnvironmentVariable: 'STONE');
+ at: 'tests' put: selectors;
+ at: 'passed' put: selectors size;
+ at: 'sourceDefinitions' put: proofs asArray;
+ at: 'crossDialectTick1Equal' put: true;
+ at: 'rowanMetadataFiles' put: metadata size;
+ at: 'directRowanLoadQualified' put: false;
+ at: 'loadMechanism' put: 'Native Tonel snapshot definitions';
+ at: 'root' put: root asString;
+ yourself.
+file := GsFile openWriteOnServer: (System gemEnvironmentVariable: 'BVC_SIMULATOR_REPORT').
+[file nextPutAll: (STON toJsonString: report)] ensure: [file close].
+true
+%

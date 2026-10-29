@@ -1,0 +1,40 @@
+{
+	"profile" : "simulation-portable-1/probe-1",
+	"passed" : 18,
+	"exportRoundTripEqual" : true,
+	"platform" : "Pharo13.1.0SNAPSHOT",
+	"tests" : [
+		"testBoundedRunUntil",
+		"testCanonicalEncoding",
+		"testCanonicalRejections",
+		"testCapacityAndInvalidAdmission",
+		"testCheckpointContinuation",
+		"testClockAndDrawExhaustion",
+		"testContentionAndMotion",
+		"testEventOrderAndCancelledCheckpoint",
+		"testFailedStepDoesNotPublish",
+		"testIterationOrderIndependence",
+		"testMalformedRestore",
+		"testModelCompatibilityAndIsolation",
+		"testMotionConservesFractionalDisplacement",
+		"testOverflowDoesNotPublish",
+		"testPhiloxKnownAnswers",
+		"testSnapshotsDoNotAliasAcceptedState",
+		"testSpatialQueriesAgainstDistance",
+		"testTimerCancellationAndReschedule"
+	],
+	"sourceDefinitions" : [
+		[
+			"BaselineOfCatalystSimulator",
+			3
+		],
+		[
+			"BVC-Simulator-Core",
+			76
+		],
+		[
+			"BVC-Simulator-Tests",
+			24
+		]
+	]
+}

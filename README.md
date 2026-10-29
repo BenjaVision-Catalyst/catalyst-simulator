@@ -2,8 +2,9 @@
 
 Catalyst Simulator is the home of the GemStone-first CatalystSimulation kernel,
 its Runtime service, portable model contracts and future external execution
-adapters. The repository currently contains project documentation; the kernel
-and adapters are planned.
+adapters. The first P0/P1 increment implements a headless portable kernel probe
+in GT and GemStone. Runtime service integration and external adapters remain
+planned.
 
 Models cover ecosystems, NPC behaviour, circuits and factory automation. The
 intended workflow is to author a model once in Smalltalk, run it entirely in
@@ -65,16 +66,34 @@ external. Runtime does not need to mirror every external agent as a live Smallta
 object; it needs recoverable accepted state and the projections required by clients.
 GT-local worlds can use the same contracts with an explicitly volatile authority.
 
-## Planned layout
+## Implementation
+
+The bounded [`probe-1` contract](contracts/probe-1/README.md) covers fixed-step
+integer movement, deterministic finite-resource contention, cancellable timers,
+mode changes, addressed Philox randomness and canonical checkpoints. It is the
+starting conformance target for a future Repast adapter. It does not close the
+full P0/P1 gates or provide one-click external execution yet.
+
+Core loads without Runtime, GT UI or ecosystem dependencies. Load Metacello
+baseline `CatalystSimulator` from this repository's `src`, group `Core` (default)
+or optional group `Tests`. Rowan Core/Tests specifications are also supplied.
+See [qualification and usage](conformance/README.md) for the SUnit suite, native
+runner, inspectable probe and independent Python fixture oracle.
+
+The [prototype mining ledger](docs/Prototype-Mining-Ledger.md) records what was
+adapted and deferred. All shared Smalltalk source is compiled and exported through
+the live GT image; exported files must not be edited externally.
+
+## Layout
 
 | Area | Responsibility |
 | --- | --- |
-| `src/` | Portable Smalltalk kernel, Runtime/GemStone integration and GT tooling; ecosystem behaviour belongs to CatalystEcosystem packages; sources authored/exported through GT |
-| `contracts/` | Versioned model, state, backend and read protocols plus canonical fixtures |
+| `src/` | Implemented headless portable probe and optional tests; Runtime adapters/GT tools follow; sources authored/exported through GT |
+| `contracts/` | Implemented probe model/state/numeric contract and canonical fixtures; service/read/migration protocols follow |
 | `native/` | Shared C++ operations/codecs and external adapters, starting with a Repast feasibility probe |
 | `conformance/` | GT, native GemStone, external-backend, migration and scale evidence |
 
-These are planned directories, not implemented packages. The workspace checkout is
+The `native/` adapter area remains planned. The workspace checkout is
 `Simulation/catalyst-simulator`. Upstream source references live in the workspace's
 `Simulation/References/`, separately from this component's dependencies.
 

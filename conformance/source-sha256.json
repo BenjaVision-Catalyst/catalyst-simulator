@@ -1,0 +1,17 @@
+{
+  "src/.properties": "99e912f5d7f21c45f57fae6a0d1cf2fe0fac69315c6244dc6db337b637d4bc44",
+  "src/BVC-Simulator-Core/CSCanonicalCodec.class.st": "e91f69d8b5c656343a3de692650c0760c50e2b01e9d92eb89b48a76ef9b075fa",
+  "src/BVC-Simulator-Core/CSEventQueue.class.st": "1e331c7d5ccee600bc953212214eebaebd77dad82db499f60d9eeb809b04294f",
+  "src/BVC-Simulator-Core/CSKernelError.class.st": "78a85f68865ba40327df005754c71e704e8df26ef17981b0c6077ac4d582d68a",
+  "src/BVC-Simulator-Core/CSKernelMath.class.st": "e0036b1f51a554501480a5da3968fb6b4660fc9464dd2437e75a27e384bc61a4",
+  "src/BVC-Simulator-Core/CSModelBundle.class.st": "60c7350fe92280c291491062d2d06f58febf6e6cb0630b318716fcc5710de4df",
+  "src/BVC-Simulator-Core/CSPhilox.class.st": "49280cc7529a1186bbf94263642b579a0b6069aa2ac165333c751c65c1ab5d8a",
+  "src/BVC-Simulator-Core/CSSmalltalkBackend.class.st": "0801c3013fc08dd6138137aeb3ccbda03bf7c637ae33315c5b40bb3c13484fc7",
+  "src/BVC-Simulator-Core/CSSpatialGrid.class.st": "027a1bf24e07959672d657bedeb31b88d5ac4927362935bd66ad968b8774f8d9",
+  "src/BVC-Simulator-Core/package.st": "b8b060600ff6b97cbe6d77bb4ee3af2cee2a8e37891a6b76bce0e1b3131b3d20",
+  "src/BVC-Simulator-Tests/CSFailingProbeBackend.class.st": "533432eb6e9cdb78cd44ee6db5f917b77f43eb9f85c4033baf5061e3a8bb8b71",
+  "src/BVC-Simulator-Tests/CSKernelExamples.class.st": "4a4bbf4e9ed74495271273bbd6374ba2a8276f0238f6e2b8f689d723a0868914",
+  "src/BVC-Simulator-Tests/package.st": "d4dff56667ed2723f8dfa00c0050af6b4d07d0fcf8cfcfe1b1a26594d4d98cbd",
+  "src/BaselineOfCatalystSimulator/BaselineOfCatalystSimulator.class.st": "544f5ed9de8b04c38b7d7db125c90c8dcd9f0739692b3207fd6d76458bbff15c",
+  "src/BaselineOfCatalystSimulator/package.st": "f1d12066e1f05da5bcccc53c6b154657047ea3d1e713ffe1545d31bfa83c8459"
+}

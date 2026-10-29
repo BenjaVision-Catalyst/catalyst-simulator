@@ -1,0 +1,29 @@
+expectvalue true
+run
+| source root backend fixture input report file |
+System abortTransaction. System transactionMode: #manualBegin.
+source := System gemEnvironmentVariable: 'BVC_SIMULATOR_SOURCE'.
+root := (System gemEnvironmentVariable: 'BVC_SIMULATOR_ROOT') asSymbol.
+input := GsFile openReadOnServer: source, '/../contracts/probe-1/fixtures.json'.
+[fixture := STON fromString: input contents] ensure: [input close].
+backend := UserGlobals at: root.
+backend checkpoint = ((fixture at: 'checkpoints') at: '1') ifFalse: [self error: 'Committed tick 1 did not survive logout/login'].
+System beginTransaction.
+5 timesRepeat: [backend advance].
+backend checkpoint = ((fixture at: 'checkpoints') at: '6') ifFalse: [self error: 'Native continuation differs from GT'].
+System abortTransaction.
+(UserGlobals at: root) checkpoint = ((fixture at: 'checkpoints') at: '1') ifFalse: [self error: 'Abort did not restore accepted backend state'].
+System beginTransaction.
+UserGlobals removeKey: root.
+System commitTransaction ifFalse: [self error: 'Qualification root cleanup commit failed'].
+report := Dictionary new
+ at: 'stone' put: (System gemEnvironmentVariable: 'STONE');
+ at: 'crossSessionRestore' put: true;
+ at: 'crossDialectTick6Equal' put: true;
+ at: 'transactionAbortRestoredTick1' put: true;
+ at: 'qualificationRootRemoved' put: true;
+ yourself.
+file := GsFile openWriteOnServer: (System gemEnvironmentVariable: 'BVC_SIMULATOR_RESUME_REPORT').
+[file nextPutAll: (STON toJsonString: report)] ensure: [file close].
+true
+%

@@ -1,0 +1,7 @@
+RwSimpleProjectLoadComponentV2 {
+ #name : 'Core',
+ #projectNames : [],
+ #componentNames : [],
+ #packageNames : [ 'BVC-Simulator-Core' ],
+ #comment : 'Headless portable kernel; no Runtime, GT UI or domain dependencies'
+}

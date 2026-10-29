@@ -1,0 +1,7 @@
+RwSimpleProjectLoadComponentV2 {
+ #name : 'Tests',
+ #projectNames : [],
+ #componentNames : [ 'Core' ],
+ #packageNames : [ 'BVC-Simulator-Tests' ],
+ #comment : 'Optional SUnit contracts; SUnit must be available in the host'
+}

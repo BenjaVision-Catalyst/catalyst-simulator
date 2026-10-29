@@ -1,0 +1,12 @@
+RwLoadSpecificationV2 {
+ #specName : 'CatalystSimulatorTests',
+ #projectName : 'CatalystSimulator',
+ #gitUrl : 'https://github.com/BenjaVision-Catalyst/catalyst-simulator.git',
+ #revision : 'main',
+ #projectSpecFile : 'rowan/project.ston',
+ #componentNames : [ 'Tests' ],
+ #platformProperties : {
+  'gemstone' : { 'allusers' : { #defaultSymbolDictName : 'Globals' } }
+ },
+ #comment : 'Optional SUnit kernel contracts'
+}
