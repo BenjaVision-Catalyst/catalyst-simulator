@@ -25,6 +25,7 @@ def load(name, filename):
 
 resident = load("resident", "repast-resident.py")
 codec = load("shards", "sharded-codec.py")
+columnar = load("columnar", "columnar-codec.py")
 encode, decode, digest, publish = codec.encode, codec.decode, codec.digest, resident.publish
 require, identity, session_key = resident.require, resident.identity, resident.session_key
 MARKER = "CatalystSimulation-sharded-resident-1"
@@ -84,6 +85,26 @@ def handle(spool, request):
     require((spool / "identity").read_text() == MARKER, "Initialize and retain the sharded spool")
     action = request["action"]
     store = codec.Store(spool / "objects")
+    if action == "getColumnar":
+        require(set(request) == {"action", "root", "base", "cursor"}, "Columnar fetch")
+        try:
+            frame = columnar.frame(store, request["root"], request["base"], request["cursor"])
+        except ValueError as error:
+            if str(error) != "Columnar bucket exceeds frame budget; use canonical pages":
+                raise
+            return dict(state="unsupported")
+        reply = dict(state="frame", frame=frame)
+        require(len(json.dumps(reply, separators=(",", ":"))) <= 196608, "Columnar response budget")
+        return reply
+    if action == "putColumnar":
+        require(set(request) == {"action", "frame"}, "Columnar offer")
+        frame = request["frame"]
+        scratch = columnar.reconstruct(store, frame, None, frame["cursor"])
+        store.put_many_raw(scratch.objects)
+        if frame["next"] == frame["total"]:
+            with codec.Availability(spool / "availability.sqlite3") as available:
+                require(not available.missing(store, frame["root"], 1), "Incomplete columnar checkpoint")
+        return dict(root=frame["root"], next=frame["next"], total=frame["total"], objects=len(scratch.objects), rawBytes=scratch.byte_count)
     if action == "getObjects":
         require(set(request) == {"action", "hashes"} and 1 <= len(request["hashes"]) <= 32, "Artifact fetch budget")
         require(len(set(request["hashes"])) == len(request["hashes"]), "Duplicate artifact fetch")

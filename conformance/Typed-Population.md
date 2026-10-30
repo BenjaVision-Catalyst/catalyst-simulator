@@ -1,5 +1,9 @@
 # Typed population qualification
 
+The subsequent [columnar publication increment](Columnar-Publication.md) retains
+these model/checkpoint identities and addresses the publication cost measured
+here. This record preserves the original typed-storage workload and timings.
+
 The [`typed-1` profile](../contracts/typed-1/README.md) removes the legacy
 10,000-entity admission limit through typed population execution and sharded
 interchange. It keeps the existing portable graph operations and the Simulator /

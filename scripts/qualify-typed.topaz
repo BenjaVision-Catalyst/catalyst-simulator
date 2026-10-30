@@ -118,7 +118,8 @@ phase = 'configure' ifFalse: [
   check value: result = group view value: 'Runtime accepted endpoint differs'.
   check value: (result at: 'checkpointDigest') = ((fixture at: 'roots') at: (result at: 'tick') printString) value: 'Accepted manifest differs from GT'.
   report at: 'view' put: result; at: 'materializations' put: group artifacts materializations; at: 'objectCount' put: group artifacts count;
-   at: 'typedRestores' put: group artifacts typedRestores; at: 'validation' put: group artifacts lastValidation; at: 'runtimeEndpoint' put: true.
+   at: 'typedRestores' put: group artifacts typedRestores; at: 'validation' put: group artifacts lastValidation; at: 'runtimeEndpoint' put: true;
+   at: 'columnar' put: group artifacts columnarMetrics.
   root := result at: 'checkpointDigest'.
   data := Dictionary new at: 'root' put: root; at: 'bucket' put: ((#('sparse' 'typed100k') includes: (fixture at: 'name')) ifTrue: ['00'] ifFalse: [(helper checkpoint at: 'entities') keys asArray sorted first last: 2]); at: 'after' put: nil; at: 'limit' put: 2; yourself.
   report at: 'projection' put: (query value: 'projection' value: data value: 'projection').

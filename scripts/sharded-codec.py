@@ -61,6 +61,36 @@ class Store:
         raw = encode(node)
         return self.put_raw(digest(raw), raw)
 
+    def put_many_raw(self, objects):
+        """Preflight a bounded frame, sync file bytes, then sync one directory.
+
+        An interrupted frame may leave immutable orphans. Only a verified full
+        closure can be restored; no file or transfer cursor establishes acceptance.
+        """
+        assert len(objects) <= 65536 and sum(map(len, objects.values())) <= 4194304
+        for key, raw in objects.items():
+            assert valid_hash(key) and len(raw) <= PAGE and digest(raw) == key
+            assert encode(decode(raw)) == raw
+            path = self.directory / (key + ".canon")
+            if path.exists():
+                assert path.read_text() == raw
+        for key, raw in objects.items():
+            path = self.directory / (key + ".canon")
+            if path.exists():
+                continue
+            temporary = self.directory / (key + "." + str(os.getpid()) + ".tmp")
+            with temporary.open("w") as stream:
+                stream.write(raw)
+                stream.flush()
+                os.fsync(stream.fileno())
+            os.replace(temporary, path)
+        descriptor = os.open(self.directory, os.O_RDONLY)
+        try:
+            os.fsync(descriptor)
+        finally:
+            os.close(descriptor)
+        return list(objects)
+
     def value(self, value):
         leaf = dict(kind="value", value=value)
         if len(encode(leaf)) <= PAGE:

@@ -228,12 +228,13 @@ def main():
                     'try:\n raw=a.request_file.read_text();q=json.loads(raw);reply=r.handle(a.spool,q)\n' +
                     'finally:\n a.request_file.unlink(missing_ok=True)\n' +
                     'base=a.spool.parent;hold=(base/"hold-import").exists();served=base/"artifact-served"\n' +
-                    'if q["action"]=="getObjects" and hold: served.touch()\n' +
+                    'if q["action"] in ("getObjects","getColumnar") and hold: served.touch()\n' +
                     'if q["action"] in ("ensure","query") and q["spec"]["binding"]["targetTick"]==6 and hold and served.exists(): reply={"state":"uncertain"}\n' +
                     'encoded=json.dumps(reply,separators=(",",":"));path=base/"wire.json"\n' +
                     'stats=json.loads(path.read_text()) if path.exists() else {"requests":0,"maxInput":0,"maxOutput":0,"flatPayloads":0,"actions":{}}\n' +
                     'stats["requests"]+=1;stats["maxInput"]=max(stats["maxInput"],len(raw));stats["maxOutput"]=max(stats["maxOutput"],len(encoded));stats["flatPayloads"]+=int("checkpoint" in q.get("spec",{}));stats["actions"][q["action"]]=stats["actions"].get(q["action"],0)+1\n' +
                     'stats["availabilityReads"]=stats.get("availabilityReads",0)+reply.get("availability",{}).get("readObjects",0);stats["availabilityHits"]=stats.get("availabilityHits",0)+reply.get("availability",{}).get("cachedReferences",0)\n' +
+                    'if q["action"]=="getColumnar" and reply.get("state")=="frame":\n f=reply["frame"];r.publish(base/("frame-"+f["root"]+"-"+str(f["cursor"])+".json"),f)\n' +
                     'r.publish(path,stats);print(encoded)\n')
                 wrapper.chmod(0o700)
                 env.update(CS_P3_RUNTIME=active, CS_P3_DIRECTORY=str(directory), CS_SHARD_FIXTURE=str(args.fixtures / fixture["name"]),

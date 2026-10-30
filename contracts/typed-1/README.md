@@ -44,6 +44,11 @@ IDs.
 
 ## Bounded artifact progression
 
+The subsequent [`columnar-1`](../columnar-1/README.md) transport uses full typed
+checkpoint frames for handover and field deltas for resident result import. It
+reconstructs the same checkpoint-1 hashes with bounded transactional bulk staging.
+The canonical page path and its limits below remain the fallback.
+
 Artifact offers/fetches can contain up to 32 objects, with the existing 196,608-byte
 control limit. Offers also cap their canonical object list at 60,000 bytes;
 fetches cap encoded JSON at 160,000 bytes and can return a nonempty prefix of the

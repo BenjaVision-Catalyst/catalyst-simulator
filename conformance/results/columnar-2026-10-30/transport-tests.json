@@ -1,0 +1,33 @@
+{
+  "passed": 46,
+  "runs": [
+    {
+      "script": "test-sharded.py",
+      "passed": 17,
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ".................\n----------------------------------------------------------------------\nRan 17 tests in 0.351s\n\nOK\n"
+    },
+    {
+      "script": "test-repast-resident.py",
+      "passed": 12,
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "............\n----------------------------------------------------------------------\nRan 12 tests in 0.102s\n\nOK\n"
+    },
+    {
+      "script": "test-repast-batch.py",
+      "passed": 7,
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.066s\n\nOK\n"
+    },
+    {
+      "script": "test-columnar.py",
+      "passed": 10,
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "..........\n----------------------------------------------------------------------\nRan 10 tests in 2.425s\n\nOK\n"
+    }
+  ]
+}

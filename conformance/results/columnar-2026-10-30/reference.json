@@ -1,0 +1,24 @@
+{
+  "directory": "conformance/results/typed-population-2026-10-30",
+  "files": {
+    "artifacts.zip": "93d51c8241e9965e7eea01c5b1e8794f9f138c30b96089dee663f8612deef942",
+    "fixtures.json": "b3c33d0fe4550a32e538c32f7784f17e8c6af6d2ff54ecbc9bc11cf79b21eefb",
+    "qualification.json": "64e4abe8bbb5bd4be08e3c00f2f0e132ad9469d8ef1e504b68a13988993ee5fe",
+    "SHA256.json": "070fd231059546f14ee32881d5b6153b943cfc776a3f68d242a498ba48e22f31",
+    "objects-00.zip": "6d8850769a79a6973d5f259afadd03f617eff0f43269f3c14953010ee9030d03",
+    "objects-01.zip": "a883cd577eab907313a0ce7105f48a600f686fe2c6545d69c4d7916535b1253d",
+    "objects-02.zip": "0296c925a0a8f4b1213c97af8d6ece83e271aacd29c602649d0b77eddfe510c0",
+    "objects-03.zip": "44cc47bc572d9598669f9f3100f183813c47d1924ad7a40285e5032840e4b771",
+    "objects-04.zip": "9dce56da31030fa13c7bdb9b628e03b14fe5f29d73eff3f98dccba26c061762c",
+    "objects-05.zip": "5ed6d220a2c4bd3a39c3ca958e30990459bd86f3e684c1c248bb74588ca7e771",
+    "objects-06.zip": "30afb1b2d50fc72094323adc068b63c661354ae387f2318e5ded90ed0531f339",
+    "objects-07.zip": "b5e159b9e03b885471fbdee44132aa012af53d7311b6e5f34ad8c9034410d22e",
+    "objects-08.zip": "875da6569d6ecd8c1a09ce423e479194afb61896fe70d7ba0ce333c6a95c2cc4",
+    "objects-09.zip": "e6755eda78dbf3926b89639f599c5af4277b8d5c013b27e8161a467644d6c33b",
+    "objects-10.zip": "9515fa52b2b0e8c4444396675f7ca1ac018dfcde529654e6a10e255a8b381303",
+    "objects-11.zip": "92febd92b1f48e379a224deb23ccc1813b9dedb755a9b740edbcf5a3bf9a4e25",
+    "objects-12.zip": "b1f5599cb333359bd2a5060d4ab7acbb4cc41d8d6f5bec0a9a8687f6b162577f",
+    "objects-13.zip": "976924096343e08914d200ed7b3b08ee03ef63f98204b66507a5880424391d88",
+    "objects-14.zip": "fa5fe174016cd7b4903073c9b68219edf60a85c52c9d3632fabf76beb0edb5cd"
+  }
+}

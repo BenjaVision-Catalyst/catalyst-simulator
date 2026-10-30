@@ -1,0 +1,107 @@
+{
+  "configure": {
+    "baselineSeconds": 0.3163045411929488,
+    "seconds": 0.36925641633570194,
+    "reductionPercent": -16.740788780029558
+  },
+  "upload": {
+    "baselineSeconds": 88.62426316738129,
+    "seconds": 84.23894704226404,
+    "reductionPercent": 4.948211661669744
+  },
+  "create": {
+    "baselineSeconds": 21.18683595955372,
+    "seconds": 19.539106249809265,
+    "reductionPercent": 7.777139129646438
+  },
+  "advance1": {
+    "baselineSeconds": 77.58290237467736,
+    "seconds": 74.13781591691077,
+    "reductionPercent": 4.440522785715029
+  },
+  "external": {
+    "baselineSeconds": 178.22158249933273,
+    "seconds": 67.04637875035405,
+    "reductionPercent": 62.38032576632233
+  },
+  "run3": {
+    "baselineSeconds": 250.96260662563145,
+    "seconds": 106.25883345864713,
+    "reductionPercent": 57.65949561674872
+  },
+  "run4": {
+    "baselineSeconds": 172.08887924999,
+    "seconds": 71.0375038748607,
+    "reductionPercent": 58.720456438288515
+  },
+  "run6": {
+    "baselineSeconds": 1.3726925840601325,
+    "seconds": 1.3182420413941145,
+    "reductionPercent": 3.9666960613253144
+  },
+  "staged": {
+    "baselineSeconds": 1.108310416340828,
+    "seconds": 1.2700408333912492,
+    "reductionPercent": -14.592519809060956
+  },
+  "read-held": {
+    "baselineSeconds": 2.5330125829204917,
+    "seconds": 2.451288791373372,
+    "reductionPercent": 3.2263476343609154
+  },
+  "recover": {
+    "baselineSeconds": 1.0165732922032475,
+    "seconds": 0.9637686256319284,
+    "reductionPercent": 5.194378701104185
+  },
+  "stale-result": {
+    "baselineSeconds": 0.9530288344249129,
+    "seconds": 0.9834208339452744,
+    "reductionPercent": -3.188990555432758
+  },
+  "accepted6": {
+    "baselineSeconds": 187.21980029158294,
+    "seconds": 80.77918899990618,
+    "reductionPercent": 56.85328748663457
+  },
+  "run8": {
+    "baselineSeconds": 169.5590847497806,
+    "seconds": 88.78979445807636,
+    "reductionPercent": 47.634894002227
+  },
+  "read-crashed": {
+    "baselineSeconds": 0.9537466252222657,
+    "seconds": 1.0063637075945735,
+    "reductionPercent": -5.516882679406132
+  },
+  "recover-idle": {
+    "baselineSeconds": 1.1462455419823527,
+    "seconds": 1.1058361670002341,
+    "reductionPercent": 3.525368125945627
+  },
+  "drive10": {
+    "baselineSeconds": 262.2004373334348,
+    "seconds": 180.61302620731294,
+    "reductionPercent": 31.116428315628198
+  },
+  "local": {
+    "baselineSeconds": 11.576883208937943,
+    "seconds": 22.05133350007236,
+    "reductionPercent": -90.47729083979709
+  },
+  "advance12": {
+    "baselineSeconds": 119.61550429090858,
+    "seconds": 138.33683529123664,
+    "reductionPercent": -15.651257845970544
+  },
+  "collect": {
+    "baselineSeconds": 44.545739417895675,
+    "seconds": 42.8068670835346,
+    "reductionPercent": 3.9035659910103715
+  },
+  "cleanup": {
+    "baselineSeconds": 0.515318457968533,
+    "seconds": 0.48731379117816687,
+    "reductionPercent": 5.434438910021777
+  }
+}

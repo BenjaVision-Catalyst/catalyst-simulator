@@ -1,0 +1,18 @@
+{
+  "artifacts.zip": "e22ecb3b233689f1f19c5023101c053e2cffe358f5351a151ea8dc739bdeb185",
+  "build.json": "abbd28ccbe4b296fd356790f2724114e4ed86b5a8cacdc5282c3384228423e69",
+  "comparison.json": "23acc5bed840e74b5568e857c3721c3238b307618d829644914dfb4d72d7b457",
+  "field-roundtrip.json": "ea394b6f2a49d1ad10b4e31856d8d0328dc4e81b65227a5c5607121277a04d98",
+  "gt-mcp-gate.json": "28d258f5cf345e949f4a292ae3a7386fca80c5260db0238a6dbcfd64dfc719d0",
+  "gt.json": "72d15b2449b9da857b9cb293304a1fb29c9bebe4b33393ead345c6ec3749784f",
+  "native-tests.json": "19da6b5a6f73ade1d41fbd23779752d34768f27f5b6c7efa09659d535300063c",
+  "native-values.json": "80b38dece67e6eb33d2b1dc33a0ea735892a22d0f79e53178c2c62762f63ea54",
+  "probe-gate.json": "3dc7f6e99a3574c3321ed9d1d2605046565531230504ff6960c72a8a0c67988a",
+  "qualification.json": "b0d303d1a4ee9b28978df19b0c78dd0c160e4f4bd445cfd6b1df1367de3b905e",
+  "reference.json": "e5259b859e0f930a2500536baa0d2fa33cffe1e8870e74edec8a966d760eddb0",
+  "runtime-source-native.json": "5576cd3965958a1204ae87b2164f264f93c8a65aaa036f89cbc99769365c3c3e",
+  "source-gt.json": "bbf9976b486740e4e666599fa7843998ef50b0113d1b5dda3e3668f35220bdea",
+  "source-native.json": "cc8514e5b7241b8e5b0a479274dc716f763c1d1a564c5700056e800b4b12b5c7",
+  "source-sha256.json": "bfd6e844d08438c3ff98d95fa2c9df53484edb36569ecbf06c25b3cc255a441d",
+  "transport-tests.json": "fa58ff282267c3843d81d3de282d1eb64db7efb91e2563d8f2305aa6cfcdaf1b"
+}

@@ -1,0 +1,44 @@
+expectvalue true
+run
+| phase fixturePath reportPath rootKey read fixture store root backend frames report file |
+System abortTransaction. System transactionMode: #manualBegin.
+phase := System gemEnvironmentVariable: 'CS_COLUMNAR_PHASE'.
+fixturePath := System gemEnvironmentVariable: 'CS_COLUMNAR_FIXTURE'.
+reportPath := System gemEnvironmentVariable: 'CS_COLUMNAR_REPORT'.
+rootKey := (System gemEnvironmentVariable: 'CS_COLUMNAR_ROOT') asSymbol.
+(rootKey asString beginsWith: 'CSColumnarFields') ifFalse: [self error: 'Owned columnar probe required'].
+read := GsFile openReadOnServer: fixturePath.
+[fixture := STON fromString: read contents] ensure: [read close].
+report := Dictionary new at: 'phase' put: phase; yourself.
+phase = 'build' ifTrue: [
+ CRGemStoneRuntime duringTransaction: [
+  (UserGlobals includesKey: rootKey) ifTrue: [self error: 'Owned columnar root already exists'].
+  store := CSArtifactStore new. frames := fixture at: 'frames'.
+  frames do: [:frame |
+   store importColumnar: frame base: (frame at: 'base') cursor: (frame at: 'cursor').
+   (frame at: 'next') = (frame at: 'total') ifTrue: [
+    root := frame at: 'root'. store validateCheckpoint: root base: (frame at: 'base').
+    backend := store typedBackendAt: root.
+    (store checkpoint: backend snapshot) = root ifFalse: [self error: 'Columnar typed round trip differs']]].
+  root = (fixture at: 'target') ifFalse: [self error: 'Columnar target differs from GT'].
+  UserGlobals at: rootKey put: {store. root}]].
+phase = 'verify' ifTrue: [
+ [CRGemStoneRuntime duringTransaction: [| saved |
+  saved := UserGlobals at: rootKey. store := saved first. root := saved second.
+  store validateCheckpoint: root base: (fixture at: 'initial'). backend := store typedBackendAt: root.
+  (store checkpoint: backend snapshot) = root ifFalse: [self error: 'Fresh session columnar root differs'].
+  root = (fixture at: 'target') ifFalse: [self error: 'Fresh session GT target differs'].
+  report at: 'freshSessionVerified' put: true]]
+ ensure: [CRGemStoneRuntime duringTransaction: [UserGlobals removeKey: rootKey ifAbsent: []]].
+ report at: 'cleaned' put: true].
+phase = 'cleanup' ifTrue: [
+ CRGemStoneRuntime duringTransaction: [UserGlobals removeKey: rootKey ifAbsent: []].
+ report at: 'passed' put: true; at: 'cleaned' put: true].
+phase = 'cleanup' ifFalse: [
+ store materializations = 0 ifFalse: [self error: 'Columnar probe materialized flat state'].
+ report at: 'passed' put: true; at: 'root' put: root; at: 'population' put: backend populationStatistics;
+  at: 'materializations' put: store materializations; at: 'typedRestores' put: store typedRestores; at: 'columnar' put: store columnarMetrics].
+file := GsFile openWriteOnServer: reportPath.
+[file nextPutAll: (STON toJsonString: report)] ensure: [file close].
+true
+%

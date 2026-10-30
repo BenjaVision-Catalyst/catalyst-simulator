@@ -19,6 +19,11 @@ See [typed population qualification](conformance/Typed-Population.md) for the
 keep their existing limits; admission capacity is separate from tested workload
 capacity.
 
+The [`columnar-1` transport](contracts/columnar-1/README.md) transfers full typed
+checkpoints and changed fields in bounded frames, reconstructing the same
+checkpoint hashes. Runtime stages a frame and its recovery cursor in one GemStone
+transaction. See [columnar publication qualification](conformance/Columnar-Publication.md).
+
 Ecosystems are the first domain; NPCs and automation remain deferred. The
 intended workflow is to author a model once in Smalltalk, run it entirely in
 GemStone or GT, then move the same supported model to a configured external

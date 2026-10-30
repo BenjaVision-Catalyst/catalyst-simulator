@@ -1,6 +1,11 @@
 # Portable kernel qualification
 
-The latest [typed population record](Typed-Population.md) covers 100,000 moving
+The latest [columnar publication record](Columnar-Publication.md) compares bounded
+columnar checkpoint/delta frames and transactional bulk staging against the
+100,000-entity typed-storage baseline. Runtime remains the client endpoint and
+GemStone remains the acceptance authority.
+
+The preceding [typed population record](Typed-Population.md) covers 100,000 moving
 entities on native macOS 1/2/4 ranks and a four-rank Runtime/GemStone switching and
 recovery scenario. It records 89 GT tests, 79 native GemStone tests and the
 remaining accepted-publication latency boundary. The opening P0/P1 record below

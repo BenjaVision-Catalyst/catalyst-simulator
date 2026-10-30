@@ -1,0 +1,55 @@
+{
+  "passed": true,
+  "stone": "bvc_simulator_native",
+  "build": {
+    "materializations": 0,
+    "passed": true,
+    "population": {
+      "packedBytes": 98304,
+      "idIndexEntries": 300,
+      "entities": 300,
+      "layout": "columns-1",
+      "capacity": 300,
+      "numericBytesPerSlot": 96,
+      "internedStrings": 301
+    },
+    "root": "5aef261fa74f5a41b7423df171aa86f8a2b76dadd2662a305e86c86667cd0304",
+    "typedRestores": 2,
+    "phase": "build",
+    "columnar": {
+      "fullFrames": 1,
+      "rows": 600,
+      "frames": 2,
+      "deltaFrames": 1,
+      "rawBytes": 197286,
+      "wireBytes": 125676
+    }
+  },
+  "verify": {
+    "materializations": 0,
+    "passed": true,
+    "freshSessionVerified": true,
+    "root": "5aef261fa74f5a41b7423df171aa86f8a2b76dadd2662a305e86c86667cd0304",
+    "cleaned": true,
+    "population": {
+      "packedBytes": 98304,
+      "idIndexEntries": 300,
+      "entities": 300,
+      "layout": "columns-1",
+      "capacity": 300,
+      "numericBytesPerSlot": 96,
+      "internedStrings": 301
+    },
+    "typedRestores": 3,
+    "phase": "verify",
+    "columnar": {
+      "fullFrames": 1,
+      "rows": 600,
+      "frames": 2,
+      "deltaFrames": 1,
+      "rawBytes": 197286,
+      "wireBytes": 125676
+    }
+  },
+  "cleaned": true
+}

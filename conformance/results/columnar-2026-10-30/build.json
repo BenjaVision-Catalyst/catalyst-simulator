@@ -1,0 +1,16 @@
+{
+  "platform": "native macOS arm64",
+  "docker": false,
+  "repastCommit": "a96c15f99589d15352523a0a710362af8997852a",
+  "executableDigest": "fe1ae2060a76f8fc010854725d92ba4b5aa6f4c903e1b30a748d5e825839eab3",
+  "valueTestsDigest": "69e32ecaf5a6a209aa32f8f1b9e7297861a906e2672732cea64ce0d7110a567a",
+  "compiler": "Apple clang version 21.0.0 (clang-2100.1.1.101)\nTarget: arm64-apple-darwin25.6.0\nThread model: posix\nInstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin",
+  "mpi": "mpirun (Open MPI) 5.0.11\n\nReport bugs to https://www.open-mpi.org/community/help/",
+  "os": "ProductName:\t\tmacOS\nProductVersion:\t\t26.6.1\nBuildVersion:\t\t25G76",
+  "machine": "arm64",
+  "buildCommand": "cmake --build /private/tmp/catalyst-repast-build -j6",
+  "cmakeCacheDigest": "01968b96506d5be4a1bba26e51221acae5d0a00b7d4c9111f57e2ade859cf18f",
+  "scope": "Transport/publication increment using the same qualified native executable; fresh four-rank Runtime run, retained prior 1/2/4-rank native determinism proof.",
+  "executableSha256": "fe1ae2060a76f8fc010854725d92ba4b5aa6f4c903e1b30a748d5e825839eab3",
+  "nativeExecutableUnchanged": true
+}

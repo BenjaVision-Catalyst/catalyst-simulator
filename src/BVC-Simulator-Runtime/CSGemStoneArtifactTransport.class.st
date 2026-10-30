@@ -5,11 +5,11 @@ Class {
 	#package : 'BVC-Simulator-Runtime'
 }
 
-{ #category : 'sharded runtime' }
+{ #category : 'columnar transport' }
 CSGemStoneArtifactTransport >> invoke: request configuration: cfg [
  | json path file output |
  (System respondsTo: #performOnServer:) ifFalse: [CSAuthorityError signal: 'native-gemstone-transport-required'].
- json := STON toJsonString: request.
+ json := STON toJsonString: (CSCanonicalCodec copy: request).
  CSAuthorityChecks require: json size <= 196608 code: 'artifact-control-byte-limit'.
  path := cfg repastDirectory, '/control/', UUID new asString36, '.json'.
  file := (Smalltalk at: #GsFile) openWriteOnServer: path.

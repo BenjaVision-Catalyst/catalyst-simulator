@@ -45,19 +45,22 @@ CSShardedExecutionGroup >> backendAt: root [
  ^ CSSmalltalkBackend fromCheckpoint: (CSCanonicalCodec encode: (artifacts materialize: root))
 ]
 
-{ #category : 'typed scale' }
+{ #category : 'columnar transport' }
 CSShardedExecutionGroup >> change: kind payload: payload request: request candidate: candidate maxSteps: maximum [
  | node pending target model backend root roots |
  node := artifacts objectAt: (candidate at: 'checkpoint').
  ((#('advance' 'command' 'prepare') includes: kind) and: [(candidate at: 'pending') isNil and: [artifacts count > 49152]]) ifTrue: [self collectIdleArtifacts: candidate].
  kind = 'stage' ifTrue: [
-  CSAuthorityChecks keys: payload exactly: #('batch' 'inputDigest' 'root' 'objects').
+  CSAuthorityChecks keys: payload exactly: ((payload includesKey: 'frame') ifTrue: [#('batch' 'inputDigest' 'root' 'frame')] ifFalse: [#('batch' 'inputDigest' 'root' 'objects')]).
   pending := candidate at: 'pending'.
   CSAuthorityChecks require: (pending notNil and: [(pending at: 'phase') = 'uncertain' and: [#('active' 'reconciling') includes: (candidate at: 'phase')]]) code: 'batch-unresolved'.
   CSAuthorityChecks require: ((pending at: 'batch') = (payload at: 'batch') and: [(pending at: 'inputDigest') = (payload at: 'inputDigest')]) code: 'wrong-batch'.
   artifacts assertHash: (payload at: 'root').
   CSAuthorityChecks require: (pending at: 'resultRoot' ifAbsent: [payload at: 'root']) = (payload at: 'root') code: 'result-root-changed'.
-  artifacts upload: (payload at: 'objects'). artifacts cacheComplete: (payload at: 'root'). pending at: 'resultRoot' put: (payload at: 'root'). ^ self].
+  (payload includesKey: 'frame')
+   ifTrue: [self stageColumnar: payload candidate: candidate]
+   ifFalse: [artifacts upload: (payload at: 'objects')].
+  artifacts cacheComplete: (payload at: 'root'). pending at: 'resultRoot' put: (payload at: 'root'). ^ self].
  kind = 'collect' ifTrue: [
   self requireIdle: candidate. CSAuthorityChecks require: payload isNil code: 'invalid-collection'.
   roots := Set with: (candidate at: 'checkpoint').
@@ -168,12 +171,15 @@ CSShardedExecutionGroup >> projectionChangesAfter: revision [
  ^ CSCanonicalCodec copy: result
 ]
 
-{ #category : 'sharded authority' }
+{ #category : 'columnar transport' }
 CSShardedExecutionGroup >> record: kind request: request principal: principal candidate: candidate [
  | input entry journal node |
  node := artifacts objectAt: (candidate at: 'checkpoint').
  input := CSCanonicalCodec copy: (request at: 'payload').
  (input isKindOf: Dictionary) ifTrue: [(input includesKey: 'objects') ifTrue: [input at: 'objects' put: ((input at: 'objects') collect: [:object | object at: 'hash'])]].
+ (input isKindOf: Dictionary) ifTrue: [(input includesKey: 'frame') ifTrue: [| frame |
+  frame := input at: 'frame'. input at: 'frame' put: (Dictionary new at: 'digest' put: (CSSha256 hexDigestOf: (CSCanonicalCodec encode: frame));
+   at: 'cursor' put: (frame at: 'cursor'); at: 'next' put: (frame at: 'next'); at: 'total' put: (frame at: 'total'); yourself)]].
  entry := Dictionary new at: 'status' put: 'accepted'; at: 'kind' put: kind; at: 'id' put: (request at: 'id');
  at: 'sequence' put: (request at: 'sequence'); at: 'fingerprint' put: (self fingerprint: kind request: request principal: principal);
  at: 'world' put: (candidate at: 'world'); at: 'group' put: (candidate at: 'group'); at: 'modelDigest' put: (candidate at: 'modelDigest');
@@ -192,6 +198,21 @@ CSShardedExecutionGroup >> retainedRoot: root [
   root = (entry at: 'root') ifTrue: [^ entry at: 'revision'].
   root = (entry at: 'baseRoot') ifTrue: [^ entry at: 'baseRevision']].
  CSAuthorityError signal: 'accepted-view-expired-resnapshot'
+]
+
+{ #category : 'columnar transport' }
+CSShardedExecutionGroup >> stageColumnar: payload candidate: candidate [
+ | frame pending cursor total result |
+ frame := payload at: 'frame'. pending := candidate at: 'pending'.
+ CSAuthorityChecks require: (frame at: 'root') = (payload at: 'root') code: 'columnar-root'.
+ cursor := pending at: 'columnarCursor' ifAbsent: [0].
+ total := pending at: 'columnarTotal' ifAbsent: [frame at: 'total'].
+ CSAuthorityChecks require: (frame at: 'total') = total code: 'columnar-plan-changed'.
+ result := artifacts importColumnar: frame base: (candidate at: 'checkpoint') cursor: cursor.
+ pending at: 'columnarCursor' put: (frame at: 'next'); at: 'columnarTotal' put: total;
+  at: 'columnarComplete' put: (frame at: 'next') = total;
+  at: 'columnarFrames' put: (pending at: 'columnarFrames' ifAbsent: [0]) + 1;
+  at: 'columnarRows' put: (pending at: 'columnarRows' ifAbsent: [0]) + (result at: 'rows')
 ]
 
 { #category : 'sharded authority' }

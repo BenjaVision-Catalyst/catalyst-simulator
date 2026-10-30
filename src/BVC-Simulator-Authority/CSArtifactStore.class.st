@@ -7,7 +7,8 @@ Class {
 		'closures',
 		'materializations',
 		'lastValidation',
-		'typedRestores'
+		'typedRestores',
+		'columnarMetrics'
 	],
 	#category : 'BVC-Simulator-Authority',
 	#package : 'BVC-Simulator-Authority'
@@ -98,9 +99,31 @@ CSArtifactStore >> collectKeeping: roots [
   ifFalse: [closures := Dictionary new]. ^ removed
 ]
 
+{ #category : 'columnar transport' }
+CSArtifactStore >> columnarMetrics [
+ ^ columnarMetrics ifNil: [Dictionary new at: 'frames' put: 0; at: 'fullFrames' put: 0; at: 'deltaFrames' put: 0; at: 'rows' put: 0; at: 'rawBytes' put: 0; at: 'wireBytes' put: 0; yourself]
+  ifNotNil: [columnarMetrics copy]
+]
+
 { #category : 'sharded checkpoints' }
 CSArtifactStore >> count [
  ^ buckets values inject: 0 into: [:sum :bucket | sum + bucket size]
+]
+
+{ #category : 'columnar transport' }
+CSArtifactStore >> importColumnar: frame base: base cursor: cursor [
+ | scratch result metrics |
+ scratch := CSColumnarCodec reconstruct: frame base: base cursor: cursor store: self.
+ result := self mergeColumnarScratch: scratch.
+ metrics := self columnarMetrics.
+ metrics at: 'frames' put: (metrics at: 'frames') + 1;
+  at: (base ifNil: ['fullFrames'] ifNotNil: ['deltaFrames']) put: (metrics at: (base ifNil: ['fullFrames'] ifNotNil: ['deltaFrames'])) + 1;
+  at: 'rows' put: (metrics at: 'rows') + ((frame at: 'buckets') inject: 0 into: [:sum :packet | sum + (packet at: 'count')]);
+  at: 'rawBytes' put: (metrics at: 'rawBytes') + scratch rawByteCount;
+  at: 'wireBytes' put: (metrics at: 'wireBytes') + (CSCanonicalCodec encode: frame) size.
+ columnarMetrics := metrics.
+ ^ Dictionary new at: 'root' put: (frame at: 'root'); at: 'next' put: (frame at: 'next'); at: 'total' put: (frame at: 'total');
+  at: 'objects' put: result size; at: 'rawBytes' put: scratch rawByteCount; at: 'rows' put: ((frame at: 'buckets') inject: 0 into: [:sum :packet | sum + (packet at: 'count')]); yourself
 ]
 
 { #category : 'sharded checkpoints' }
@@ -156,6 +179,22 @@ CSArtifactStore >> materialize: root [
  ^ Dictionary new at: 'version' put: 2; at: 'model' put: (self valueAt: (node at: 'model')); at: 'modelDigest' put: (node at: 'modelDigest');
  at: 'tick' put: (node at: 'tick'); at: 'seed' put: (node at: 'seed'); at: 'entities' put: entities;
  at: 'resources' put: (self valueAt: (node at: 'resources')); at: 'events' put: (self valueAt: (node at: 'events')); at: 'outcomes' put: (self valueAt: (node at: 'outcomes')); yourself
+]
+
+{ #category : 'columnar transport' }
+CSArtifactStore >> mergeColumnarScratch: scratch [
+ | pairs missing |
+ CSAuthorityChecks require: scratch class == CSColumnarScratchStore code: 'columnar-owned-scratch'.
+ CSAuthorityChecks require: scratch rawByteCount <= 4194304 code: 'columnar-expanded-budget'.
+ pairs := scratch rawPairs.
+ missing := 0.
+ pairs do: [:pair | (self includes: pair first)
+  ifTrue: [CSAuthorityChecks require: (self rawAt: pair first) = pair second code: 'artifact-collision']
+  ifFalse: [missing := missing + 1]].
+ CSAuthorityChecks require: self count + missing <= 65536 code: 'artifact-capacity-collect-required'.
+ pairs do: [:pair | | bucket | bucket := buckets at: (pair first first: 2) ifAbsentPut: [Dictionary new].
+  (bucket includesKey: pair first) ifFalse: [bucket at: pair first copy put: pair second copy]].
+ ^ pairs collect: #first
 ]
 
 { #category : 'sharded checkpoints' }
@@ -241,6 +280,19 @@ CSArtifactStore >> putRaw: raw hash: hash [
 CSArtifactStore >> rawAt: hash [
  self assertHash: hash.
  ^ ((buckets at: (hash first: 2) ifAbsent: [CSAuthorityError signal: 'artifact-unavailable']) at: hash ifAbsent: [CSAuthorityError signal: 'artifact-unavailable']) copy
+]
+
+{ #category : 'columnar transport' }
+CSArtifactStore >> rawByteCount [
+ ^ buckets values inject: 0 into: [:sum :bucket | sum + (bucket values inject: 0 into: [:bytes :raw | bytes + raw size])]
+]
+
+{ #category : 'columnar transport' }
+CSArtifactStore >> rawPairs [
+ | result |
+ result := OrderedCollection new.
+ buckets values do: [:bucket | bucket keysAndValuesDo: [:hash :raw | result add: {hash copy. raw copy}]].
+ ^ result asArray
 ]
 
 { #category : 'sharded checkpoints' }
