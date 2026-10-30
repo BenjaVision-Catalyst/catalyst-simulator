@@ -1,0 +1,10 @@
+expectvalue true
+run
+| root |
+System abortTransaction. System transactionMode: #manualBegin.
+root := (System gemEnvironmentVariable: 'BVC_P2_ROOT') asSymbol.
+System beginTransaction.
+UserGlobals removeKey: root ifAbsent: [].
+System commitTransaction ifFalse: [self error: 'P2 cleanup commit failed'].
+true
+%

@@ -1,0 +1,28 @@
+expectvalue true
+run
+| input manifest returns root directory returned file report |
+System abortTransaction. System transactionMode: #manualBegin.
+directory := System gemEnvironmentVariable: 'BVC_P2_OUTPUT'.
+input := GsFile openReadOnServer: (System gemEnvironmentVariable: 'BVC_P2_MANIFEST').
+[manifest := STON fromString: input contents] ensure: [input close].
+input := GsFile openReadOnServer: directory, '/returns.json'.
+[returns := STON fromString: input contents] ensure: [input close].
+root := UserGlobals at: (System gemEnvironmentVariable: 'BVC_P2_ROOT') asSymbol.
+returned := Dictionary new.
+returns do: [:entry | | backend bytes record |
+ record := (manifest at: 'cases') detect: [:r | (r at: 'name') = (entry at: 'name')].
+ input := GsFile openReadOnServer: (entry at: 'checkpoint').
+ [bytes := input contents] ensure: [input close].
+ backend := CSSmalltalkBackend fromCheckpoint: bytes.
+ backend checkpoint = ((record at: 'checkpoints') at: '4') ifFalse: [self error: 'External checkpoint differs at return'].
+ backend advanceThrough: 6.
+ backend checkpoint = ((record at: 'checkpoints') at: '6') ifFalse: [self error: 'GemStone continuation differs'].
+ returned at: (entry at: 'key') put: backend].
+System beginTransaction.
+root at: 'returned' put: returned.
+System commitTransaction ifFalse: [self error: 'P2 return commit failed'].
+report := Dictionary new at: 'returned' put: returned size; at: 'committedTick' put: 6; at: 'passed' put: true; yourself.
+file := GsFile openWriteOnServer: directory, '/return.json'.
+[file nextPutAll: (STON toJsonString: report)] ensure: [file close].
+true
+%

@@ -4,7 +4,8 @@ Catalyst Simulator is the home of the GemStone-first CatalystSimulation kernel,
 its Runtime service, portable model contracts and future external execution
 adapters. P0/P1 now includes a headless portable graph interpreter, versioned
 operation registry, model digests and compatibility checks, qualified in GT and
-GemStone. Runtime service integration and external adapters remain planned.
+GemStone. The P2 Repast adapter now passes native macOS feasibility; Runtime
+service integration and a production external backend remain planned.
 
 Models cover ecosystems, NPC behaviour, circuits and factory automation. The
 intended workflow is to author a model once in Smalltalk, run it entirely in
@@ -76,8 +77,11 @@ value budgets. The original [`probe-1` contract](contracts/probe-1/README.md) an
 its checkpoint bytes remain supported.
 
 Three neutral models and their model digests, state traces and compatibility
-fixtures match in GT and native GemStone. This provides an input for a future
-Repast feasibility adapter; full P0/P1 gates and one-click migration remain open.
+fixtures match in GT and native GemStone. The same bundles now run through
+[native Repast HPC](native/p2/README.md) with byte-identical 1/2/4-rank results,
+actual agent migration and cross-rank resource contention. All 24 tested external
+checkpoints round-trip through the dedicated `bvc_simulator_native` stone and
+continue identically. Full P0/P1 gates and one-click migration remain open.
 
 Core loads without Runtime, GT UI or ecosystem dependencies. Load Metacello
 baseline `CatalystSimulator` from this repository's `src`, group `Core` (default)
@@ -101,7 +105,8 @@ the live GT image; exported files must not be edited externally.
 | `native/` | Shared C++ operations/codecs and external adapters, starting with a Repast feasibility probe |
 | `conformance/` | GT, native GemStone, external-backend, migration and scale evidence |
 
-The `native/` adapter area remains planned. The workspace checkout is
+The `native/p2/` adapter is a bounded feasibility implementation, with its
+toolchain and qualification evidence recorded in the component. The workspace checkout is
 `Simulation/catalyst-simulator`. Upstream source references live in the workspace's
 `Simulation/References/`, separately from this component's dependencies.
 

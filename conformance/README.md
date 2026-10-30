@@ -104,3 +104,18 @@ parses decimal digits explicitly and accesses that record field by index. No
 GemStone-specific fork of the kernel was introduced.
 
 The [rebuild record](../docs/Rebuild-Readiness.md) explains the next clean-load gate.
+
+## Native Repast feasibility
+
+The [P2 adapter and runner](../native/p2/README.md) execute the unchanged graph-1
+bundles natively on macOS with 1/2/4 MPI ranks, actual Repast agent migration and
+shared-resource contention. The dedicated `bvc_simulator_native` stone exports
+committed checkpoints and accepts returned states for native continuation.
+
+[The qualified record](results/repast-p2-macos-2026-10-30/qualification.json)
+includes 24 rank/layout runs, 12 rank-count restarts, 24 durable GemStone returns,
+negative capability/digest/overflow checks and speculative-job termination.
+Raw canonical traces and logs, toolchain identities and the released GT MCP lease
+are archived beside the report. Use `native/p2/verify-evidence.py` for offline
+verification. This is P2 correctness evidence; production Runtime acceptance,
+one-click migration and massive-scale qualification remain later gates.

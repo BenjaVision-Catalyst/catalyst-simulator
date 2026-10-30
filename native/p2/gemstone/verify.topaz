@@ -1,0 +1,22 @@
+expectvalue true
+run
+| input manifest root directory report file expectedReturns |
+System abortTransaction. System transactionMode: #manualBegin.
+directory := System gemEnvironmentVariable: 'BVC_P2_OUTPUT'.
+input := GsFile openReadOnServer: (System gemEnvironmentVariable: 'BVC_P2_MANIFEST').
+[manifest := STON fromString: input contents] ensure: [input close].
+root := UserGlobals at: (System gemEnvironmentVariable: 'BVC_P2_ROOT') asSymbol.
+(manifest at: 'cases') do: [:record |
+ ((root at: 'source') at: (record at: 'name')) checkpoint = ((record at: 'checkpoints') at: '1')
+ ifFalse: [self error: 'Committed GemStone source changed']].
+expectedReturns := (System gemEnvironmentVariable: 'BVC_P2_EXPECT_RETURNS') asInteger.
+(root at: 'returned') size = expectedReturns ifFalse: [self error: 'Return count differs in fresh session'].
+(root at: 'returned') keysAndValuesDo: [:key :backend | | record |
+ record := (manifest at: 'cases') detect: [:r | key beginsWith: (r at: 'name'), '-'].
+ backend checkpoint = ((record at: 'checkpoints') at: '6') ifFalse: [self error: 'Durable return differs']].
+report := Dictionary new at: 'sourcesUnchanged' put: true; at: 'returned' put: expectedReturns;
+ at: 'freshSession' put: true; at: 'passed' put: true; yourself.
+file := GsFile openWriteOnServer: directory, '/verify-', expectedReturns printString, '.json'.
+[file nextPutAll: (STON toJsonString: report)] ensure: [file close].
+true
+%

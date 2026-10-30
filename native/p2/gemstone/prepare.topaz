@@ -1,0 +1,34 @@
+expectvalue true
+run
+| input manifest root records directory worlds report file tests |
+System abortTransaction. System transactionMode: #manualBegin.
+input := GsFile openReadOnServer: (System gemEnvironmentVariable: 'BVC_P2_MANIFEST').
+[manifest := STON fromString: input contents] ensure: [input close].
+root := (System gemEnvironmentVariable: 'BVC_P2_ROOT') asSymbol.
+(UserGlobals includesKey: root) ifTrue: [self error: 'P2 root already exists'].
+tests := 0.
+#(CSKernelExamples CSGraphExamples) do: [:name | | cls |
+ cls := Smalltalk at: name.
+ (cls selectors select: [:s | s asString beginsWith: 'test']) do: [:selector | cls new perform: selector. tests := tests + 1]].
+worlds := Dictionary new. directory := System gemEnvironmentVariable: 'BVC_P2_OUTPUT'.
+(manifest at: 'cases') do: [:record | | backend name |
+ name := record at: 'name'.
+ backend := CSSmalltalkBackend fromCheckpoint: (record at: 'initial').
+ backend model canonicalBytes = (record at: 'model') ifFalse: [self error: 'Bundle changed in GemStone'].
+ backend model digest = (record at: 'modelDigest') ifFalse: [self error: 'Digest changed in GemStone'].
+ backend advance.
+ backend checkpoint = ((record at: 'checkpoints') at: '1') ifFalse: [self error: 'GemStone tick 1 differs from GT'].
+ file := GsFile openWriteOnServer: directory, '/', name, '.model'.
+ [file nextPutAll: backend model canonicalBytes] ensure: [file close].
+ file := GsFile openWriteOnServer: directory, '/', name, '.checkpoint'.
+ [file nextPutAll: backend checkpoint] ensure: [file close].
+ worlds at: name put: backend].
+System beginTransaction.
+UserGlobals at: root put: (Dictionary new at: 'source' put: worlds; at: 'returned' put: Dictionary new; yourself).
+System commitTransaction ifFalse: [self error: 'P2 source commit failed'].
+report := Dictionary new at: 'stone' put: 'bvc_simulator_native'; at: 'tests' put: tests;
+ at: 'models' put: worlds size; at: 'committedTick' put: 1; at: 'passed' put: true; yourself.
+file := GsFile openWriteOnServer: directory, '/prepare.json'.
+[file nextPutAll: (STON toJsonString: report)] ensure: [file close].
+true
+%

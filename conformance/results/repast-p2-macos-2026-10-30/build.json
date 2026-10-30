@@ -1,0 +1,1568 @@
+{
+  "platform": "macOS-26.6.1-arm64-arm-64bit-Mach-O",
+  "machine": "arm64",
+  "compiler": "Apple clang version 21.0.0 (clang-2100.1.1.101)\nTarget: arm64-apple-darwin25.6.0\nThread model: posix\nInstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin",
+  "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk",
+  "sdkVersion": "26.5",
+  "cmake": "cmake version 4.4.3\n\nCMake suite maintained and supported by Kitware (kitware.com/cmake).",
+  "ninja": "1.13.2",
+  "mpi": "mpirun (Open MPI) 5.0.11\n\nReport bugs to https://www.open-mpi.org/community/help/",
+  "repastRevision": "a96c15f99589d15352523a0a710362af8997852a",
+  "repastDirty": "",
+  "upstreamCpp": 28,
+  "excluded": [
+    "NCDataSet.cpp",
+    "NCDataSetBuilder.cpp"
+  ],
+  "openMP": false,
+  "dependencies": {
+    "/opt/homebrew/Cellar/ninja/1.13.2": {
+      "receipt": {
+        "homebrew_version": "5.0.3",
+        "used_options": [],
+        "unused_options": [],
+        "built_as_bottle": true,
+        "poured_from_bottle": true,
+        "loaded_from_api": true,
+        "loaded_from_internal_api": true,
+        "installed_on_request": true,
+        "changed_files": [],
+        "time": 1783574682,
+        "source_modified_time": 1763655980,
+        "compiler": "clang",
+        "aliases": [],
+        "runtime_dependencies": [],
+        "source": {
+          "spec": "stable",
+          "versions": {
+            "stable": "1.13.2",
+            "head": null,
+            "version_scheme": 0,
+            "compatibility_version": null
+          },
+          "path": "/Users/jupiter/Library/Caches/Homebrew/api/internal/packages.arm64_tahoe.jws.json",
+          "tap_git_head": null,
+          "tap": "homebrew/core"
+        },
+        "arch": "arm64",
+        "built_on": {
+          "os": "Macintosh",
+          "os_version": "macOS 26",
+          "cpu_family": "dunno",
+          "xcode": "26.1",
+          "clt": "26.1.0.0.1.1761104275",
+          "preferred_perl": "5.34"
+        }
+      },
+      "sha256": "6c28c9fc553bc27f3142c16eb68bb84442e7445cf1ac47b7c7f83a6e43346c13"
+    },
+    "/opt/homebrew/Cellar/cmake/4.4.3": {
+      "receipt": {
+        "homebrew_version": "6.0.19-35-g9574410",
+        "used_options": [],
+        "unused_options": [],
+        "built_as_bottle": true,
+        "poured_from_bottle": true,
+        "loaded_from_api": true,
+        "loaded_from_internal_api": true,
+        "installed_on_request": true,
+        "changed_files": [
+          "share/cmake/Modules/CMakeFindFrameworks.cmake",
+          "share/cmake/Modules/FindGTK2.cmake",
+          "share/cmake/Modules/FindPython/Support.cmake",
+          "share/cmake/Modules/FindRuby.cmake",
+          "share/cmake/Modules/GNUInstallDirs.cmake",
+          "share/cmake/Modules/Platform/Darwin.cmake"
+        ],
+        "linkage_files": [],
+        "binary_relocation_files": [],
+        "time": 1790972977,
+        "source_modified_time": 1787670630,
+        "compiler": "clang",
+        "aliases": [],
+        "runtime_dependencies": [],
+        "source": {
+          "spec": "stable",
+          "versions": {
+            "stable": "4.4.3",
+            "head": null,
+            "version_scheme": 0,
+            "compatibility_version": null
+          },
+          "path": "/Users/jupiter/Library/Caches/Homebrew/api/internal/packages.arm64_tahoe.jws.json",
+          "tap_git_head": null,
+          "tap": "homebrew/core"
+        },
+        "arch": "arm64",
+        "built_on": {
+          "os": "Macintosh",
+          "os_version": "macOS 26",
+          "cpu_family": "dunno",
+          "xcode": "26.6",
+          "clt": "26.6.0.0.1781586589",
+          "preferred_perl": "5.34"
+        }
+      },
+      "sha256": "f6d58240c48bd25b7a79e9c3dc17842f2e80caa2c90f69a07e9103f2133a6ed3"
+    },
+    "/opt/homebrew/Cellar/openssl@3/3.6.5": {
+      "receipt": {
+        "homebrew_version": "7.0.7-32-g19e9e67",
+        "used_options": [],
+        "unused_options": [],
+        "built_as_bottle": true,
+        "built_prefix": "/opt/homebrew",
+        "poured_from_bottle": true,
+        "loaded_from_api": true,
+        "loaded_from_internal_api": true,
+        "installed_on_request": true,
+        "changed_files": [
+          "bin/c_rehash",
+          "lib/pkgconfig/libcrypto.pc",
+          "lib/pkgconfig/libssl.pc",
+          "lib/pkgconfig/openssl.pc"
+        ],
+        "linkage_files": [
+          "bin/openssl",
+          "lib/engines-3/capi.dylib",
+          "lib/engines-3/loader_attic.dylib",
+          "lib/engines-3/padlock.dylib",
+          "lib/libcrypto.3.dylib",
+          "lib/libssl.3.dylib",
+          "lib/ossl-modules/legacy.dylib"
+        ],
+        "binary_relocation_files": [
+          "lib/libcrypto.3.dylib",
+          "lib/libcrypto.a"
+        ],
+        "time": 1790972954,
+        "source_modified_time": 1790690250,
+        "compiler": "clang",
+        "aliases": [
+          "openssl@3.6"
+        ],
+        "runtime_dependencies": [
+          {
+            "full_name": "ca-certificates",
+            "version": "2026-09-25",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "2026-09-25",
+            "declared_directly": true
+          }
+        ],
+        "source": {
+          "spec": "stable",
+          "versions": {
+            "stable": "3.6.5",
+            "head": null,
+            "version_scheme": 0,
+            "compatibility_version": null
+          },
+          "path": "/Users/jupiter/Library/Caches/Homebrew/api/internal/packages.arm64_tahoe.jws.json",
+          "tap_git_head": null,
+          "tap": "homebrew/core"
+        },
+        "arch": "arm64",
+        "built_on": {
+          "os": "Macintosh",
+          "os_version": "macOS 26.6",
+          "cpu_family": "dunno",
+          "xcode": "27.0",
+          "clt": "27.0.0.0.1788430756",
+          "preferred_perl": "5.34"
+        }
+      },
+      "sha256": "da3667bc4862e4c664f7143e174eab0e984d3b6f5f7bc3d4d25b0efd4cd74a80"
+    },
+    "/opt/homebrew/Cellar/ca-certificates/2026-09-25": {
+      "receipt": {
+        "homebrew_version": "7.0.6-42-gddc6726",
+        "used_options": [],
+        "unused_options": [],
+        "built_as_bottle": true,
+        "poured_from_bottle": true,
+        "loaded_from_api": true,
+        "loaded_from_internal_api": true,
+        "installed_on_request": false,
+        "changed_files": [],
+        "linkage_files": [],
+        "binary_relocation_files": [],
+        "time": 1790972947,
+        "source_modified_time": 1790305921,
+        "compiler": "clang",
+        "aliases": [],
+        "runtime_dependencies": [],
+        "source": {
+          "spec": "stable",
+          "versions": {
+            "stable": "2026-09-25",
+            "head": null,
+            "version_scheme": 0,
+            "compatibility_version": null
+          },
+          "path": "/Users/jupiter/Library/Caches/Homebrew/api/internal/packages.arm64_tahoe.jws.json",
+          "tap_git_head": null,
+          "tap": "homebrew/core"
+        },
+        "arch": "arm64",
+        "built_on": null
+      },
+      "sha256": "4d709662eb180ddd6ea50444ea2b9518d1ee7c19fda9e7ab4fb16675031f6dd1"
+    },
+    "/opt/homebrew/Cellar/boost-mpi/1.92.0": {
+      "receipt": {
+        "homebrew_version": "6.0.17-32-geb0d884",
+        "used_options": [],
+        "unused_options": [],
+        "built_as_bottle": true,
+        "built_prefix": "/opt/homebrew",
+        "poured_from_bottle": true,
+        "loaded_from_api": true,
+        "loaded_from_internal_api": true,
+        "installed_on_request": true,
+        "changed_files": [],
+        "time": 1793318658,
+        "source_modified_time": 1786538465,
+        "compiler": "clang",
+        "aliases": [],
+        "runtime_dependencies": [
+          {
+            "full_name": "icu4c@78",
+            "version": "78.3",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "78.3",
+            "declared_directly": false
+          },
+          {
+            "full_name": "xz",
+            "version": "5.8.4",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "5.8.4",
+            "declared_directly": false
+          },
+          {
+            "full_name": "lz4",
+            "version": "1.10.0",
+            "revision": 0,
+            "bottle_rebuild": 3,
+            "pkg_version": "1.10.0",
+            "declared_directly": false
+          },
+          {
+            "full_name": "zstd",
+            "version": "1.5.7",
+            "revision": 1,
+            "bottle_rebuild": 0,
+            "pkg_version": "1.5.7_1",
+            "declared_directly": false
+          },
+          {
+            "full_name": "boost",
+            "version": "1.92.0",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "1.92.0",
+            "declared_directly": true
+          },
+          {
+            "full_name": "gmp",
+            "version": "6.3.0",
+            "revision": 0,
+            "bottle_rebuild": 1,
+            "pkg_version": "6.3.0",
+            "declared_directly": false
+          },
+          {
+            "full_name": "isl",
+            "version": "0.28",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "0.28",
+            "declared_directly": false
+          },
+          {
+            "full_name": "mpfr",
+            "version": "4.2.2",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "4.2.2",
+            "declared_directly": false
+          },
+          {
+            "full_name": "libmpc",
+            "version": "1.4.1",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "1.4.1",
+            "declared_directly": false
+          },
+          {
+            "full_name": "gcc",
+            "version": "16.2.0",
+            "revision": 0,
+            "bottle_rebuild": 1,
+            "pkg_version": "16.2.0",
+            "declared_directly": false
+          },
+          {
+            "full_name": "hwloc",
+            "version": "2.15.0",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "2.15.0",
+            "declared_directly": false
+          },
+          {
+            "full_name": "ca-certificates",
+            "version": "2026-09-25",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "2026-09-25",
+            "declared_directly": false
+          },
+          {
+            "full_name": "openssl@3",
+            "version": "3.6.5",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "3.6.5",
+            "declared_directly": false
+          },
+          {
+            "full_name": "libevent",
+            "version": "2.1.13",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "2.1.13",
+            "declared_directly": false
+          },
+          {
+            "full_name": "pmix",
+            "version": "6.1.0",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "6.1.0",
+            "declared_directly": false
+          },
+          {
+            "full_name": "prrte",
+            "version": "4.1.0",
+            "revision": 1,
+            "bottle_rebuild": 0,
+            "pkg_version": "4.1.0_1",
+            "declared_directly": false
+          },
+          {
+            "full_name": "open-mpi",
+            "version": "5.0.11",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "5.0.11",
+            "declared_directly": true
+          }
+        ],
+        "source": {
+          "spec": "stable",
+          "versions": {
+            "stable": "1.92.0",
+            "head": null,
+            "version_scheme": 0,
+            "compatibility_version": null
+          },
+          "path": "/Users/jupiter/Library/Caches/Homebrew/api/internal/packages.arm64_tahoe.jws.json",
+          "tap_git_head": null,
+          "tap": "homebrew/core"
+        },
+        "arch": "arm64",
+        "built_on": {
+          "os": "Macintosh",
+          "os_version": "macOS 26",
+          "cpu_family": "dunno",
+          "xcode": "26.6",
+          "clt": "26.6.0.0.1781586589",
+          "preferred_perl": "5.34"
+        }
+      },
+      "sha256": "c281e21e14d1185d985338e85e9a7bc7c49651b23c378970c8577144a5d71fd0"
+    },
+    "/opt/homebrew/Cellar/open-mpi/5.0.11": {
+      "receipt": {
+        "homebrew_version": "7.0.4-5-g6bfe3ed",
+        "used_options": [],
+        "unused_options": [],
+        "built_as_bottle": true,
+        "built_prefix": "/opt/homebrew",
+        "poured_from_bottle": true,
+        "loaded_from_api": true,
+        "loaded_from_internal_api": true,
+        "installed_on_request": true,
+        "changed_files": [
+          "lib/pkgconfig/ompi-c.pc",
+          "lib/pkgconfig/ompi-cxx.pc",
+          "lib/pkgconfig/ompi-f77.pc",
+          "lib/pkgconfig/ompi-f90.pc",
+          "lib/pkgconfig/ompi-fort.pc",
+          "lib/pkgconfig/ompi.pc"
+        ],
+        "linkage_files": [
+          "bin/mpirun",
+          "bin/ompi_info",
+          "bin/opal_wrapper",
+          "lib/libmpi.40.dylib",
+          "lib/libmpi_mpifh.40.dylib",
+          "lib/libmpi_usempi_ignore_tkr.40.dylib",
+          "lib/libmpi_usempif08.40.dylib",
+          "lib/libopen-pal.80.dylib",
+          "lib/openmpi/libompi_dbg_msgq.so"
+        ],
+        "binary_relocation_files": [
+          "bin/mpirun",
+          "bin/ompi_info",
+          "bin/opal_wrapper",
+          "lib/libopen-pal.80.dylib"
+        ],
+        "time": 1793318657,
+        "source_modified_time": 1789597385,
+        "compiler": "clang",
+        "aliases": [
+          "openmpi"
+        ],
+        "runtime_dependencies": [
+          {
+            "full_name": "gmp",
+            "version": "6.3.0",
+            "revision": 0,
+            "bottle_rebuild": 1,
+            "pkg_version": "6.3.0",
+            "declared_directly": false
+          },
+          {
+            "full_name": "isl",
+            "version": "0.28",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "0.28",
+            "declared_directly": false
+          },
+          {
+            "full_name": "mpfr",
+            "version": "4.2.2",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "4.2.2",
+            "declared_directly": false
+          },
+          {
+            "full_name": "libmpc",
+            "version": "1.4.1",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "1.4.1",
+            "declared_directly": false
+          },
+          {
+            "full_name": "lz4",
+            "version": "1.10.0",
+            "revision": 0,
+            "bottle_rebuild": 3,
+            "pkg_version": "1.10.0",
+            "declared_directly": false
+          },
+          {
+            "full_name": "xz",
+            "version": "5.8.4",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "5.8.4",
+            "declared_directly": false
+          },
+          {
+            "full_name": "zstd",
+            "version": "1.5.7",
+            "revision": 1,
+            "bottle_rebuild": 0,
+            "pkg_version": "1.5.7_1",
+            "declared_directly": false
+          },
+          {
+            "full_name": "gcc",
+            "version": "16.2.0",
+            "revision": 0,
+            "bottle_rebuild": 1,
+            "pkg_version": "16.2.0",
+            "declared_directly": true
+          },
+          {
+            "full_name": "hwloc",
+            "version": "2.15.0",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "2.15.0",
+            "declared_directly": true
+          },
+          {
+            "full_name": "ca-certificates",
+            "version": "2026-09-25",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "2026-09-25",
+            "declared_directly": false
+          },
+          {
+            "full_name": "openssl@3",
+            "version": "3.6.5",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "3.6.5",
+            "declared_directly": false
+          },
+          {
+            "full_name": "libevent",
+            "version": "2.1.13",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "2.1.13",
+            "declared_directly": true
+          },
+          {
+            "full_name": "pmix",
+            "version": "6.1.0",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "6.1.0",
+            "declared_directly": true
+          },
+          {
+            "full_name": "prrte",
+            "version": "4.1.0",
+            "revision": 1,
+            "bottle_rebuild": 0,
+            "pkg_version": "4.1.0_1",
+            "declared_directly": true
+          }
+        ],
+        "source": {
+          "spec": "stable",
+          "versions": {
+            "stable": "5.0.11",
+            "head": null,
+            "version_scheme": 0,
+            "compatibility_version": null
+          },
+          "path": "/Users/jupiter/Library/Caches/Homebrew/api/internal/packages.arm64_tahoe.jws.json",
+          "tap_git_head": null,
+          "tap": "homebrew/core"
+        },
+        "arch": "arm64",
+        "built_on": {
+          "os": "Macintosh",
+          "os_version": "macOS 26.6",
+          "cpu_family": "dunno",
+          "xcode": "27.0",
+          "clt": "27.0.0.0.1788430756",
+          "preferred_perl": "5.34"
+        }
+      },
+      "sha256": "5c7af154d87141f611f2f8ebcae0b93155d83f549c883fb2b4d70d2646b3f9ef"
+    },
+    "/opt/homebrew/Cellar/prrte/4.1.0_1": {
+      "receipt": {
+        "homebrew_version": "6.0.9-66-g06440bb",
+        "used_options": [],
+        "unused_options": [],
+        "built_as_bottle": true,
+        "built_prefix": "/opt/homebrew",
+        "poured_from_bottle": true,
+        "loaded_from_api": true,
+        "loaded_from_internal_api": true,
+        "installed_on_request": false,
+        "changed_files": [],
+        "time": 1793318656,
+        "source_modified_time": 1772217808,
+        "compiler": "clang",
+        "aliases": [],
+        "runtime_dependencies": [
+          {
+            "full_name": "hwloc",
+            "version": "2.15.0",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "2.15.0",
+            "declared_directly": true
+          },
+          {
+            "full_name": "ca-certificates",
+            "version": "2026-09-25",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "2026-09-25",
+            "declared_directly": false
+          },
+          {
+            "full_name": "openssl@3",
+            "version": "3.6.5",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "3.6.5",
+            "declared_directly": false
+          },
+          {
+            "full_name": "libevent",
+            "version": "2.1.13",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "2.1.13",
+            "declared_directly": true
+          },
+          {
+            "full_name": "pmix",
+            "version": "6.1.0",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "6.1.0",
+            "declared_directly": true
+          }
+        ],
+        "source": {
+          "spec": "stable",
+          "versions": {
+            "stable": "4.1.0",
+            "head": null,
+            "version_scheme": 0,
+            "compatibility_version": null
+          },
+          "path": "/Users/jupiter/Library/Caches/Homebrew/api/internal/packages.arm64_tahoe.jws.json",
+          "tap_git_head": null,
+          "tap": "homebrew/core"
+        },
+        "arch": "arm64",
+        "built_on": {
+          "os": "Macintosh",
+          "os_version": "macOS 26",
+          "cpu_family": "dunno",
+          "xcode": "26.4",
+          "clt": "26.4.0.0.1774242506",
+          "preferred_perl": "5.34"
+        }
+      },
+      "sha256": "e28dafeb446ed0c9b6ff2b046c8592a975a121c057fe92e9f1c345fbf4d4bc3e"
+    },
+    "/opt/homebrew/Cellar/pmix/6.1.0": {
+      "receipt": {
+        "homebrew_version": "6.0.6-30-gd808d59",
+        "used_options": [],
+        "unused_options": [],
+        "built_as_bottle": true,
+        "built_prefix": "/opt/homebrew",
+        "poured_from_bottle": true,
+        "loaded_from_api": true,
+        "loaded_from_internal_api": true,
+        "installed_on_request": false,
+        "changed_files": [
+          "include/pmix/src/include/pmix_config.h",
+          "lib/pkgconfig/pmix.pc"
+        ],
+        "time": 1793318655,
+        "source_modified_time": 1772217503,
+        "compiler": "clang",
+        "aliases": [],
+        "runtime_dependencies": [
+          {
+            "full_name": "hwloc",
+            "version": "2.15.0",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "2.15.0",
+            "declared_directly": true
+          },
+          {
+            "full_name": "ca-certificates",
+            "version": "2026-09-25",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "2026-09-25",
+            "declared_directly": false
+          },
+          {
+            "full_name": "openssl@3",
+            "version": "3.6.5",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "3.6.5",
+            "declared_directly": false
+          },
+          {
+            "full_name": "libevent",
+            "version": "2.1.13",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "2.1.13",
+            "declared_directly": true
+          }
+        ],
+        "source": {
+          "spec": "stable",
+          "versions": {
+            "stable": "6.1.0",
+            "head": null,
+            "version_scheme": 0,
+            "compatibility_version": null
+          },
+          "path": "/Users/jupiter/Library/Caches/Homebrew/api/internal/packages.arm64_tahoe.jws.json",
+          "tap_git_head": null,
+          "tap": "homebrew/core"
+        },
+        "arch": "arm64",
+        "built_on": {
+          "os": "Macintosh",
+          "os_version": "macOS 26",
+          "cpu_family": "dunno",
+          "xcode": "26.4",
+          "clt": "26.4.0.0.1774242506",
+          "preferred_perl": "5.34"
+        }
+      },
+      "sha256": "60838016d43d8f4b7f7bc47e60875c2e91349b86c5098632abc8a3c1d001aadd"
+    },
+    "/opt/homebrew/Cellar/libevent/2.1.13": {
+      "receipt": {
+        "homebrew_version": "6.0.6-2-g7f14ed4",
+        "used_options": [],
+        "unused_options": [],
+        "built_as_bottle": true,
+        "poured_from_bottle": true,
+        "loaded_from_api": true,
+        "loaded_from_internal_api": true,
+        "installed_on_request": false,
+        "changed_files": [
+          "lib/pkgconfig/libevent.pc",
+          "lib/pkgconfig/libevent_core.pc",
+          "lib/pkgconfig/libevent_extra.pc",
+          "lib/pkgconfig/libevent_openssl.pc",
+          "lib/pkgconfig/libevent_pthreads.pc"
+        ],
+        "time": 1793318655,
+        "source_modified_time": 1782905417,
+        "compiler": "clang",
+        "aliases": [],
+        "runtime_dependencies": [
+          {
+            "full_name": "ca-certificates",
+            "version": "2026-09-25",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "2026-09-25",
+            "declared_directly": false
+          },
+          {
+            "full_name": "openssl@3",
+            "version": "3.6.5",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "3.6.5",
+            "declared_directly": true
+          }
+        ],
+        "source": {
+          "spec": "stable",
+          "versions": {
+            "stable": "2.1.13",
+            "head": null,
+            "version_scheme": 0,
+            "compatibility_version": null
+          },
+          "path": "/Users/jupiter/Library/Caches/Homebrew/api/internal/packages.arm64_tahoe.jws.json",
+          "tap_git_head": null,
+          "tap": "homebrew/core"
+        },
+        "arch": "arm64",
+        "built_on": {
+          "os": "Macintosh",
+          "os_version": "macOS 26",
+          "cpu_family": "dunno",
+          "xcode": "26.4",
+          "clt": "26.4.0.0.1774242506",
+          "preferred_perl": "5.34"
+        }
+      },
+      "sha256": "e65ac70017475f71c85da94183f2db59410bafa8a524746485ca0c41f5cdf658"
+    },
+    "/opt/homebrew/Cellar/hwloc/2.15.0": {
+      "receipt": {
+        "homebrew_version": "7.0.6-21-g3f12c3e",
+        "used_options": [],
+        "unused_options": [],
+        "built_as_bottle": true,
+        "poured_from_bottle": true,
+        "loaded_from_api": true,
+        "loaded_from_internal_api": true,
+        "installed_on_request": false,
+        "changed_files": [
+          "bin/hwloc-compress-dir",
+          "lib/pkgconfig/hwloc.pc"
+        ],
+        "linkage_files": [
+          "bin/hwloc-annotate",
+          "bin/hwloc-bind",
+          "bin/hwloc-calc",
+          "bin/hwloc-diff",
+          "bin/hwloc-distrib",
+          "bin/hwloc-info",
+          "bin/hwloc-patch",
+          "bin/hwloc-ps",
+          "bin/lstopo-no-graphics",
+          "lib/libhwloc.15.dylib"
+        ],
+        "binary_relocation_files": [],
+        "time": 1793318654,
+        "source_modified_time": 1790164938,
+        "compiler": "clang",
+        "aliases": [],
+        "runtime_dependencies": [],
+        "source": {
+          "spec": "stable",
+          "versions": {
+            "stable": "2.15.0",
+            "head": null,
+            "version_scheme": 0,
+            "compatibility_version": null
+          },
+          "path": "/Users/jupiter/Library/Caches/Homebrew/api/internal/packages.arm64_tahoe.jws.json",
+          "tap_git_head": null,
+          "tap": "homebrew/core"
+        },
+        "arch": "arm64",
+        "built_on": {
+          "os": "Macintosh",
+          "os_version": "macOS 26.6",
+          "cpu_family": "dunno",
+          "xcode": "27.0",
+          "clt": "27.0.0.0.1788430756",
+          "preferred_perl": "5.34"
+        }
+      },
+      "sha256": "0c4503a002cbb77de4b94403231cde5e104a6c843d02cc80b15c9b1346df8c3b"
+    },
+    "/opt/homebrew/Cellar/gcc/16.2.0": {
+      "receipt": {
+        "homebrew_version": "6.0.21-49-g40916f6",
+        "used_options": [],
+        "unused_options": [],
+        "built_as_bottle": true,
+        "built_prefix": "/opt/homebrew",
+        "poured_from_bottle": true,
+        "loaded_from_api": true,
+        "loaded_from_internal_api": true,
+        "installed_on_request": false,
+        "changed_files": [
+          "libexec/gcc/aarch64-apple-darwin25/16/install-tools/mkheaders",
+          "lib/gcc/current/gcc/aarch64-apple-darwin25/16/plugin/include/configargs.h",
+          "lib/gcc/current/libstdc++.6.dylib-gdb.py"
+        ],
+        "linkage_files": [
+          "bin/lto-dump-16",
+          "lib/gcc/current/libasan.8.dylib",
+          "lib/gcc/current/libatomic.1.dylib",
+          "lib/gcc/current/libgcc_s.1.1.dylib",
+          "lib/gcc/current/libgfortran.5.dylib",
+          "lib/gcc/current/libgomp.1.dylib",
+          "lib/gcc/current/libitm.1.dylib",
+          "lib/gcc/current/libobjc-gnu.4.dylib",
+          "lib/gcc/current/libquadmath.0.dylib",
+          "lib/gcc/current/libssp.0.dylib",
+          "lib/gcc/current/libstdc++.6.dylib",
+          "lib/gcc/current/libubsan.1.dylib",
+          "libexec/gcc/aarch64-apple-darwin25/16/cc1",
+          "libexec/gcc/aarch64-apple-darwin25/16/cc1obj",
+          "libexec/gcc/aarch64-apple-darwin25/16/cc1objplus",
+          "libexec/gcc/aarch64-apple-darwin25/16/cc1plus",
+          "libexec/gcc/aarch64-apple-darwin25/16/f951",
+          "libexec/gcc/aarch64-apple-darwin25/16/lto1"
+        ],
+        "binary_relocation_files": [
+          "bin/aarch64-apple-darwin25-c++-16",
+          "bin/aarch64-apple-darwin25-gcc-16",
+          "bin/aarch64-apple-darwin25-gcc-ar-16",
+          "bin/aarch64-apple-darwin25-gcc-nm-16",
+          "bin/cpp-16",
+          "bin/gcc-ranlib-16",
+          "bin/gfortran-16",
+          "libexec/gcc/aarch64-apple-darwin25/16/cc1",
+          "libexec/gcc/aarch64-apple-darwin25/16/cc1obj",
+          "libexec/gcc/aarch64-apple-darwin25/16/cc1objplus",
+          "libexec/gcc/aarch64-apple-darwin25/16/cc1plus",
+          "libexec/gcc/aarch64-apple-darwin25/16/f951"
+        ],
+        "time": 1793318651,
+        "source_modified_time": 1786090803,
+        "compiler": "clang",
+        "aliases": [
+          "gcc@16",
+          "gfortran"
+        ],
+        "runtime_dependencies": [
+          {
+            "full_name": "gmp",
+            "version": "6.3.0",
+            "revision": 0,
+            "bottle_rebuild": 1,
+            "pkg_version": "6.3.0",
+            "declared_directly": true
+          },
+          {
+            "full_name": "isl",
+            "version": "0.28",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "0.28",
+            "declared_directly": true
+          },
+          {
+            "full_name": "mpfr",
+            "version": "4.2.2",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "4.2.2",
+            "declared_directly": true
+          },
+          {
+            "full_name": "libmpc",
+            "version": "1.4.1",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "1.4.1",
+            "declared_directly": true
+          },
+          {
+            "full_name": "lz4",
+            "version": "1.10.0",
+            "revision": 0,
+            "bottle_rebuild": 3,
+            "pkg_version": "1.10.0",
+            "declared_directly": false
+          },
+          {
+            "full_name": "xz",
+            "version": "5.8.4",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "5.8.4",
+            "declared_directly": false
+          },
+          {
+            "full_name": "zstd",
+            "version": "1.5.7",
+            "revision": 1,
+            "bottle_rebuild": 0,
+            "pkg_version": "1.5.7_1",
+            "declared_directly": true
+          }
+        ],
+        "source": {
+          "spec": "stable",
+          "versions": {
+            "stable": "16.2.0",
+            "head": null,
+            "version_scheme": 0,
+            "compatibility_version": null
+          },
+          "path": "/Users/jupiter/Library/Caches/Homebrew/api/internal/packages.arm64_tahoe.jws.json",
+          "tap_git_head": null,
+          "tap": "homebrew/core"
+        },
+        "arch": "arm64",
+        "built_on": {
+          "os": "Macintosh",
+          "os_version": "macOS 26",
+          "cpu_family": "dunno",
+          "xcode": "26.6",
+          "clt": "26.6.0.0.1781586589",
+          "preferred_perl": "5.34"
+        }
+      },
+      "sha256": "90f583eb8f2fb503a09258b0ffe0eb5ff7bf9d5b4ce8a85955b72d6554c9e6d9"
+    },
+    "/opt/homebrew/Cellar/zstd/1.5.7_1": {
+      "receipt": {
+        "homebrew_version": "5.0.13-24-g70b5921",
+        "used_options": [],
+        "unused_options": [],
+        "built_as_bottle": true,
+        "poured_from_bottle": true,
+        "loaded_from_api": true,
+        "installed_as_dependency": true,
+        "installed_on_request": false,
+        "changed_files": [
+          "lib/pkgconfig/libzstd.pc"
+        ],
+        "time": 1771702293,
+        "source_modified_time": 1739923464,
+        "compiler": "clang",
+        "aliases": [
+          "pzstd"
+        ],
+        "runtime_dependencies": [
+          {
+            "full_name": "lz4",
+            "version": "1.10.0",
+            "revision": 0,
+            "bottle_rebuild": 1,
+            "pkg_version": "1.10.0",
+            "declared_directly": true
+          },
+          {
+            "full_name": "xz",
+            "version": "5.8.2",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "5.8.2",
+            "declared_directly": true
+          }
+        ],
+        "source": {
+          "spec": "stable",
+          "versions": {
+            "stable": "1.5.7",
+            "head": null,
+            "version_scheme": 0,
+            "compatibility_version": null
+          },
+          "path": "/Users/jupiter/Library/Caches/Homebrew/api/formula.jws.json",
+          "tap_git_head": null,
+          "tap": "homebrew/core"
+        },
+        "arch": "arm64",
+        "built_on": {
+          "os": "Macintosh",
+          "os_version": "macOS 26",
+          "cpu_family": "dunno",
+          "xcode": "26.2",
+          "clt": "26.2.0.0.1.1764812424",
+          "preferred_perl": "5.34"
+        }
+      },
+      "sha256": "8655a306282cce7e1e3ba5f608b66370b9db65bfd3e59c45cebe47917a96112e"
+    },
+    "/opt/homebrew/Cellar/xz/5.8.4": {
+      "receipt": {
+        "homebrew_version": "6.0.22-323-gde1ac14",
+        "used_options": [],
+        "unused_options": [],
+        "built_as_bottle": true,
+        "poured_from_bottle": true,
+        "loaded_from_api": true,
+        "loaded_from_internal_api": true,
+        "installed_on_request": false,
+        "changed_files": [
+          "lib/pkgconfig/liblzma.pc"
+        ],
+        "linkage_files": [
+          "bin/lzmadec",
+          "bin/lzmainfo",
+          "bin/xz",
+          "bin/xzdec",
+          "lib/liblzma.5.dylib"
+        ],
+        "binary_relocation_files": [],
+        "time": 1790972940,
+        "source_modified_time": 1788964466,
+        "compiler": "clang",
+        "aliases": [],
+        "runtime_dependencies": [],
+        "source": {
+          "spec": "stable",
+          "versions": {
+            "stable": "5.8.4",
+            "head": null,
+            "version_scheme": 1,
+            "compatibility_version": null
+          },
+          "path": "/Users/jupiter/Library/Caches/Homebrew/api/internal/packages.arm64_tahoe.jws.json",
+          "tap_git_head": null,
+          "tap": "homebrew/core"
+        },
+        "arch": "arm64",
+        "built_on": {
+          "os": "Macintosh",
+          "os_version": "macOS 26.6",
+          "cpu_family": "dunno",
+          "xcode": "27.0",
+          "clt": "27.0.0.0.1788430756",
+          "preferred_perl": "5.34"
+        }
+      },
+      "sha256": "8c18173d2b5876c5efc68322b8b722b4f526f604fc64bdcabdfc7b10aa95246a"
+    },
+    "/opt/homebrew/Cellar/lz4/1.10.0": {
+      "receipt": {
+        "homebrew_version": "4.3.16-28-gf17ee43",
+        "used_options": [],
+        "unused_options": [],
+        "built_as_bottle": true,
+        "poured_from_bottle": true,
+        "loaded_from_api": true,
+        "installed_as_dependency": true,
+        "installed_on_request": true,
+        "changed_files": [
+          "lib/pkgconfig/liblz4.pc"
+        ],
+        "time": 1725138325,
+        "source_modified_time": 1721582989,
+        "compiler": "clang",
+        "aliases": [],
+        "runtime_dependencies": [],
+        "source": {
+          "spec": "stable",
+          "versions": {
+            "stable": "1.10.0",
+            "head": null,
+            "version_scheme": 0
+          },
+          "path": "/Users/jupiter/Library/Caches/Homebrew/api/formula.jws.json",
+          "tap_git_head": null,
+          "tap": "homebrew/core"
+        },
+        "arch": "arm64",
+        "built_on": {
+          "os": "Macintosh",
+          "os_version": "macOS 14.4",
+          "cpu_family": "dunno",
+          "xcode": "15.3",
+          "clt": "15.3.0.0.1.1708646388",
+          "preferred_perl": "5.34"
+        }
+      },
+      "sha256": "10c5b82f5b2f04045b7ec2c3ea54642f8eaad03b5245efc7b4a4933ba5c120d0"
+    },
+    "/opt/homebrew/Cellar/libmpc/1.4.1": {
+      "receipt": {
+        "homebrew_version": "5.1.6-89-g598ecb7",
+        "used_options": [],
+        "unused_options": [],
+        "built_as_bottle": true,
+        "poured_from_bottle": true,
+        "loaded_from_api": true,
+        "loaded_from_internal_api": false,
+        "installed_on_request": false,
+        "changed_files": [
+          "lib/pkgconfig/mpc.pc"
+        ],
+        "time": 1780655949,
+        "source_modified_time": 1776170600,
+        "compiler": "clang",
+        "aliases": [],
+        "runtime_dependencies": [
+          {
+            "full_name": "gmp",
+            "version": "6.3.0",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "6.3.0",
+            "declared_directly": true
+          },
+          {
+            "full_name": "mpfr",
+            "version": "4.2.2",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "4.2.2",
+            "declared_directly": true
+          }
+        ],
+        "source": {
+          "spec": "stable",
+          "versions": {
+            "stable": "1.4.1",
+            "head": null,
+            "version_scheme": 0,
+            "compatibility_version": null
+          },
+          "path": "/Users/jupiter/Library/Caches/Homebrew/api/formula.jws.json",
+          "tap_git_head": null,
+          "tap": "homebrew/core"
+        },
+        "arch": "arm64",
+        "built_on": {
+          "os": "Macintosh",
+          "os_version": "macOS 26",
+          "cpu_family": "dunno",
+          "xcode": "26.4",
+          "clt": "26.4.0.0.1774242506",
+          "preferred_perl": "5.34"
+        }
+      },
+      "sha256": "a9570ef45945677caf3224d711f3853cc9a151bcc42f414940148ae7a8d3de2f"
+    },
+    "/opt/homebrew/Cellar/mpfr/4.2.2": {
+      "receipt": {
+        "homebrew_version": "4.4.25-31-g7ddc4b0",
+        "used_options": [],
+        "unused_options": [],
+        "built_as_bottle": true,
+        "poured_from_bottle": true,
+        "loaded_from_api": true,
+        "installed_as_dependency": true,
+        "installed_on_request": false,
+        "changed_files": [
+          "lib/pkgconfig/mpfr.pc"
+        ],
+        "time": 1749521961,
+        "source_modified_time": 1742462481,
+        "compiler": "clang",
+        "aliases": [],
+        "runtime_dependencies": [
+          {
+            "full_name": "gmp",
+            "version": "6.3.0",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "6.3.0",
+            "declared_directly": true
+          }
+        ],
+        "source": {
+          "spec": "stable",
+          "versions": {
+            "stable": "4.2.2",
+            "head": null,
+            "version_scheme": 0
+          },
+          "path": "/Users/jupiter/Library/Caches/Homebrew/api/formula.jws.json",
+          "tap_git_head": null,
+          "tap": "homebrew/core"
+        },
+        "arch": "arm64",
+        "built_on": {
+          "os": "Macintosh",
+          "os_version": "macOS 15",
+          "cpu_family": "dunno",
+          "xcode": "16.2",
+          "clt": "16.2.0.0.1.1733547573",
+          "preferred_perl": "5.34"
+        }
+      },
+      "sha256": "321d5f4fa526628eeb169a8f396db536e44811db3499e92bc4d83e163325a615"
+    },
+    "/opt/homebrew/Cellar/gmp/6.3.0": {
+      "receipt": {
+        "homebrew_version": "4.1.15-36-gc0c8a4d",
+        "used_options": [],
+        "unused_options": [],
+        "built_as_bottle": true,
+        "poured_from_bottle": true,
+        "loaded_from_api": true,
+        "installed_as_dependency": true,
+        "installed_on_request": false,
+        "changed_files": [
+          "lib/pkgconfig/gmp.pc",
+          "lib/pkgconfig/gmpxx.pc"
+        ],
+        "time": 1708725648,
+        "source_modified_time": 1690638162,
+        "compiler": "clang",
+        "aliases": [],
+        "runtime_dependencies": [],
+        "source": {
+          "spec": "stable",
+          "versions": {
+            "stable": "6.3.0",
+            "head": null,
+            "version_scheme": 0
+          },
+          "path": "/opt/homebrew/Library/Taps/homebrew/homebrew-core/Formula/g/gmp.rb",
+          "tap_git_head": null,
+          "tap": "homebrew/core"
+        },
+        "arch": "arm64",
+        "built_on": {
+          "os": "Macintosh",
+          "os_version": "macOS 14",
+          "cpu_family": "dunno",
+          "xcode": "15.0",
+          "clt": "15.0.0.0.1.1694021235",
+          "preferred_perl": "5.34"
+        }
+      },
+      "sha256": "53422b4ed2e92a96c39f2874d2b4000a2f83221ef016b721f62b6976f9d0e814"
+    },
+    "/opt/homebrew/Cellar/isl/0.28": {
+      "receipt": {
+        "homebrew_version": "6.0.6-88-gfe99b3b",
+        "used_options": [],
+        "unused_options": [],
+        "built_as_bottle": true,
+        "poured_from_bottle": true,
+        "loaded_from_api": true,
+        "loaded_from_internal_api": true,
+        "installed_on_request": false,
+        "changed_files": [
+          "lib/pkgconfig/isl.pc"
+        ],
+        "time": 1783574782,
+        "source_modified_time": 1783252941,
+        "compiler": "clang",
+        "aliases": [
+          "isl@0.28"
+        ],
+        "runtime_dependencies": [
+          {
+            "full_name": "gmp",
+            "version": "6.3.0",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "6.3.0",
+            "declared_directly": true
+          }
+        ],
+        "source": {
+          "spec": "stable",
+          "versions": {
+            "stable": "0.28",
+            "head": null,
+            "version_scheme": 0,
+            "compatibility_version": null
+          },
+          "path": "/Users/jupiter/Library/Caches/Homebrew/api/internal/packages.arm64_tahoe.jws.json",
+          "tap_git_head": null,
+          "tap": "homebrew/core"
+        },
+        "arch": "arm64",
+        "built_on": {
+          "os": "Macintosh",
+          "os_version": "macOS 26",
+          "cpu_family": "dunno",
+          "xcode": "26.4",
+          "clt": "26.4.0.0.1774242506",
+          "preferred_perl": "5.34"
+        }
+      },
+      "sha256": "d7633c29f3342c0b3409058400dda0a4cc84cf1da9675493327cc5cc5dec051f"
+    },
+    "/opt/homebrew/Cellar/boost/1.92.0": {
+      "receipt": {
+        "homebrew_version": "6.0.17-27-gec55b2e",
+        "used_options": [],
+        "unused_options": [],
+        "built_as_bottle": true,
+        "built_prefix": "/opt/homebrew",
+        "poured_from_bottle": true,
+        "loaded_from_api": true,
+        "loaded_from_internal_api": true,
+        "installed_on_request": true,
+        "changed_files": [
+          "lib/cmake/boost_atomic-1.92.0/boost_atomic-config.cmake",
+          "lib/cmake/boost_charconv-1.92.0/boost_charconv-config.cmake",
+          "lib/cmake/boost_chrono-1.92.0/boost_chrono-config.cmake",
+          "lib/cmake/boost_container-1.92.0/boost_container-config.cmake",
+          "lib/cmake/boost_context-1.92.0/boost_context-config.cmake",
+          "lib/cmake/boost_contract-1.92.0/boost_contract-config.cmake",
+          "lib/cmake/boost_coroutine-1.92.0/boost_coroutine-config.cmake",
+          "lib/cmake/boost_date_time-1.92.0/boost_date_time-config.cmake",
+          "lib/cmake/boost_exception-1.92.0/boost_exception-config.cmake",
+          "lib/cmake/boost_fiber-1.92.0/boost_fiber-config.cmake",
+          "lib/cmake/boost_filesystem-1.92.0/boost_filesystem-config.cmake",
+          "lib/cmake/boost_graph-1.92.0/boost_graph-config.cmake",
+          "lib/cmake/boost_graph_parallel-1.92.0/boost_graph_parallel-config.cmake",
+          "lib/cmake/boost_headers-1.92.0/boost_headers-config.cmake",
+          "lib/cmake/boost_iostreams-1.92.0/boost_iostreams-config.cmake",
+          "lib/cmake/boost_json-1.92.0/boost_json-config.cmake",
+          "lib/cmake/boost_locale-1.92.0/boost_locale-config.cmake",
+          "lib/cmake/boost_log-1.92.0/boost_log-config.cmake",
+          "lib/cmake/boost_log_setup-1.92.0/boost_log_setup-config.cmake",
+          "lib/cmake/boost_math-1.92.0/boost_math-config.cmake",
+          "lib/cmake/boost_math_c99-1.92.0/boost_math_c99-config.cmake",
+          "lib/cmake/boost_math_c99f-1.92.0/boost_math_c99f-config.cmake",
+          "lib/cmake/boost_math_c99l-1.92.0/boost_math_c99l-config.cmake",
+          "lib/cmake/boost_math_tr1-1.92.0/boost_math_tr1-config.cmake",
+          "lib/cmake/boost_math_tr1f-1.92.0/boost_math_tr1f-config.cmake",
+          "lib/cmake/boost_math_tr1l-1.92.0/boost_math_tr1l-config.cmake",
+          "lib/cmake/boost_nowide-1.92.0/boost_nowide-config.cmake",
+          "lib/cmake/boost_prg_exec_monitor-1.92.0/boost_prg_exec_monitor-config.cmake",
+          "lib/cmake/boost_process-1.92.0/boost_process-config.cmake",
+          "lib/cmake/boost_program_options-1.92.0/boost_program_options-config.cmake",
+          "lib/cmake/boost_random-1.92.0/boost_random-config.cmake",
+          "lib/cmake/boost_regex-1.92.0/boost_regex-config.cmake",
+          "lib/cmake/boost_regex_old-1.92.0/boost_regex_old-config.cmake",
+          "lib/cmake/boost_serialization-1.92.0/boost_serialization-config.cmake",
+          "lib/cmake/boost_stacktrace_addr2line-1.92.0/boost_stacktrace_addr2line-config.cmake",
+          "lib/cmake/boost_stacktrace_basic-1.92.0/boost_stacktrace_basic-config.cmake",
+          "lib/cmake/boost_stacktrace_dump-1.92.0/boost_stacktrace_dump-config.cmake",
+          "lib/cmake/boost_stacktrace_from_exception-1.92.0/boost_stacktrace_from_exception-config.cmake",
+          "lib/cmake/boost_stacktrace_noop-1.92.0/boost_stacktrace_noop-config.cmake",
+          "lib/cmake/boost_system-1.92.0/boost_system-config.cmake",
+          "lib/cmake/boost_test_exec_monitor-1.92.0/boost_test_exec_monitor-config.cmake",
+          "lib/cmake/boost_thread-1.92.0/boost_thread-config.cmake",
+          "lib/cmake/boost_timer-1.92.0/boost_timer-config.cmake",
+          "lib/cmake/boost_type_erasure-1.92.0/boost_type_erasure-config.cmake",
+          "lib/cmake/boost_unit_test_framework-1.92.0/boost_unit_test_framework-config.cmake",
+          "lib/cmake/boost_url-1.92.0/boost_url-config.cmake",
+          "lib/cmake/boost_wave-1.92.0/boost_wave-config.cmake",
+          "lib/cmake/boost_wserialization-1.92.0/boost_wserialization-config.cmake"
+        ],
+        "time": 1790972979,
+        "source_modified_time": 1786538465,
+        "compiler": "clang",
+        "aliases": [
+          "boost@1.92"
+        ],
+        "runtime_dependencies": [
+          {
+            "full_name": "icu4c@78",
+            "version": "78.3",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "78.3",
+            "declared_directly": true
+          },
+          {
+            "full_name": "xz",
+            "version": "5.8.4",
+            "revision": 0,
+            "bottle_rebuild": 0,
+            "pkg_version": "5.8.4",
+            "declared_directly": true
+          },
+          {
+            "full_name": "lz4",
+            "version": "1.10.0",
+            "revision": 0,
+            "bottle_rebuild": 3,
+            "pkg_version": "1.10.0",
+            "declared_directly": false
+          },
+          {
+            "full_name": "zstd",
+            "version": "1.5.7",
+            "revision": 1,
+            "bottle_rebuild": 0,
+            "pkg_version": "1.5.7_1",
+            "declared_directly": true
+          }
+        ],
+        "source": {
+          "spec": "stable",
+          "versions": {
+            "stable": "1.92.0",
+            "head": null,
+            "version_scheme": 0,
+            "compatibility_version": null
+          },
+          "path": "/Users/jupiter/Library/Caches/Homebrew/api/internal/packages.arm64_tahoe.jws.json",
+          "tap_git_head": null,
+          "tap": "homebrew/core"
+        },
+        "arch": "arm64",
+        "built_on": {
+          "os": "Macintosh",
+          "os_version": "macOS 26",
+          "cpu_family": "dunno",
+          "xcode": "26.6",
+          "clt": "26.6.0.0.1781586589",
+          "preferred_perl": "5.34"
+        }
+      },
+      "sha256": "27d4be7a5f8db52e9210b5aaf8f58c15a19c4ff1aa8cb8c580c018dfcc5c2e10"
+    },
+    "/opt/homebrew/Cellar/icu4c@78/78.3": {
+      "receipt": {
+        "homebrew_version": "5.1.0-67-g603412f",
+        "used_options": [],
+        "unused_options": [],
+        "built_as_bottle": true,
+        "poured_from_bottle": true,
+        "loaded_from_api": true,
+        "loaded_from_internal_api": false,
+        "installed_on_request": false,
+        "changed_files": [
+          "bin/icu-config",
+          "lib/icu/78.3/Makefile.inc",
+          "lib/icu/78.3/pkgdata.inc",
+          "lib/pkgconfig/icu-i18n.pc",
+          "lib/pkgconfig/icu-io.pc",
+          "lib/pkgconfig/icu-uc.pc"
+        ],
+        "time": 1780655908,
+        "source_modified_time": 1773769494,
+        "compiler": "clang",
+        "aliases": [
+          "icu4c"
+        ],
+        "runtime_dependencies": [],
+        "source": {
+          "spec": "stable",
+          "versions": {
+            "stable": "78.3",
+            "head": null,
+            "version_scheme": 0,
+            "compatibility_version": null
+          },
+          "path": "/Users/jupiter/Library/Caches/Homebrew/api/formula.jws.json",
+          "tap_git_head": null,
+          "tap": "homebrew/core"
+        },
+        "arch": "arm64",
+        "built_on": {
+          "os": "Macintosh",
+          "os_version": "macOS 26.3",
+          "cpu_family": "dunno",
+          "xcode": "26.3",
+          "clt": "26.3.0.0.1.1771626560",
+          "preferred_perl": "5.34"
+        }
+      },
+      "sha256": "77818bd9120ea9e733c62a3026d7774286592162cbea3dc8a6bdf9c655086524"
+    }
+  },
+  "binaries": {
+    "catalyst_repast": {
+      "sha256": "d5be375bc108b51005d1ad3b9a6a16a3f8e45f8c766039a3bacabd3c4e88647b",
+      "file": "/private/tmp/catalyst-repast-build/catalyst_repast: Mach-O 64-bit executable arm64",
+      "linked": "/private/tmp/catalyst-repast-build/catalyst_repast:\n\t/opt/homebrew/opt/openssl@3/lib/libcrypto.3.dylib (compatibility version 3.0.0, current version 3.0.0)\n\t/opt/homebrew/opt/open-mpi/lib/libmpi.40.dylib (compatibility version 81.0.0, current version 81.8.0)\n\t/opt/homebrew/opt/boost-mpi/lib/libboost_mpi.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/opt/homebrew/opt/boost/lib/libboost_serialization.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/opt/homebrew/opt/boost/lib/libboost_thread.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/opt/homebrew/opt/boost/lib/libboost_chrono.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/opt/homebrew/opt/boost/lib/libboost_date_time.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/opt/homebrew/opt/boost/lib/libboost_container.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/opt/homebrew/opt/boost/lib/libboost_filesystem.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/opt/homebrew/opt/boost/lib/libboost_atomic.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)",
+      "libraries": {
+        "/opt/homebrew/Cellar/openssl@3/3.6.5/lib/libcrypto.3.dylib": "31180b62269748133aaa870deedce8037a9b51547887c6c0be56a58e3a6a9a4a",
+        "/opt/homebrew/Cellar/open-mpi/5.0.11/lib/libmpi.40.dylib": "a2c61a3988ca1606fc21b8ba232531926d157211fbe34e28c3b28f800df5fd0d",
+        "/opt/homebrew/Cellar/boost-mpi/1.92.0/lib/libboost_mpi.dylib": "fc1511116de795889184445007c8e5b0cde6225ef084ee949ad2de939b13296e",
+        "/opt/homebrew/Cellar/boost/1.92.0/lib/libboost_serialization.dylib": "83d38024bd03ebe9cdb3379a870a6398844377265526aafdc8ffb30e251cdfc7",
+        "/opt/homebrew/Cellar/boost/1.92.0/lib/libboost_thread.dylib": "30588b0187d7e889a83b84c621024767d43b43b988c35dbc13160d9f86ea3af8",
+        "/opt/homebrew/Cellar/boost/1.92.0/lib/libboost_chrono.dylib": "4c802654455de23abbcb0310d874b6ba7f738a8b19f9794ab77131760040d534",
+        "/opt/homebrew/Cellar/boost/1.92.0/lib/libboost_date_time.dylib": "757b90310013555eae7452a4999435f889246f03eda86f4847f0cfb924179ee1",
+        "/opt/homebrew/Cellar/boost/1.92.0/lib/libboost_container.dylib": "8c83fa51d3d1cf9a173c021afe70910b9023cecdb5a8a5ead06a129a81e0ceab",
+        "/opt/homebrew/Cellar/boost/1.92.0/lib/libboost_filesystem.dylib": "fccc70ad53b3d1fd89a8cc11997024b4798dbfa4480acd5d3532df973fbf447c",
+        "/opt/homebrew/Cellar/boost/1.92.0/lib/libboost_atomic.dylib": "cbb0ca3f0906999bfef951f408149bf581d1e3b0e184caf2f4f45696e5b2b6b0"
+      }
+    },
+    "catalyst_value_tests": {
+      "sha256": "3fa5e274c703bb43c6293faa472a96158316e97181fc984216dbbf67f7292908",
+      "file": "/private/tmp/catalyst-repast-build/catalyst_value_tests: Mach-O 64-bit executable arm64",
+      "linked": "/private/tmp/catalyst-repast-build/catalyst_value_tests:\n\t/opt/homebrew/opt/boost/lib/libboost_serialization.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/opt/homebrew/opt/openssl@3/lib/libcrypto.3.dylib (compatibility version 3.0.0, current version 3.0.0)\n\t/opt/homebrew/opt/boost/lib/libboost_thread.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/opt/homebrew/opt/boost/lib/libboost_atomic.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/opt/homebrew/opt/boost/lib/libboost_chrono.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/opt/homebrew/opt/boost/lib/libboost_date_time.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/opt/homebrew/opt/boost/lib/libboost_container.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)",
+      "libraries": {
+        "/opt/homebrew/Cellar/boost/1.92.0/lib/libboost_serialization.dylib": "83d38024bd03ebe9cdb3379a870a6398844377265526aafdc8ffb30e251cdfc7",
+        "/opt/homebrew/Cellar/openssl@3/3.6.5/lib/libcrypto.3.dylib": "31180b62269748133aaa870deedce8037a9b51547887c6c0be56a58e3a6a9a4a",
+        "/opt/homebrew/Cellar/boost/1.92.0/lib/libboost_thread.dylib": "30588b0187d7e889a83b84c621024767d43b43b988c35dbc13160d9f86ea3af8",
+        "/opt/homebrew/Cellar/boost/1.92.0/lib/libboost_atomic.dylib": "cbb0ca3f0906999bfef951f408149bf581d1e3b0e184caf2f4f45696e5b2b6b0",
+        "/opt/homebrew/Cellar/boost/1.92.0/lib/libboost_chrono.dylib": "4c802654455de23abbcb0310d874b6ba7f738a8b19f9794ab77131760040d534",
+        "/opt/homebrew/Cellar/boost/1.92.0/lib/libboost_date_time.dylib": "757b90310013555eae7452a4999435f889246f03eda86f4847f0cfb924179ee1",
+        "/opt/homebrew/Cellar/boost/1.92.0/lib/libboost_container.dylib": "8c83fa51d3d1cf9a173c021afe70910b9023cecdb5a8a5ead06a129a81e0ceab"
+      }
+    }
+  },
+  "cmakeCache": "# This is the CMakeCache file.\n# For build in directory: /private/tmp/catalyst-repast-build\n# It was generated by CMake: /opt/homebrew/bin/cmake\n# You can edit this file to change values found and used by cmake.\n# If you do not want to change any of the values, simply exit the editor.\n# If you do want to change a value, simply edit, save, and exit the editor.\n# The syntax for the file is as follows:\n# KEY:TYPE=VALUE\n# KEY is the name of a variable in the cache.\n# TYPE is a hint to GUIs for the type of VALUE, DO NOT EDIT TYPE!.\n# VALUE is the current value for the KEY.\n\n########################\n# EXTERNAL cache entries\n########################\n\n//Path to a library.\nBOOST_MPI_LIBRARY:FILEPATH=/opt/homebrew/opt/boost-mpi/lib/libboost_mpi.dylib\n\n//The directory containing a CMake configuration file for Boost.\nBoost_DIR:PATH=/opt/homebrew/opt/boost/lib/cmake/Boost-1.92.0\n\n//Path to a program.\nCMAKE_ADDR2LINE:FILEPATH=CMAKE_ADDR2LINE-NOTFOUND\n\n//Path to a program.\nCMAKE_AR:FILEPATH=/usr/bin/ar\n\n//Choose the type of build, options are: None Debug Release RelWithDebInfo\n// MinSizeRel ...\nCMAKE_BUILD_TYPE:STRING=Release\n\n//CXX compiler\nCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/c++\n\n//Flags used by the CXX compiler during all build types.\nCMAKE_CXX_FLAGS:STRING=\n\n//Flags used by the CXX compiler during DEBUG builds.\nCMAKE_CXX_FLAGS_DEBUG:STRING=-g\n\n//Flags used by the CXX compiler during MINSIZEREL builds.\nCMAKE_CXX_FLAGS_MINSIZEREL:STRING=-Os -DNDEBUG\n\n//Flags used by the CXX compiler during RELEASE builds.\nCMAKE_CXX_FLAGS_RELEASE:STRING=-O3 -DNDEBUG\n\n//Flags used by the CXX compiler during RELWITHDEBINFO builds.\nCMAKE_CXX_FLAGS_RELWITHDEBINFO:STRING=-O2 -g -DNDEBUG\n\n//Path to a program.\nCMAKE_DLLTOOL:FILEPATH=CMAKE_DLLTOOL-NOTFOUND\n\n//Flags used by the linker during all build types.\nCMAKE_EXE_LINKER_FLAGS:STRING=\n\n//Flags used by the linker during DEBUG builds.\nCMAKE_EXE_LINKER_FLAGS_DEBUG:STRING=\n\n//Flags used by the linker during MINSIZEREL builds.\nCMAKE_EXE_LINKER_FLAGS_MINSIZEREL:STRING=\n\n//Flags used by the linker during RELEASE builds.\nCMAKE_EXE_LINKER_FLAGS_RELEASE:STRING=\n\n//Flags used by the linker during RELWITHDEBINFO builds.\nCMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO:STRING=\n\n//Enable/Disable output of build database during the build.\nCMAKE_EXPORT_BUILD_DATABASE:BOOL=\n\n//Enable/Disable output of compile commands during generation.\nCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=\n\n//Value Computed by CMake.\nCMAKE_FIND_PACKAGE_REDIRECTS_DIR:STATIC=/private/tmp/catalyst-repast-build/CMakeFiles/pkgRedirects\n\n//Path to a program.\nCMAKE_INSTALL_NAME_TOOL:FILEPATH=/usr/bin/install_name_tool\n\n//Install path prefix, prepended onto install directories.\nCMAKE_INSTALL_PREFIX:PATH=/usr/local\n\n//Path to a program.\nCMAKE_LINKER:FILEPATH=/usr/bin/ld\n\n//Program used to build from build.ninja files.\nCMAKE_MAKE_PROGRAM:FILEPATH=/opt/homebrew/bin/ninja\n\n//Flags used by the linker during the creation of modules during\n// all build types.\nCMAKE_MODULE_LINKER_FLAGS:STRING=\n\n//Flags used by the linker during the creation of modules during\n// DEBUG builds.\nCMAKE_MODULE_LINKER_FLAGS_DEBUG:STRING=\n\n//Flags used by the linker during the creation of modules during\n// MINSIZEREL builds.\nCMAKE_MODULE_LINKER_FLAGS_MINSIZEREL:STRING=\n\n//Flags used by the linker during the creation of modules during\n// RELEASE builds.\nCMAKE_MODULE_LINKER_FLAGS_RELEASE:STRING=\n\n//Flags used by the linker during the creation of modules during\n// RELWITHDEBINFO builds.\nCMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO:STRING=\n\n//Path to a program.\nCMAKE_NM:FILEPATH=/usr/bin/nm\n\n//Path to a program.\nCMAKE_OBJCOPY:FILEPATH=CMAKE_OBJCOPY-NOTFOUND\n\n//Path to a program.\nCMAKE_OBJDUMP:FILEPATH=/usr/bin/objdump\n\n//Build architectures for OSX\nCMAKE_OSX_ARCHITECTURES:STRING=\n\n//Minimum OS X version to target for deployment (at runtime); newer\n// APIs weak linked. Set to empty string for default value.\nCMAKE_OSX_DEPLOYMENT_TARGET:STRING=\n\n//The product will be built against the headers and libraries located\n// inside the indicated SDK.\nCMAKE_OSX_SYSROOT:STRING=\n\n//Semicolon-separated list of installation prefixes searched by\n// find_package(), find_program(), find_library(), find_file(),\n// and find_path(). Empty by default; intended to be set by the\n// project or the user.\nCMAKE_PREFIX_PATH:UNINITIALIZED=/opt/homebrew/opt/boost;/opt/homebrew/opt/openssl@3\n\n//Value Computed by CMake\nCMAKE_PROJECT_COMPAT_VERSION:STATIC=\n\n//Value Computed by CMake\nCMAKE_PROJECT_DESCRIPTION:STATIC=\n\n//Value Computed by CMake\nCMAKE_PROJECT_HOMEPAGE_URL:STATIC=\n\n//Value Computed by CMake\nCMAKE_PROJECT_NAME:STATIC=CatalystRepastProbe\n\n//Value Computed by CMake\nCMAKE_PROJECT_SPDX_LICENSE:STATIC=\n\n//Path to a program.\nCMAKE_RANLIB:FILEPATH=/usr/bin/ranlib\n\n//Path to a program.\nCMAKE_READELF:FILEPATH=CMAKE_READELF-NOTFOUND\n\n//Flags used by the linker during the creation of shared libraries\n// during all build types.\nCMAKE_SHARED_LINKER_FLAGS:STRING=\n\n//Flags used by the linker during the creation of shared libraries\n// during DEBUG builds.\nCMAKE_SHARED_LINKER_FLAGS_DEBUG:STRING=\n\n//Flags used by the linker during the creation of shared libraries\n// during MINSIZEREL builds.\nCMAKE_SHARED_LINKER_FLAGS_MINSIZEREL:STRING=\n\n//Flags used by the linker during the creation of shared libraries\n// during RELEASE builds.\nCMAKE_SHARED_LINKER_FLAGS_RELEASE:STRING=\n\n//Flags used by the linker during the creation of shared libraries\n// during RELWITHDEBINFO builds.\nCMAKE_SHARED_LINKER_FLAGS_RELWITHDEBINFO:STRING=\n\n//If set, runtime paths are not added when installing shared libraries,\n// but are added when building.\nCMAKE_SKIP_INSTALL_RPATH:BOOL=NO\n\n//If set, runtime paths are not added when using shared libraries.\nCMAKE_SKIP_RPATH:BOOL=NO\n\n//Flags used by the archiver during the creation of static libraries\n// during all build types.\nCMAKE_STATIC_LINKER_FLAGS:STRING=\n\n//Flags used by the archiver during the creation of static libraries\n// during DEBUG builds.\nCMAKE_STATIC_LINKER_FLAGS_DEBUG:STRING=\n\n//Flags used by the archiver during the creation of static libraries\n// during MINSIZEREL builds.\nCMAKE_STATIC_LINKER_FLAGS_MINSIZEREL:STRING=\n\n//Flags used by the archiver during the creation of static libraries\n// during RELEASE builds.\nCMAKE_STATIC_LINKER_FLAGS_RELEASE:STRING=\n\n//Flags used by the archiver during the creation of static libraries\n// during RELWITHDEBINFO builds.\nCMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO:STRING=\n\n//Path to a program.\nCMAKE_STRIP:FILEPATH=/usr/bin/strip\n\n//Path to a program.\nCMAKE_TAPI:FILEPATH=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/tapi\n\n//If this value is on, makefiles will be generated without the\n// .SILENT directive, and all commands will be echoed to the console\n// during the make.  This is useful for debugging only. With Visual\n// Studio IDE projects all commands are done without /nologo.\nCMAKE_VERBOSE_MAKEFILE:BOOL=FALSE\n\n//Value Computed by CMake\nCatalystRepastProbe_BINARY_DIR:STATIC=/private/tmp/catalyst-repast-build\n\n//Value Computed by CMake\nCatalystRepastProbe_IS_TOP_LEVEL:STATIC=ON\n\n//Value Computed by CMake\nCatalystRepastProbe_SOURCE_DIR:STATIC=/opt/git/BenjaVisionPro/catalyst-workspace/Simulation/catalyst-simulator/native/p2\n\n//Git command line client\nGIT_EXECUTABLE:FILEPATH=/usr/bin/git\n\n//Executable for running MPI programs.\nMPIEXEC_EXECUTABLE:FILEPATH=/opt/homebrew/bin/mpiexec\n\n//Maximum number of processors available to run MPI applications.\nMPIEXEC_MAX_NUMPROCS:STRING=16\n\n//Flag used by MPI to specify the number of processes for mpiexec;\n// the next option will be the number of processes.\nMPIEXEC_NUMPROC_FLAG:STRING=-n\n\n//These flags will be placed after all flags passed to mpiexec.\nMPIEXEC_POSTFLAGS:STRING=\n\n//These flags will be directly before the executable that is being\n// run by mpiexec.\nMPIEXEC_PREFLAGS:STRING=\n\n//MPI CXX additional include directories\nMPI_CXX_ADDITIONAL_INCLUDE_DIRS:STRING=\n\n//MPI compiler for CXX\nMPI_CXX_COMPILER:FILEPATH=/opt/homebrew/bin/mpicxx\n\n//MPI CXX compiler wrapper include directories\nMPI_CXX_COMPILER_INCLUDE_DIRS:STRING=/opt/homebrew/Cellar/open-mpi/5.0.11/include\n\n//MPI CXX compilation definitions\nMPI_CXX_COMPILE_DEFINITIONS:STRING=\n\n//MPI CXX compilation options\nMPI_CXX_COMPILE_OPTIONS:STRING=\n\n//Path to a file.\nMPI_CXX_HEADER_DIR:PATH=/opt/homebrew/Cellar/open-mpi/5.0.11/include\n\n//MPI CXX libraries to link against\nMPI_CXX_LIB_NAMES:STRING=mpi\n\n//MPI CXX linker flags\nMPI_CXX_LINK_FLAGS:STRING=\n\n//If true, the MPI-2 C++ bindings are disabled using definitions.\nMPI_CXX_SKIP_MPICXX:BOOL=OFF\n\n//Location of the mpi library for MPI\nMPI_mpi_LIBRARY:FILEPATH=/opt/homebrew/Cellar/open-mpi/5.0.11/lib/libmpi.dylib\n\n//Path to a library.\nOPENSSL_CRYPTO_LIBRARY:FILEPATH=/opt/homebrew/opt/openssl@3/lib/libcrypto.dylib\n\n//Path to a file.\nOPENSSL_INCLUDE_DIR:PATH=/opt/homebrew/opt/openssl@3/include\n\n//No help, variable specified on the command line.\nOPENSSL_ROOT_DIR:UNINITIALIZED=/opt/homebrew/opt/openssl@3\n\n//Path to a library.\nOPENSSL_SSL_LIBRARY:FILEPATH=/opt/homebrew/opt/openssl@3/lib/libssl.dylib\n\n//Arguments to supply to pkg-config\nPKG_CONFIG_ARGN:STRING=\n\n//pkg-config executable\nPKG_CONFIG_EXECUTABLE:FILEPATH=/opt/homebrew/bin/pkg-config\n\n//Pinned repast.hpc checkout\nREPAST_SOURCE:PATH=/opt/git/BenjaVisionPro/catalyst-workspace/Simulation/References/repast.hpc\n\n//The directory containing a CMake configuration file for boost_atomic.\nboost_atomic_DIR:PATH=/opt/homebrew/opt/boost/lib/cmake/boost_atomic-1.92.0\n\n//The directory containing a CMake configuration file for boost_chrono.\nboost_chrono_DIR:PATH=/opt/homebrew/opt/boost/lib/cmake/boost_chrono-1.92.0\n\n//The directory containing a CMake configuration file for boost_container.\nboost_container_DIR:PATH=/opt/homebrew/opt/boost/lib/cmake/boost_container-1.92.0\n\n//The directory containing a CMake configuration file for boost_date_time.\nboost_date_time_DIR:PATH=/opt/homebrew/opt/boost/lib/cmake/boost_date_time-1.92.0\n\n//The directory containing a CMake configuration file for boost_exception.\nboost_exception_DIR:PATH=/opt/homebrew/opt/boost/lib/cmake/boost_exception-1.92.0\n\n//The directory containing a CMake configuration file for boost_filesystem.\nboost_filesystem_DIR:PATH=/opt/homebrew/opt/boost/lib/cmake/boost_filesystem-1.92.0\n\n//The directory containing a CMake configuration file for boost_graph.\nboost_graph_DIR:PATH=/opt/homebrew/opt/boost/lib/cmake/boost_graph-1.92.0\n\n//The directory containing a CMake configuration file for boost_headers.\nboost_headers_DIR:PATH=/opt/homebrew/opt/boost/lib/cmake/boost_headers-1.92.0\n\n//The directory containing a CMake configuration file for boost_math_tr1.\nboost_math_tr1_DIR:PATH=/opt/homebrew/opt/boost/lib/cmake/boost_math_tr1-1.92.0\n\n//The directory containing a CMake configuration file for boost_mpi.\nboost_mpi_DIR:PATH=/opt/homebrew/opt/boost-mpi/lib/cmake/boost_mpi-1.92.0\n\n//The directory containing a CMake configuration file for boost_random.\nboost_random_DIR:PATH=/opt/homebrew/opt/boost/lib/cmake/boost_random-1.92.0\n\n//The directory containing a CMake configuration file for boost_serialization.\nboost_serialization_DIR:PATH=/opt/homebrew/opt/boost/lib/cmake/boost_serialization-1.92.0\n\n//The directory containing a CMake configuration file for boost_thread.\nboost_thread_DIR:PATH=/opt/homebrew/opt/boost/lib/cmake/boost_thread-1.92.0\n\n//Path to a library.\npkgcfg_lib__OPENSSL_crypto:FILEPATH=/opt/homebrew/Cellar/openssl@3/3.6.5/lib/libcrypto.dylib\n\n//Path to a library.\npkgcfg_lib__OPENSSL_ssl:FILEPATH=/opt/homebrew/Cellar/openssl@3/3.6.5/lib/libssl.dylib\n\n\n########################\n# INTERNAL cache entries\n########################\n\n//ADVANCED property for variable: CMAKE_ADDR2LINE\nCMAKE_ADDR2LINE-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_AR\nCMAKE_AR-ADVANCED:INTERNAL=1\n//This is the directory where this CMakeCache.txt was created\nCMAKE_CACHEFILE_DIR:INTERNAL=/private/tmp/catalyst-repast-build\n//Major version of cmake used to create the current loaded cache\nCMAKE_CACHE_MAJOR_VERSION:INTERNAL=4\n//Minor version of cmake used to create the current loaded cache\nCMAKE_CACHE_MINOR_VERSION:INTERNAL=4\n//Patch version of cmake used to create the current loaded cache\nCMAKE_CACHE_PATCH_VERSION:INTERNAL=3\n//Path to CMake executable.\nCMAKE_COMMAND:INTERNAL=/opt/homebrew/bin/cmake\n//Path to cpack program executable.\nCMAKE_CPACK_COMMAND:INTERNAL=/opt/homebrew/bin/cpack\n//Path to ctest program executable.\nCMAKE_CTEST_COMMAND:INTERNAL=/opt/homebrew/bin/ctest\n//ADVANCED property for variable: CMAKE_CXX_COMPILER\nCMAKE_CXX_COMPILER-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_CXX_FLAGS\nCMAKE_CXX_FLAGS-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_CXX_FLAGS_DEBUG\nCMAKE_CXX_FLAGS_DEBUG-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_CXX_FLAGS_MINSIZEREL\nCMAKE_CXX_FLAGS_MINSIZEREL-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_CXX_FLAGS_RELEASE\nCMAKE_CXX_FLAGS_RELEASE-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_CXX_FLAGS_RELWITHDEBINFO\nCMAKE_CXX_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1\n//Set initial state for CMake diagnostics; used to persist state\n// set by command-line options across invocations.\nCMAKE_DIAGNOSTIC_INIT:INTERNAL=CMD_AUTHOR=WARN;CMD_DEPRECATED=WARN;CMD_EXPERIMENTAL=WARN;CMD_INSTALL_ABSOLUTE_DESTINATION=IGNORE;CMD_POLICY=WARN;CMD_UNINITIALIZED=IGNORE;CMD_UNUSED_CLI=WARN\n//ADVANCED property for variable: CMAKE_DLLTOOL\nCMAKE_DLLTOOL-ADVANCED:INTERNAL=1\n//Path to cache edit program executable.\nCMAKE_EDIT_COMMAND:INTERNAL=/opt/homebrew/bin/ccmake\n//Deprecated.  Use -W[no-]error=deprecated instead.\nCMAKE_ERROR_DEPRECATED:INTERNAL=OFF\n//Executable file format\nCMAKE_EXECUTABLE_FORMAT:INTERNAL=MACHO\n//ADVANCED property for variable: CMAKE_EXE_LINKER_FLAGS\nCMAKE_EXE_LINKER_FLAGS-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_EXE_LINKER_FLAGS_DEBUG\nCMAKE_EXE_LINKER_FLAGS_DEBUG-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_EXE_LINKER_FLAGS_MINSIZEREL\nCMAKE_EXE_LINKER_FLAGS_MINSIZEREL-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_EXE_LINKER_FLAGS_RELEASE\nCMAKE_EXE_LINKER_FLAGS_RELEASE-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO\nCMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_EXPORT_BUILD_DATABASE\nCMAKE_EXPORT_BUILD_DATABASE-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_EXPORT_COMPILE_COMMANDS\nCMAKE_EXPORT_COMPILE_COMMANDS-ADVANCED:INTERNAL=1\n//Name of external makefile project generator.\nCMAKE_EXTRA_GENERATOR:INTERNAL=\n//Name of generator.\nCMAKE_GENERATOR:INTERNAL=Ninja\n//Generator instance identifier.\nCMAKE_GENERATOR_INSTANCE:INTERNAL=\n//Name of generator platform.\nCMAKE_GENERATOR_PLATFORM:INTERNAL=\n//Name of generator toolset.\nCMAKE_GENERATOR_TOOLSET:INTERNAL=\n//Test CMAKE_HAVE_LIBC_PTHREAD\nCMAKE_HAVE_LIBC_PTHREAD:INTERNAL=1\n//Source directory with the top level CMakeLists.txt file for this\n// project\nCMAKE_HOME_DIRECTORY:INTERNAL=/opt/git/BenjaVisionPro/catalyst-workspace/Simulation/catalyst-simulator/native/p2\n//ADVANCED property for variable: CMAKE_INSTALL_NAME_TOOL\nCMAKE_INSTALL_NAME_TOOL-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_LINKER\nCMAKE_LINKER-ADVANCED:INTERNAL=1\n//Name of CMakeLists files to read\nCMAKE_LIST_FILE_NAME:INTERNAL=CMakeLists.txt\n//ADVANCED property for variable: CMAKE_MAKE_PROGRAM\nCMAKE_MAKE_PROGRAM-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_MODULE_LINKER_FLAGS\nCMAKE_MODULE_LINKER_FLAGS-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_MODULE_LINKER_FLAGS_DEBUG\nCMAKE_MODULE_LINKER_FLAGS_DEBUG-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_MODULE_LINKER_FLAGS_MINSIZEREL\nCMAKE_MODULE_LINKER_FLAGS_MINSIZEREL-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_MODULE_LINKER_FLAGS_RELEASE\nCMAKE_MODULE_LINKER_FLAGS_RELEASE-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO\nCMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_NM\nCMAKE_NM-ADVANCED:INTERNAL=1\n//number of local generators\nCMAKE_NUMBER_OF_MAKEFILES:INTERNAL=1\n//ADVANCED property for variable: CMAKE_OBJCOPY\nCMAKE_OBJCOPY-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_OBJDUMP\nCMAKE_OBJDUMP-ADVANCED:INTERNAL=1\n//Platform information initialized\nCMAKE_PLATFORM_INFO_INITIALIZED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_RANLIB\nCMAKE_RANLIB-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_READELF\nCMAKE_READELF-ADVANCED:INTERNAL=1\n//Path to CMake installation.\nCMAKE_ROOT:INTERNAL=/opt/homebrew/share/cmake\n//ADVANCED property for variable: CMAKE_SHARED_LINKER_FLAGS\nCMAKE_SHARED_LINKER_FLAGS-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_SHARED_LINKER_FLAGS_DEBUG\nCMAKE_SHARED_LINKER_FLAGS_DEBUG-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_SHARED_LINKER_FLAGS_MINSIZEREL\nCMAKE_SHARED_LINKER_FLAGS_MINSIZEREL-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_SHARED_LINKER_FLAGS_RELEASE\nCMAKE_SHARED_LINKER_FLAGS_RELEASE-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_SHARED_LINKER_FLAGS_RELWITHDEBINFO\nCMAKE_SHARED_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_SKIP_INSTALL_RPATH\nCMAKE_SKIP_INSTALL_RPATH-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_SKIP_RPATH\nCMAKE_SKIP_RPATH-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_STATIC_LINKER_FLAGS\nCMAKE_STATIC_LINKER_FLAGS-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_STATIC_LINKER_FLAGS_DEBUG\nCMAKE_STATIC_LINKER_FLAGS_DEBUG-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_STATIC_LINKER_FLAGS_MINSIZEREL\nCMAKE_STATIC_LINKER_FLAGS_MINSIZEREL-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_STATIC_LINKER_FLAGS_RELEASE\nCMAKE_STATIC_LINKER_FLAGS_RELEASE-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO\nCMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_STRIP\nCMAKE_STRIP-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: CMAKE_TAPI\nCMAKE_TAPI-ADVANCED:INTERNAL=1\n//uname command\nCMAKE_UNAME:INTERNAL=/usr/bin/uname\n//ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE\nCMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1\n//Deprecated.  Use -W[no-]deprecated instead.\nCMAKE_WARN_DEPRECATED:INTERNAL=ON\n//Details about finding Git\nFIND_PACKAGE_MESSAGE_DETAILS_Git:INTERNAL=[/usr/bin/git][v2.50.1 (Apple Git-155)()]\n//Details about finding MPI\nFIND_PACKAGE_MESSAGE_DETAILS_MPI:INTERNAL=[TRUE][found components: CXX ][v3.1()]\n//Details about finding MPI_CXX\nFIND_PACKAGE_MESSAGE_DETAILS_MPI_CXX:INTERNAL=[/opt/homebrew/Cellar/open-mpi/5.0.11/lib/libmpi.dylib][mpi][/opt/homebrew/Cellar/open-mpi/5.0.11/include][TRUE][v3.1()]\n//Details about finding OpenSSL\nFIND_PACKAGE_MESSAGE_DETAILS_OpenSSL:INTERNAL=[/opt/homebrew/opt/openssl@3/lib/libcrypto.dylib][/opt/homebrew/opt/openssl@3/include][found components: Crypto ][v3.6.5()]\n//Details about finding Threads\nFIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]\n//ADVANCED property for variable: GIT_EXECUTABLE\nGIT_EXECUTABLE-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: MPIEXEC_EXECUTABLE\nMPIEXEC_EXECUTABLE-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: MPIEXEC_MAX_NUMPROCS\nMPIEXEC_MAX_NUMPROCS-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: MPIEXEC_NUMPROC_FLAG\nMPIEXEC_NUMPROC_FLAG-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: MPIEXEC_POSTFLAGS\nMPIEXEC_POSTFLAGS-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: MPIEXEC_PREFLAGS\nMPIEXEC_PREFLAGS-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: MPI_CXX_ADDITIONAL_INCLUDE_DIRS\nMPI_CXX_ADDITIONAL_INCLUDE_DIRS-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: MPI_CXX_COMPILER\nMPI_CXX_COMPILER-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: MPI_CXX_COMPILER_INCLUDE_DIRS\nMPI_CXX_COMPILER_INCLUDE_DIRS-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: MPI_CXX_COMPILE_DEFINITIONS\nMPI_CXX_COMPILE_DEFINITIONS-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: MPI_CXX_COMPILE_OPTIONS\nMPI_CXX_COMPILE_OPTIONS-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: MPI_CXX_HEADER_DIR\nMPI_CXX_HEADER_DIR-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: MPI_CXX_LIB_NAMES\nMPI_CXX_LIB_NAMES-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: MPI_CXX_LINK_FLAGS\nMPI_CXX_LINK_FLAGS-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: MPI_CXX_SKIP_MPICXX\nMPI_CXX_SKIP_MPICXX-ADVANCED:INTERNAL=1\n//Result of TRY_COMPILE\nMPI_RESULT_CXX_test_mpi_MPICXX:INTERNAL=TRUE\n//Result of TRY_COMPILE\nMPI_RESULT_CXX_test_mpi_normal:INTERNAL=TRUE\n//ADVANCED property for variable: MPI_mpi_LIBRARY\nMPI_mpi_LIBRARY-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: OPENSSL_CRYPTO_LIBRARY\nOPENSSL_CRYPTO_LIBRARY-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: OPENSSL_INCLUDE_DIR\nOPENSSL_INCLUDE_DIR-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: OPENSSL_SSL_LIBRARY\nOPENSSL_SSL_LIBRARY-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: PKG_CONFIG_ARGN\nPKG_CONFIG_ARGN-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: PKG_CONFIG_EXECUTABLE\nPKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1\n_OPENSSL_CFLAGS:INTERNAL=-I/opt/homebrew/Cellar/openssl@3/3.6.5/include\n_OPENSSL_CFLAGS_I:INTERNAL=\n_OPENSSL_CFLAGS_OTHER:INTERNAL=\n_OPENSSL_FOUND:INTERNAL=1\n_OPENSSL_INCLUDEDIR:INTERNAL=/opt/homebrew/Cellar/openssl@3/3.6.5/include\n_OPENSSL_INCLUDE_DIRS:INTERNAL=/opt/homebrew/Cellar/openssl@3/3.6.5/include\n_OPENSSL_LDFLAGS:INTERNAL=-L/opt/homebrew/Cellar/openssl@3/3.6.5/lib;-lssl;-lcrypto\n_OPENSSL_LDFLAGS_OTHER:INTERNAL=\n_OPENSSL_LIBDIR:INTERNAL=/opt/homebrew/Cellar/openssl@3/3.6.5/lib\n_OPENSSL_LIBRARIES:INTERNAL=ssl;crypto\n_OPENSSL_LIBRARY_DIRS:INTERNAL=/opt/homebrew/Cellar/openssl@3/3.6.5/lib\n_OPENSSL_LIBS:INTERNAL=\n_OPENSSL_LIBS_L:INTERNAL=\n_OPENSSL_LIBS_OTHER:INTERNAL=\n_OPENSSL_LIBS_PATHS:INTERNAL=\n_OPENSSL_MODULE_NAME:INTERNAL=openssl\n_OPENSSL_PREFIX:INTERNAL=/opt/homebrew/Cellar/openssl@3/3.6.5\n_OPENSSL_STATIC_CFLAGS:INTERNAL=-I/opt/homebrew/Cellar/openssl@3/3.6.5/include\n_OPENSSL_STATIC_CFLAGS_I:INTERNAL=\n_OPENSSL_STATIC_CFLAGS_OTHER:INTERNAL=\n_OPENSSL_STATIC_INCLUDE_DIRS:INTERNAL=/opt/homebrew/Cellar/openssl@3/3.6.5/include\n_OPENSSL_STATIC_LDFLAGS:INTERNAL=-L/opt/homebrew/Cellar/openssl@3/3.6.5/lib;-lssl;-lcrypto\n_OPENSSL_STATIC_LDFLAGS_OTHER:INTERNAL=\n_OPENSSL_STATIC_LIBDIR:INTERNAL=\n_OPENSSL_STATIC_LIBRARIES:INTERNAL=ssl;crypto\n_OPENSSL_STATIC_LIBRARY_DIRS:INTERNAL=/opt/homebrew/Cellar/openssl@3/3.6.5/lib\n_OPENSSL_STATIC_LIBS:INTERNAL=\n_OPENSSL_STATIC_LIBS_L:INTERNAL=\n_OPENSSL_STATIC_LIBS_OTHER:INTERNAL=\n_OPENSSL_STATIC_LIBS_PATHS:INTERNAL=\n_OPENSSL_VERSION:INTERNAL=3.6.5\n_OPENSSL_openssl_INCLUDEDIR:INTERNAL=\n_OPENSSL_openssl_LIBDIR:INTERNAL=\n_OPENSSL_openssl_PREFIX:INTERNAL=\n_OPENSSL_openssl_VERSION:INTERNAL=\n__pkg_config_arguments__OPENSSL:INTERNAL=QUIET;openssl\n__pkg_config_checked__OPENSSL:INTERNAL=1\n//ADVANCED property for variable: boost_atomic_DIR\nboost_atomic_DIR-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: boost_chrono_DIR\nboost_chrono_DIR-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: boost_container_DIR\nboost_container_DIR-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: boost_date_time_DIR\nboost_date_time_DIR-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: boost_exception_DIR\nboost_exception_DIR-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: boost_filesystem_DIR\nboost_filesystem_DIR-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: boost_graph_DIR\nboost_graph_DIR-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: boost_headers_DIR\nboost_headers_DIR-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: boost_math_tr1_DIR\nboost_math_tr1_DIR-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: boost_mpi_DIR\nboost_mpi_DIR-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: boost_random_DIR\nboost_random_DIR-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: boost_serialization_DIR\nboost_serialization_DIR-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: boost_thread_DIR\nboost_thread_DIR-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: pkgcfg_lib__OPENSSL_crypto\npkgcfg_lib__OPENSSL_crypto-ADVANCED:INTERNAL=1\n//ADVANCED property for variable: pkgcfg_lib__OPENSSL_ssl\npkgcfg_lib__OPENSSL_ssl-ADVANCED:INTERNAL=1\nprefix_result:INTERNAL=/opt/homebrew/Cellar/openssl@3/3.6.5/lib\n\n",
+  "sourceSha256": {
+    "CMakeLists.txt": "5353433934d5ec4c891f20cf8fc2e9d8d0bd9d5be06b7662ff60525eef895394",
+    "capture-build.py": "47d2472fb1823ac3fdbd8c93c64af52d47e756977793c1d054a84a3b0ae6e5aa",
+    "export-fixtures.st": "67f54a1b24b529ae3641e9c6e9144d420c2c8d9d89679635712f9e102d514ea7",
+    "gemstone/cleanup.topaz": "f9174fe2dd13be060a92ece2b81af92739844891822e933a0339689f05faa310",
+    "gemstone/prepare.topaz": "d571f40f7771926d490aefb4414065ae46537968508b0c76ffb2bf6a8384eef1",
+    "gemstone/return.topaz": "eec1ff3450b49aeba5b00e3a1211e73d67eba8ae85d83cb6dc46dbc5285c4f44",
+    "gemstone/verify.topaz": "a91d4936ac9b3d87c6fc386fe962112cd74e199fd1eab258057c890d97a8f89a",
+    "graph.hpp": "a7b7bcfd340dfde1ca66744b894544140067c5232acf0e088a8fe5e467d8d27f",
+    "main.cpp": "80315f96a840518cf915037a42ab017fb01de20e0b6d5667910f0d6c7068d11e",
+    "qualify.py": "70ab7bc21c5d809d47b8b383139203347745c11572261d15f6fa2e8216a88cd7",
+    "tests.cpp": "4290fb82fabbda0065cd5f645b3f58d4efed8d59ee1d079820557bd900af85dd",
+    "value.hpp": "00d68414b639fa3d280681484ce70c873be8b827a46de408c17b10642e47a4fd",
+    "verify-evidence.py": "281e419f7eca04f03c2293a85472fa3dc5b395034eae464fb523f7befe005e74"
+  }
+}
