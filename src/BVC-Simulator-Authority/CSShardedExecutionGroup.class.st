@@ -37,15 +37,19 @@ CSShardedExecutionGroup >> artifacts: store [
  artifacts := store
 ]
 
-{ #category : 'sharded authority' }
+{ #category : 'typed population' }
 CSShardedExecutionGroup >> backendAt: root [
+ | node model |
+ node := artifacts objectAt: root. model := CSModelBundle fromSnapshot: (artifacts valueAt: (node at: 'model')).
+ model isTyped ifTrue: [^ artifacts typedBackendAt: root].
  ^ CSSmalltalkBackend fromCheckpoint: (CSCanonicalCodec encode: (artifacts materialize: root))
 ]
 
-{ #category : 'sharded authority' }
+{ #category : 'typed scale' }
 CSShardedExecutionGroup >> change: kind payload: payload request: request candidate: candidate maxSteps: maximum [
  | node pending target model backend root roots |
  node := artifacts objectAt: (candidate at: 'checkpoint').
+ ((#('advance' 'command' 'prepare') includes: kind) and: [(candidate at: 'pending') isNil and: [artifacts count > 49152]]) ifTrue: [self collectIdleArtifacts: candidate].
  kind = 'stage' ifTrue: [
   CSAuthorityChecks keys: payload exactly: #('batch' 'inputDigest' 'root' 'objects').
   pending := candidate at: 'pending'.
@@ -53,7 +57,7 @@ CSShardedExecutionGroup >> change: kind payload: payload request: request candid
   CSAuthorityChecks require: ((pending at: 'batch') = (payload at: 'batch') and: [(pending at: 'inputDigest') = (payload at: 'inputDigest')]) code: 'wrong-batch'.
   artifacts assertHash: (payload at: 'root').
   CSAuthorityChecks require: (pending at: 'resultRoot' ifAbsent: [payload at: 'root']) = (payload at: 'root') code: 'result-root-changed'.
-  artifacts upload: (payload at: 'objects'). pending at: 'resultRoot' put: (payload at: 'root'). ^ self].
+  artifacts upload: (payload at: 'objects'). artifacts cacheComplete: (payload at: 'root'). pending at: 'resultRoot' put: (payload at: 'root'). ^ self].
  kind = 'collect' ifTrue: [
   self requireIdle: candidate. CSAuthorityChecks require: payload isNil code: 'invalid-collection'.
   roots := Set with: (candidate at: 'checkpoint').
@@ -111,6 +115,14 @@ CSShardedExecutionGroup >> change: kind payload: payload request: request candid
   CSAuthorityChecks require: ((payload at: 'decision') = 'confirmed-absent' and: [(payload at: 'root') isNil]) code: 'invalid-reconciliation'.
   candidate at: 'pending' put: nil; at: 'phase' put: 'active'. ^ self].
  CSAuthorityError signal: 'unsupported-operation'
+]
+
+{ #category : 'typed scale' }
+CSShardedExecutionGroup >> collectIdleArtifacts: candidate [
+ | roots |
+ self requireIdle: candidate. roots := Set with: (candidate at: 'checkpoint').
+ (candidate at: 'projections') do: [:entry | roots add: (entry at: 'baseRoot'); add: (entry at: 'root')].
+ ^ artifacts collectKeeping: roots asArray
 ]
 
 { #category : 'sharded authority' }

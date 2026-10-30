@@ -1,5 +1,6 @@
 #include "value.hpp"
 #include "cas.hpp"
+#include "population.hpp"
 #include <iostream>
 using namespace catalyst;
 int main() {
@@ -19,6 +20,17 @@ int main() {
   check(sample("0123456789abcdeffedcba9876543210", Integer("18364758544493064720"), 0x13579bdf, 0x2468ace0) == 697764476);
   check(sample(std::string(32, '0'), Integer(0), 0, 0) == 0x6627e8d5);
   check(sample(std::string(32, 'f'), Integer(0), 0xffffffff, 0xffffffff) == 0x408f276d);
+  StringTable strings;
+  auto typedValue=Value::list({"0123456789abcdeffedcba9876543210",Value::list({Value(MIN64),Value(MAX64),Value(-1)}),Value::list({Value(0),Value(-997),Value(13)}),"",Value(0),"neutral",Value(MAX32),Value(MAX32),Value::list({Value(999),Value(0),Value(1)})});
+  auto typed=TypedRecord::from(typedValue,strings);
+  check(typed.value(strings)==typedValue);
+  StringTable receiving;receiving.intern("different-index");
+  check(TypedWire(typed,strings).record(receiving).value(receiving)==typedValue);
+  typed.velocity[0]=-1;
+  rejects([&]{typed.integrate(1000);});
+  check(typed.position[0]==INT64_MIN&&typed.position[1]==INT64_MAX);
+  auto invalid=typedValue;invalid.at(6)=Value(MAX32+1);rejects([&]{TypedRecord::from(invalid,strings);});
+  invalid=typedValue;invalid.at(8).at(0)=Value(1000);rejects([&]{TypedRecord::from(invalid,strings);});
   char pattern[]="/private/tmp/catalyst-cas-unit-XXXXXX";
   auto directory=mkdtemp(pattern);require(directory,"Native test directory");
   try {

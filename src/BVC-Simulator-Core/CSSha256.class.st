@@ -20,8 +20,24 @@ CSSha256 class >> constants [
  16r748F82EE 16r78A5636F 16r84C87814 16r8CC70208 16r90BEFFFA 16rA4506CEB 16rBEF9A3F7 16rC67178F2)
 ]
 
-{ #category : 'portable graph' }
+{ #category : 'typed population' }
 CSSha256 class >> hexDigestOf: ascii [
+ | bytes hash algorithm |
+ CSKernelMath require: (ascii isString and: [ascii size <= 8388608 and: [ascii allSatisfy: [:char | char asciiValue <= 127]]]) message: 'SHA-256 requires bounded ASCII bytes'.
+ bytes := ascii asByteArray.
+ (bytes respondsTo: #sha256SumBytes)
+  ifTrue: [hash := bytes perform: #sha256SumBytes]
+  ifFalse: [algorithm := Smalltalk at: #SHA256 ifAbsent: [nil].
+   algorithm ifNil: [^ self portableHexDigestOf: ascii].
+   hash := algorithm hashMessage: bytes].
+ CSKernelMath require: hash size = 32 message: 'SHA-256 provider width'.
+ ^ String streamContents: [:out | hash do: [:byte |
+  out nextPut: ('0123456789abcdef' at: (byte bitShift: -4) + 1).
+  out nextPut: ('0123456789abcdef' at: (byte bitAnd: 15) + 1)]]
+]
+
+{ #category : 'portable fallback' }
+CSSha256 class >> portableHexDigestOf: ascii [
  | bytes bits state words working constants mask s0 s1 a b c d e f g h ch maj t1 t2 out |
  CSKernelMath require: (ascii isString and: [ascii size <= 8388608 and: [ascii allSatisfy: [:char | char asciiValue <= 127]]]) message: 'SHA-256 requires bounded ASCII bytes'.
  mask := 4294967295. bytes := OrderedCollection new.

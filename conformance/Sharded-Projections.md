@@ -1,5 +1,9 @@
 # Incremental accepted projections and sharded checkpoints
 
+The subsequent [typed population increment](Typed-Population.md) adds packed
+execution storage and a separate 100,000-entity qualification. This record retains
+the original sharded-profile scope, counts and remaining boundaries at that stage.
+
 The optional `sharded` Runtime backend mode uses
 [`checkpoint-1`](../contracts/checkpoint-1/README.md) immutable objects and
 [`projection-1`](../contracts/projection-1/README.md) client pages. Runtime remains

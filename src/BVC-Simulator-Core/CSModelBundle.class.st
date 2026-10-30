@@ -78,21 +78,21 @@ CSModelBundle >> graph [
  ^ CSModelGraph fromSnapshot: self snapshot sixth
 ]
 
-{ #category : 'portable graph' }
+{ #category : 'typed population' }
 CSModelBundle >> initializeFrom: value [
  | normalized graph |
  CSKernelMath require: (value class == Array and: [value size = 6]) message: 'Model requires six fields'.
- CSKernelMath require: (#('simulation-portable-1/probe-1' 'simulation-portable-1/graph-1') includes: value first) message: 'Unsupported model profile'.
+ CSKernelMath require: (#('simulation-portable-1/probe-1' 'simulation-portable-1/graph-1' 'simulation-portable-1/typed-1') includes: value first) message: 'Unsupported model profile'.
  CSKernelMath require: (value second isString and: [value second notEmpty]) message: 'Model identity required'.
  CSKernelMath int64: value third.
  CSKernelMath require: (value third between: 1 and: 1000) message: 'Tick duration must be 1..1000 milliseconds'.
- 4 to: 5 do: [:i | CSKernelMath int64: (value at: i). CSKernelMath require: ((value at: i) between: 1 and: 10000) message: 'Model capacity must be 1..10000'].
+ 4 to: 5 do: [:i | CSKernelMath int64: (value at: i). CSKernelMath require: ((value at: i) between: 1 and: ((i = 4 and: [value first = 'simulation-portable-1/typed-1']) ifTrue: [1000000] ifFalse: [10000])) message: 'Model capacity exceeds profile'].
  normalized := CSCanonicalCodec copy: value.
  value first = 'simulation-portable-1/probe-1'
   ifTrue: [CSKernelMath require: (value sixth class == Array and: [value sixth allSatisfy: [:stage | stage isString]]) message: 'Stages must be described names']
   ifFalse: [graph := CSModelGraph fromSnapshot: value sixth. normalized at: 6 put: graph snapshot].
  tickMillis := normalized third. entityCapacity := normalized fourth. eventCapacity := normalized fifth.
- graphProfile := normalized first = 'simulation-portable-1/graph-1'.
+ graphProfile := normalized first ~= 'simulation-portable-1/probe-1'.
  canonical := CSCanonicalCodec encode: normalized.
  digest := CSSha256 hexDigestOf: 'CatalystSimulation-Model-1:', canonical. ^ self
 ]
@@ -100,6 +100,10 @@ CSModelBundle >> initializeFrom: value [
 { #category : 'portable graph' }
 CSModelBundle >> isGraph [
  ^ graphProfile ifNil: [self snapshot first = 'simulation-portable-1/graph-1']
+]
+
+{ #category : 'typed population' }
+CSModelBundle >> isTyped [ ^ self snapshot first = 'simulation-portable-1/typed-1'
 ]
 
 { #category : 'portable kernel' }

@@ -13,6 +13,12 @@ endpoint and GemStone publishes accepted roots. See the current
 [sharded qualification and remaining gates](../../conformance/Sharded-Projections.md);
 the original P2 and resident records below describe their respective legacy modes.
 
+`typed-1` model bundles select the typed resident engine: 112-byte entity records,
+typed candidate/stage copies and typed migration packages, with the same portable
+operations and canonical shard format. See
+[typed population qualification](../../conformance/Typed-Population.md) for the
+100,000-entity native macOS profile and its remaining boundaries.
+
 P2 passes on macOS arm64 with the same normalized `graph-1` bundles used by GT
 and GemStone. This directory contains an experimental execution adapter and a
 bounded qualification controller. Ecosystem behaviour stays in CatalystEcosystem.

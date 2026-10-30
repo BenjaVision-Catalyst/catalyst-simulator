@@ -14,10 +14,10 @@ inline bool matches(const Value& v,const std::string& type){
 inline const std::vector<std::string> FIELDS={"id","position","velocity","requestedResource","requestedQuantity","mode","drawIndex","sample","motionRemainders"};
 inline const std::vector<std::string> FIELD_TYPES={"string","vec3","vec3","string","i64","string","u32","u32","vec3"};
 inline std::vector<Value> compileGraph(const Value& model){
- require(model.kind==Value::Array&&model.array.size()==6&&model.at(0).text()=="simulation-portable-1/graph-1","Unsupported model profile");
+ require(model.kind==Value::Array&&model.array.size()==6&&(model.at(0).text()=="simulation-portable-1/graph-1"||model.at(0).text()=="simulation-portable-1/typed-1"),"Unsupported model profile");
  require(!model.at(1).text().empty(),"Model identity");
  require(model.at(2).integer()>=1&&model.at(2).integer()<=1000,"Tick duration");
- for(int i:{3,4})require(model.at(i).integer()>=1&&model.at(i).integer()<=10000,"Model capacity");
+ for(int i:{3,4})require(model.at(i).integer()>=1&&model.at(i).integer()<=(i==3&&model.at(0).text()=="simulation-portable-1/typed-1"?1000000:10000),"Model capacity");
  const auto& graph=model.at(5);require(graph.kind==Value::Map&&graph.map.size()==3&&graph.at("version").integer()==1,"Graph schema");
  auto budget=graph.at("maxNodeEvaluations").integer();require(budget>=1&&budget<=1000000,"Evaluation budget");
  require(graph.at("nodes").kind==Value::Array&&!graph.at("nodes").array.empty()&&graph.at("nodes").array.size()<=128,"Graph node bound");

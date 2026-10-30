@@ -1,0 +1,42 @@
+expectvalue true
+run
+| phase directory rootKey report expected read check store backend root initial objects file |
+System abortTransaction. System transactionMode: #manualBegin.
+phase := System gemEnvironmentVariable: 'CS_TYPED_SOURCE_PHASE'.
+directory := System gemEnvironmentVariable: 'CS_TYPED_FIXTURE'.
+rootKey := (System gemEnvironmentVariable: 'CS_TYPED_SOURCE_ROOT') asSymbol.
+check := [:condition :message | condition ifFalse: [self error: message]].
+check value: (rootKey asString beginsWith: 'CSTypedSource') value: 'Owned source probe root required'.
+read := [:path | | input value | input := GsFile openReadOnServer: path. [value := STON fromString: input contents] ensure: [input close]. value].
+expected := read value: directory, '/record.json'.
+report := Dictionary new at: 'phase' put: phase; yourself.
+phase = 'build' ifTrue: [
+ check value: (UserGlobals includesKey: rootKey) not value: 'Source probe root exists'.
+ objects := read value: directory, '/initial-objects.json'.
+ CRGemStoneRuntime duringTransaction: [
+  store := CSArtifactStore new.
+  1 to: objects size by: 8 do: [:start | store upload: (objects copyFrom: start to: ((start + 7) min: objects size))].
+  initial := expected at: 'initialRoot'. store validateCheckpoint: initial base: nil.
+  backend := store typedBackendAt: initial.
+  check value: (store checkpoint: backend snapshot) = initial value: 'Final-source initial root differs'.
+  backend advanceThrough: 1. root := store checkpoint: backend snapshot.
+  store validateCheckpoint: root base: initial.
+  check value: root = ((expected at: 'roots') at: '1') value: 'Final-source advance differs'.
+  UserGlobals at: rootKey put: {store. root}]].
+phase = 'verify' ifTrue: [
+ [CRGemStoneRuntime duringTransaction: [| saved |
+  saved := UserGlobals at: rootKey ifAbsent: [nil].
+  check value: saved notNil value: 'Committed source probe missing'.
+  store := saved first. root := saved second. backend := store typedBackendAt: root.
+  check value: (store checkpoint: backend snapshot) = root value: 'Fresh session root differs'.
+  check value: root = ((expected at: 'roots') at: '1') value: 'Fresh session GT root differs'.
+  report at: 'freshSessionVerified' put: true]]
+ ensure: [CRGemStoneRuntime duringTransaction: [UserGlobals removeKey: rootKey ifAbsent: []]].
+ report at: 'cleaned' put: true].
+check value: store notNil value: 'Invalid source probe phase'.
+report at: 'passed' put: true; at: 'root' put: root; at: 'materializations' put: store materializations;
+ at: 'typedRestores' put: store typedRestores; at: 'population' put: backend populationStatistics.
+file := GsFile openWriteOnServer: (System gemEnvironmentVariable: 'CS_TYPED_SOURCE_REPORT').
+[file nextPutAll: (STON toJsonString: report)] ensure: [file close].
+true
+%

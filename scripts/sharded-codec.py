@@ -5,6 +5,7 @@ tries use ID suffixes, independently of execution rank or spatial ownership.
 """
 import hashlib
 import os
+import sqlite3
 from pathlib import Path
 import sys
 
@@ -183,3 +184,58 @@ class Store:
     def objects(self, hashes):
         return [dict(hash=key, parts=[raw[i:i + 4096] for i in range(0, len(raw), 4096)])
                 for key in hashes for raw in [self.raw(key)]]
+
+
+class Availability:
+    """Discardable completeness proofs for an immutable, durable object spool.
+
+    Never caches absence. Native restore and artifact reads still verify bytes;
+    this index cannot authorize simulation publication or confirmed job absence.
+    """
+    def __init__(self, path):
+        self.connection = sqlite3.connect(path, timeout=30)
+        self.connection.execute("CREATE TABLE IF NOT EXISTS complete (hash TEXT PRIMARY KEY, height INTEGER NOT NULL CHECK(height BETWEEN 0 AND 64))")
+        self.stats = dict(readObjects=0, cachedReferences=0, recordedClosures=0)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, kind, value, trace):
+        try:
+            self.connection.commit() if kind is None else self.connection.rollback()
+        finally:
+            self.connection.close()
+
+    def missing(self, store, root, limit):
+        assert 1 <= limit <= 32
+        missing, seen, active = [], set(), set()
+
+        def visit(key, depth):
+            assert valid_hash(key) and depth <= 64
+            cached = self.connection.execute("SELECT height FROM complete WHERE hash = ?", (key,)).fetchone()
+            if cached is not None:
+                assert depth + cached[0] <= 64
+                self.stats["cachedReferences"] += 1
+                return cached[0]
+            if not (store.directory / (key + ".canon")).exists():
+                if key not in seen and len(missing) < limit:
+                    missing.append(key)
+                    seen.add(key)
+                return None
+            if len(missing) >= limit:
+                return None
+            assert key not in active
+            active.add(key)
+            self.stats["readObjects"] += 1
+            heights = [visit(child, depth + 1) for child in store.references(store.get(key))]
+            active.remove(key)
+            if any(height is None for height in heights):
+                return None
+            height = max(heights, default=-1) + 1
+            assert depth + height <= 64
+            self.connection.execute("INSERT OR IGNORE INTO complete VALUES (?, ?)", (key, height))
+            self.stats["recordedClosures"] += 1
+            return height
+
+        visit(root, 0)
+        return missing

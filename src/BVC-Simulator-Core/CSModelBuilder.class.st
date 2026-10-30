@@ -33,6 +33,13 @@ CSModelBuilder >> build [
   (Dictionary new at: 'version' put: 1; at: 'nodes' put: nodes asArray; at: 'maxNodeEvaluations' put: budget; yourself) }
 ]
 
+{ #category : 'typed population' }
+CSModelBuilder >> buildTyped [
+ ^ CSModelBundle fromSnapshot: {
+  'simulation-portable-1/typed-1'. name. tickMillis. entityLimit. eventLimit.
+  (Dictionary new at: 'version' put: 1; at: 'nodes' put: nodes asArray; at: 'maxNodeEvaluations' put: budget; yourself) }
+]
+
 { #category : 'portable graph' }
 CSModelBuilder >> initializeNamed: modelName [
  name := modelName copy. tickMillis := 100. entityLimit := 10000. eventLimit := 10000.

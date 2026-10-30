@@ -1,0 +1,131 @@
+expectvalue true
+run
+| phase runtimeName directory fixtureDirectory fixture runtime cfg orchestrator serviceCfg controlHost simulationHost helper check wait report repository group router submit query before payload request result target file data evidenceNumber root readFile expected |
+System abortTransaction. System transactionMode: #manualBegin.
+phase := System gemEnvironmentVariable: 'CS_SHARD_PHASE'. runtimeName := System gemEnvironmentVariable: 'CS_P3_RUNTIME'.
+directory := System gemEnvironmentVariable: 'CS_P3_DIRECTORY'. fixtureDirectory := System gemEnvironmentVariable: 'CS_SHARD_FIXTURE'.
+readFile := [:path | | input contents | input := GsFile openReadOnServer: path. [contents := STON fromString: input contents] ensure: [input close]. contents].
+fixture := readFile value: fixtureDirectory, '/record.json'.
+helper := CSAuthorityExamples new.
+check := [:condition :message | condition ifFalse: [self error: message]].
+wait := [:predicate | | deadline |
+ deadline := CRPlatform current currentMillis + 1500000.
+ [System abortTransaction. predicate value or: [CRPlatform current currentMillis >= deadline]] whileFalse: [(Delay forMilliseconds: 25) wait].
+ check value: predicate value value: 'Sharded qualification timeout'].
+report := Dictionary new at: 'phase' put: phase; yourself. evidenceNumber := 0.
+phase = 'configure' ifTrue: [
+ cfg := CRRuntimeConfiguration new label: 'Sharded Simulation qualification'; yourself.
+ orchestrator := CROrchestrationConfiguration default heartbeatIntervalMillis: 1000; reconcileIntervalMillis: 100; yourself.
+ serviceCfg := CSSimulationConfiguration new identifier: #simulation; label: 'Simulation'; authoritative: true;
+  repositoryName: runtimeName; controlPrincipal: 'admin'; executorPrincipal: 'executor'; maximumSteps: 4; journalLimit: 4;
+  driveThroughTick: 0; driveIntervalMillis: 10; repastMode: 'sharded';
+  repastLauncher: (System gemEnvironmentVariable: 'CS_LIVE_LAUNCHER'); repastExecutable: (System gemEnvironmentVariable: 'CS_LIVE_EXECUTABLE');
+  repastMpi: '/opt/homebrew/bin/mpirun'; repastDirectory: directory, '/spool'; repastRanks: (System gemEnvironmentVariable: 'CS_LIVE_RANKS') asInteger; yourself.
+ cfg services: {orchestrator. serviceCfg}.
+ controlHost := CRHostConfiguration new identifier: #control; label: 'Control'; address: 'localhost'; maxProcesses: 1; services: {CRRuntime orchestratorIdentifier}; yourself.
+ simulationHost := CRHostConfiguration new identifier: #simulationHost; label: 'Simulation'; address: 'localhost'; maxProcesses: 1; services: {#simulation}; yourself.
+ cfg topology: (CRTopologyConfiguration new hosts: {controlHost. simulationHost}; placementStrategyConfiguration: CRRoundRobinPlacementStrategyConfiguration new; yourself).
+ cfg deployment serviceDeployments: {
+  CRServiceDeploymentConfiguration new serviceIdentifier: CRRuntime orchestratorIdentifier; label: 'Orchestrator'; initialCount: 1; yourself.
+  CRServiceDeploymentConfiguration new serviceIdentifier: #simulation; label: 'Simulation'; initialCount: 1; yourself}.
+ cfg failureEvidenceConfiguration captureDebugArtifacts: false.
+ check value: cfg validate isValid value: 'Invalid sharded configuration'.
+ file := GsFile openWriteOnServer: directory, '/runtime.ston'.
+ [file nextPutAll: (CRRuntimeConfigurationCodec toString: cfg)] ensure: [file close]].
+phase = 'configure' ifFalse: [
+ runtime := CRRuntimeRegistry default runtimeNamed: runtimeName. check value: runtime notNil value: 'Runtime missing'.
+ repository := CSSimulationRepository named: runtimeName.
+ (repository notNil and: [phase ~= 'upload' and: [phase ~= 'create']]) ifTrue: [group := repository groupFor: helper createRequest].
+ router := CRWorkRouter deploymentTopology: runtime activation deploymentTopology.
+ submit := [:work | | envelope |
+  envelope := work asEnvelope serviceIdentifier: #simulation; yourself.
+  envelope context add: (CRDeploymentVersionContext new version: runtime configuration version; yourself).
+  CRApplicationWorkSubmissionPolicy new validateWorkUnit: work.
+  CRGemStoneRuntime duringTransaction: [router enqueue: envelope]].
+ query := [:kind :argument :label | | readRequest evidence |
+  evidence := runtimeName, '-', phase, '-', label.
+  readRequest := Dictionary new at: 'world' put: (helper id: 1); at: 'group' put: (helper id: 2); at: 'minimumRevision' put: 0; at: 'argument' put: argument; yourself.
+  submit value: (CSSimulationCaptureWorkUnit operation: kind request: readRequest principal: 'admin' evidence: evidence).
+  wait value: [(CSSimulationEvidence at: evidence) notNil].
+  CSSimulationEvidence at: evidence].
+ phase = 'upload' ifTrue: [
+  1 to: (fixture at: 'uploadBatches') do: [:number | | evidence |
+   data := readFile value: fixtureDirectory, '/upload-', number printString, '.json'.
+   request := Dictionary new at: 'world' put: (helper id: 1); at: 'group' put: (helper id: 2); at: 'objects' put: data; yourself.
+   evidence := runtimeName, '-upload-', number printString.
+   submit value: (CSSimulationCaptureWorkUnit operation: 'upload' request: request principal: 'admin' evidence: evidence).
+   wait value: [(CSSimulationEvidence at: evidence) notNil].
+   check value: (CSSimulationEvidence at: evidence) = (data collect: [:object | object at: 'hash']) value: 'Upload receipt differs'].
+  report at: 'uploadedObjects' put: (fixture at: 'initialObjects')].
+ phase = 'create' ifTrue: [
+  request := helper createRequest.
+  request at: 'payload' put: ((helper placement: 'smalltalk' owner: 3) at: 'root' put: (fixture at: 'initialRoot'); yourself).
+  submit value: (CSCreateShardedSimulationWorkUnit request: request principal: 'admin').
+  wait value: [(CSSimulationRepository named: runtimeName) notNil and: [| found |
+   found := [(CSSimulationRepository named: runtimeName) groupFor: request] on: CSAuthorityError do: [:error | nil]. found notNil]].
+  repository := CSSimulationRepository named: runtimeName. group := repository groupFor: request].
+ (phase beginsWith: 'advance') ifTrue: [
+  target := (phase copyFrom: 8 to: phase size) asInteger.
+  submit value: (CSAdvanceSimulationWorkUnit request: (helper requestFor: group id: phase payload: (helper target: target)) principal: 'admin').
+  wait value: [(group view at: 'tick') = target]].
+ (#('external' 'local') includes: phase) ifTrue: [
+  before := group view.
+  payload := helper placement: (phase = 'external' ifTrue: ['external'] ifFalse: ['smalltalk']) owner: (phase = 'external' ifTrue: [4] ifFalse: [7]).
+  submit value: (CSMigrateSimulationWorkUnit request: (helper requestFor: group id: phase payload: payload) principal: 'admin').
+  wait value: [(group view at: 'generation') > (before at: 'generation') and: [(group view at: 'phase') = 'active']].
+  check value: (group view at: 'checkpointDigest') = (before at: 'checkpointDigest') value: 'Placement changed accepted root'].
+ (phase beginsWith: 'run') ifTrue: [
+  target := (phase copyFrom: 4 to: phase size) asInteger.
+  submit value: (CSPrepareSimulationBatchWorkUnit request: (helper requestFor: group id: phase payload: (helper target: target)) principal: 'admin').
+  target = 6 ifTrue: [wait value: [(group view at: 'pending') notNil and: [((group view at: 'pending') at: 'phase') = 'uncertain']]]
+   ifFalse: [wait value: [(group view at: 'tick') = target]]].
+ phase = 'staged' ifTrue: [
+  wait value: [(group view at: 'pending') notNil and: [((group view at: 'pending') includesKey: 'resultRoot')]].
+  data := group artifacts missingFor: ((group view at: 'pending') at: 'resultRoot') limit: 4.
+  check value: data notEmpty value: 'Fault injection did not leave a partially staged checkpoint'.
+  report at: 'unacceptedMissingObjects' put: data size].
+ (phase beginsWith: 'recover') ifTrue: [
+  before := group view. payload := helper placement: 'external' owner: 9.
+  payload at: 'owner' put: ((CSSha256 hexDigestOf: phase, runtimeName, (before at: 'generation') printString) first: 32); at: 'reason' put: 'Sharded checkpoint recovery'.
+  submit value: (CSRecoverSimulationWorkUnit request: (helper requestFor: group id: phase payload: payload) principal: 'admin').
+  wait value: [(group view at: 'generation') > (before at: 'generation')].
+  check value: (group view at: 'pending') = (before at: 'pending') value: 'Recovery discarded staged evidence'].
+ phase = 'stale-result' ifTrue: [
+  before := group view. data := before at: 'pending'.
+  payload := Dictionary new at: 'batch' put: (data at: 'batch'); at: 'inputDigest' put: (data at: 'inputDigest'); at: 'root' put: (data at: 'resultRoot'); yourself.
+  request := helper requestFor: group id: phase payload: payload.
+  request at: 'generation' put: (data at: 'generation'); at: 'owner' put: (data at: 'owner').
+  submit value: (CSAcceptSimulationResultWorkUnit request: request principal: 'executor').
+  wait value: [runtime nativeHosts values anySatisfy: [:host | host failures asArray anySatisfy: [:failure | failure workUnitClassName asString = 'CSAcceptSimulationResultWorkUnit']]].
+  check value: group view = before value: 'Old owner published sharded data'. report at: 'fencedResultRejected' put: true].
+ phase = 'accepted6' ifTrue: [wait value: [(group view at: 'tick') = 6 and: [(group view at: 'pending') isNil]]].
+ phase = 'drive10' ifTrue: [
+  cfg := runtime configuration. (cfg serviceConfigurationNamed: #simulation) driveThroughTick: 10. runtime configure: cfg.
+  wait value: [(group view at: 'tick') = 10].
+  cfg := runtime configuration. (cfg serviceConfigurationNamed: #simulation) driveThroughTick: 0. runtime configure: cfg.
+  wait value: [runtime publications values anySatisfy: [:publication | (publication isKindOf: CRWorkerHandle) and: [| handle | handle := publication serviceHandleForIdentifier: #simulation. handle notNil and: [handle appliedConfigurationVersion = runtime configuration version]]]].
+  report at: 'scheduled' put: true].
+ phase = 'collect' ifTrue: [
+  before := group artifacts count.
+  submit value: (CSCollectSimulationArtifactsWorkUnit request: (helper requestFor: group id: phase payload: nil) principal: 'admin').
+  wait value: [group artifacts count < before].
+  report at: 'objectsBefore' put: before; at: 'objectsAfter' put: group artifacts count].
+ phase = 'cleanup' ifTrue: [
+  check value: runtime status = CRStatus stopped value: 'Stop Runtime before cleanup'.
+  CRGemStoneRuntime duringTransaction: [CSSimulationRepository removeNamed: runtimeName. CSSimulationEvidence removePrefix: runtimeName, '-']].
+ (#('upload' 'cleanup') includes: phase) ifFalse: [
+  result := query value: 'checkpoint' value: nil value: 'view'.
+  check value: result = group view value: 'Runtime accepted endpoint differs'.
+  check value: (result at: 'checkpointDigest') = ((fixture at: 'roots') at: (result at: 'tick') printString) value: 'Accepted manifest differs from GT'.
+  report at: 'view' put: result; at: 'materializations' put: group artifacts materializations; at: 'objectCount' put: group artifacts count;
+   at: 'typedRestores' put: group artifacts typedRestores; at: 'validation' put: group artifacts lastValidation; at: 'runtimeEndpoint' put: true.
+  root := result at: 'checkpointDigest'.
+  data := Dictionary new at: 'root' put: root; at: 'bucket' put: ((#('sparse' 'typed100k') includes: (fixture at: 'name')) ifTrue: ['00'] ifFalse: [(helper checkpoint at: 'entities') keys asArray sorted first last: 2]); at: 'after' put: nil; at: 'limit' put: 2; yourself.
+  report at: 'projection' put: (query value: 'projection' value: data value: 'projection').
+  report at: 'projectionChanges' put: (query value: 'projectionChanges' value: 0 value: 'projectionChanges').
+  report at: 'manifest' put: (query value: 'manifest' value: (Dictionary new at: 'root' put: root; yourself) value: 'manifest')]].
+report at: 'passed' put: true.
+file := GsFile openWriteOnServer: directory, '/', phase, '.json'.
+[file nextPutAll: (STON toJsonString: report)] ensure: [file close].
+true
+%

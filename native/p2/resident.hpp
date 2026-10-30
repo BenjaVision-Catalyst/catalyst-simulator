@@ -4,7 +4,7 @@
 // One compiled graph and SharedContext per placement incarnation. Only command
 // boundaries gather a full checkpoint. Private candidates require acceptance
 // acknowledgment before a subsequent advance. The supervisor fsyncs receipts.
-inline void runResident(mpi::communicator& world,Probe& probe,const std::string& directory,const std::string& objects=""){
+template<class Engine>inline void runResident(mpi::communicator& world,Engine& probe,const std::string& directory,const std::string& objects=""){
  bool sharded=!objects.empty();
  std::string sessionBytes;if(world.rank()==0)sessionBytes=readFile(directory+"/session.canon");
  mpi::broadcast(world,sessionBytes,0);Value session=decode(sessionBytes);
@@ -17,10 +17,12 @@ inline void runResident(mpi::communicator& world,Probe& probe,const std::string&
  if(world.rank()==0)require((sharded?CasStore(objects).get(checkpointDigest):decode(bytes)).at("modelDigest")==session.at("modelDigest"),"Resident model binding");
  mpi::broadcast(world,checkpointDigest,0);bool awaiting=false;int number=0;Integer acceptedRevision=0;unsigned long advanced=0;
  auto reply=[&](const std::string& state){
+  auto population=probe.populationStatistics();
   if(world.rank()==0){auto response=Value::dict({{"version",Value(1)},{"session",session},{"number",Value(number)},
    {"state",Value(state)},{"tick",Value(probe.tick())},{"checkpointDigest",Value(checkpointDigest)},{"awaitingAcceptance",Value(awaiting)},
    {"pids",pids},{"snapshots",Value(Integer(probe.snapshotCount()))},{"graphCompilations",Value(1)},{"restores",Value(1)},{"advancedTicks",Value(Integer(advanced))}});
    if(sharded){response.map["profile"]="checkpoint-1";response.map["shardedSnapshots"]=Value(Integer(probe.shardedSnapshotCount()));response.map["rootEntityRowsGathered"]=Value(0);}
+   if(!population.map.empty())response.map["population"]=population;
    publish(directory+"/reply.canon",encode(response));}
  };
  if(world.rank()==0)publish(directory+(sharded?"/candidate-root":"/candidate.canon"),sharded?checkpointDigest:bytes);reply("ready");

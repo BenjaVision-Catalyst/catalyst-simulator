@@ -6,6 +6,11 @@ entity, random-address and logical-time semantics. Legacy `authority-1` groups
 retain their full-checkpoint representation; new sharded groups identify
 `schemaVersion: 2` and `profile: checkpoint-1` at the same Runtime endpoint.
 
+The subsequent [`typed-1` execution profile](../typed-1/README.md) uses this same
+interchange format with packed local reconstruction and larger populations. The
+original `graph-1` materialization limits below remain specific to that legacy
+execution profile.
+
 ## Immutable objects
 
 Each object is canonical ASCII (`CSCanonicalCodec`), at most 16,384 bytes,

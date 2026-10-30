@@ -25,6 +25,7 @@ def main():
     for name in ("project", "bvc", "output", "executable", "lease-release"):
         parser.add_argument("--" + name, type=Path, required=True)
     parser.add_argument("--ranks", type=int, nargs="+", choices=(1, 2, 4), default=[1, 2, 4])
+    parser.add_argument("--typed-source-fixtures", type=Path)
     args = parser.parse_args()
     gate = args.lease_release.parent
     assert json.loads((gate / "active.json").read_text())["active"] is True
@@ -45,7 +46,7 @@ def main():
         nonlocal sequence
         sequence += 1
         result = subprocess.run(list(map(str, command)), cwd=args.project, env=dict(env, **(extra or {})),
-                                capture_output=True, text=True, timeout=100)
+                                capture_output=True, text=True, timeout=360)
         (args.output / f"{sequence:03}-{label}.log").write_text(result.stdout + result.stderr)
         assert result.returncode == 0, (label, result.returncode)
         return result.stdout
@@ -138,6 +139,16 @@ def main():
         run([args.bvc, "topaz", "bvc_simulator_native", "--script", HERE / "verify-live-repast-source.topaz"],
             "verify-source", dict(CS_LIVE_SOURCE_REPORT=str(args.output / "source-native.json")))
         run([args.executable.parent / "catalyst_value_tests"], "native-values")
+        if args.typed_source_fixtures:
+            root = "CSTypedSource" + uuid.uuid4().hex
+            report["typedSourceRoundTrip"] = {}
+            for stage in ("build", "verify"):
+                output = args.output / ("typed-source-" + stage + ".json")
+                run([args.bvc, "topaz", "bvc_simulator_native", "--script", HERE / "qualify-typed-source.topaz"],
+                    "typed-source-" + stage, dict(CS_TYPED_FIXTURE=str(args.typed_source_fixtures),
+                        CS_TYPED_SOURCE_ROOT=root, CS_TYPED_SOURCE_PHASE=stage, CS_TYPED_SOURCE_REPORT=str(output)))
+                report["typedSourceRoundTrip"][stage] = json.loads(output.read_text())
+                assert report["typedSourceRoundTrip"][stage]["passed"]
         for ranks in args.ranks:
             active = "simulation_resident_" + uuid.uuid4().hex[:12]
             directory = args.output / f"r{ranks}"

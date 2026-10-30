@@ -80,22 +80,35 @@ def observation(spool, job, spec):
 
 
 def handle(spool, request):
+    require(len(json.dumps(request, separators=(",", ":"))) <= 196608, "Sharded control byte limit")
     require((spool / "identity").read_text() == MARKER, "Initialize and retain the sharded spool")
     action = request["action"]
     store = codec.Store(spool / "objects")
     if action == "getObjects":
-        require(set(request) == {"action", "hashes"} and 1 <= len(request["hashes"]) <= 4, "Artifact fetch budget")
-        return dict(objects=store.objects(request["hashes"]))
+        require(set(request) == {"action", "hashes"} and 1 <= len(request["hashes"]) <= 32, "Artifact fetch budget")
+        require(len(set(request["hashes"])) == len(request["hashes"]), "Duplicate artifact fetch")
+        objects = []
+        for key in request["hashes"]:
+            candidate = objects + store.objects([key])
+            if len(json.dumps(dict(objects=candidate), separators=(",", ":"))) > 160000:
+                break
+            objects = candidate
+        return dict(objects=objects)
     if action == "putObjects":
-        require(set(request) == {"action", "objects"} and 1 <= len(request["objects"]) <= 4, "Artifact offer budget")
+        require(set(request) == {"action", "objects"} and 1 <= len(request["objects"]) <= 32, "Artifact offer budget")
         for obj in request["objects"]:
             require(set(obj) == {"hash", "parts"} and 1 <= len(obj["parts"]) <= 4
                     and all(type(part) is str and len(part) <= 4096 for part in obj["parts"]), "Artifact parts")
             store.put_raw(obj["hash"], "".join(obj["parts"]))
+        with codec.Availability(spool / "availability.sqlite3") as available:
+            for obj in request["objects"]:
+                available.missing(store, obj["hash"], 1)
         return dict(stored=[obj["hash"] for obj in request["objects"]])
     if action == "missing":
         require(set(request) == {"action", "root"}, "Artifact availability")
-        return dict(missing=missing(store, request["root"], 4))
+        with codec.Availability(spool / "availability.sqlite3") as available:
+            result = available.missing(store, request["root"], 32)
+            return dict(missing=result, availability=available.stats)
     require(set(request) == {"action", "spec", "executable", "mpi", "ranks", "acceptedRevision"}, "Sharded request")
     require(action in ("ensure", "synchronize", "retire", "query"), "Sharded action")
     spec = request["spec"]
@@ -174,7 +187,9 @@ def worker(directory):
         claim = resident.read(directory / "claim.json")
         spec, session = claim["initialSpec"], claim["session"]
         validate(spec)
-        publish(directory / "started.json", dict(supervisor=os.getpid(), session=session))
+        typed = store.read_value(store.get(spec["root"])["model"])[0] == "simulation-portable-1/typed-1"
+        client_lease = 300 if typed else 60
+        publish(directory / "started.json", dict(supervisor=os.getpid(), session=session, clientLeaseSeconds=client_lease))
         native = directory / "native"
         native.mkdir()
         (native / "session.canon").write_text(encode(session))
@@ -225,7 +240,7 @@ def worker(directory):
             while not (directory / "stop").exists():
                 pulse()
                 require(process.poll() is None, "Sharded MPI failed")
-                if time.time() - (directory / "client-heartbeat").stat().st_mtime > 60:
+                if time.time() - (directory / "client-heartbeat").stat().st_mtime > client_lease:
                     state = "expired"
                     break
                 if (directory / "accepted.json").exists():

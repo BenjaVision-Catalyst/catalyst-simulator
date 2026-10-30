@@ -111,6 +111,7 @@ public:
  }
  Integer tick()const{return accepted.at("tick").integer();}
  unsigned long snapshotCount()const{return snapshots;}
+ Value populationStatistics(){return Value::dict();}
  unsigned long shardedSnapshotCount()const{return shardedSnapshots;}
  std::string shardedCheckpoint(const std::string& directory){
   ++shardedSnapshots;CasStore store(directory);
@@ -165,6 +166,7 @@ public:
   if(world.rank()==0){Value array=Value::list();for(int n:counts)array.array.emplace_back(n);publish(output+"/execution.canon",encode(Value::dict({{"ranks",Value(world.size())},{"migrations",Value(Integer(moves))},{"remoteRequests",Value(Integer(requests))},{"localCounts",array}})));}
  }
 };
+#include "typed.hpp"
 #include "resident.hpp"
 Value restoreSharded(mpi::communicator& world,const std::string& directory,const std::string& root,int layout){
  CasStore store(directory);auto manifest=store.get(root);require(manifest.at("kind").text()=="checkpoint"&&manifest.at("version").integer()==1,"Sharded checkpoint manifest");
@@ -190,9 +192,12 @@ int main(int argc,char** argv){
   require(sha256("CatalystSimulation-Registry-1:"+catalog)=="710502049ac1f485589d81eb27482360017ed9d048afb0452694792bf23fc367","Unqualified operation catalog");
   registry=decode(catalog);if(opt.count("--disable-operation"))registry.map.erase(opt.at("--disable-operation"));
   if(opt.count("--validate-only")){compileGraph(decode(bundle));return 0;}
+  require(decode(bundle).at(0).text()!="simulation-portable-1/typed-1"||sharded,"Typed execution requires checkpoint-1 resident artifacts");
   bool resident=opt.count("--resident");int steps=resident?0:std::stoi(opt.at("--steps"));require(steps>=0&&steps<=1000,"Step budget");
   repast::RepastProcess::init("",&world);
-  if(sharded){int layout=opt.count("--layout")?std::stoi(opt.at("--layout")):0;Probe probe(world,restoreSharded(world,opt.at("--objects"),opt.at("--root"),layout),decode(bundle),opt.at("--output"),layout,-1,true,true);runResident(world,probe,opt.at("--resident"),opt.at("--objects"));probe.finish();}
+  if(sharded){int layout=opt.count("--layout")?std::stoi(opt.at("--layout")):0;
+   if(decode(bundle).at(0).text()=="simulation-portable-1/typed-1"){TypedProbe probe(world,opt.at("--objects"),opt.at("--root"),opt.at("--output"),layout);runResident(world,probe,opt.at("--resident"),opt.at("--objects"));probe.finish();}
+   else{Probe probe(world,restoreSharded(world,opt.at("--objects"),opt.at("--root"),layout),decode(bundle),opt.at("--output"),layout,-1,true,true);runResident(world,probe,opt.at("--resident"),opt.at("--objects"));probe.finish();}}
   else{Probe probe(world,input,bundle,opt.at("--output"),opt.count("--layout")?std::stoi(opt.at("--layout")):0,opt.count("--hold-tick")?std::stoi(opt.at("--hold-tick")):-1,resident);
    if(resident)runResident(world,probe,opt.at("--resident"));
    if(steps){auto& runner=repast::RepastProcess::instance()->getScheduleRunner();runner.scheduleEvent(1,1,repast::Schedule::FunctorPtr(new repast::MethodFunctor<Probe>(&probe,&Probe::advance)));runner.scheduleStop(steps+0.5);runner.run();}

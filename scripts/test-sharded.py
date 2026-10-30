@@ -72,6 +72,45 @@ class ShardedTests(unittest.TestCase):
         with self.assertRaises(AssertionError):
             self.store.get(self.root)
 
+    def test_availability_reuses_closed_subtrees_across_process_calls(self):
+        path = self.spool / "availability.sqlite3"
+        with sharded.codec.Availability(path) as available:
+            self.assertEqual(available.missing(self.store, self.root, 32), [])
+            self.assertGreater(available.stats["readObjects"], 0)
+        with sharded.codec.Availability(path) as available:
+            self.assertEqual(available.missing(self.store, self.root, 32), [])
+            self.assertEqual(available.stats["readObjects"], 0)
+        path.unlink()
+        with sharded.codec.Availability(path) as available:
+            self.assertEqual(available.missing(self.store, self.root, 32), [])
+            self.assertGreater(available.stats["readObjects"], 0)
+
+    def test_availability_does_not_cache_absence_or_hide_corrupt_reads(self):
+        target = sharded.codec.Store(self.spool / "import")
+        path = self.spool / "availability.sqlite3"
+        with sharded.codec.Availability(path) as available:
+            self.assertEqual(available.missing(target, self.root, 32), [self.root])
+        for key in self.store.closure(self.root):
+            target.put_raw(key, self.store.raw(key))
+        with sharded.codec.Availability(path) as available:
+            self.assertEqual(available.missing(target, self.root, 32), [])
+        (target.directory / (self.root + ".canon")).write_text("n")
+        with self.assertRaises(AssertionError):
+            target.get(self.root)
+
+    def test_cached_subtree_height_still_enforces_the_whole_path_limit(self):
+        leaf = self.store.value([])
+        root = leaf
+        for _ in range(64):
+            root = self.store.put(dict(kind="array", left=root, right=leaf))
+        path = self.spool / "availability.sqlite3"
+        with sharded.codec.Availability(path) as available:
+            self.assertEqual(available.missing(self.store, root, 32), [])
+        parent = self.store.put(dict(kind="array", left=root, right=leaf))
+        with self.assertRaises(AssertionError):
+            with sharded.codec.Availability(path) as available:
+                available.missing(self.store, parent, 32)
+
     def test_artifact_fetch_and_offer_budgets(self):
         with self.assertRaises(ValueError):
             sharded.handle(self.spool, dict(action="getObjects", hashes=[self.root] * 5))
@@ -85,6 +124,20 @@ class ShardedTests(unittest.TestCase):
             self.assertEqual(sharded.handle(self.spool, self.request)["state"], "missing")
             launch.assert_not_called()
         self.assertFalse(list((self.spool / "sessions").iterdir()))
+
+    def test_large_fetch_is_shortened_to_the_wire_byte_budget(self):
+        keys = [self.store.value([str(i), '"' * 4096, '"' * 4096, '"' * 4096]) for i in range(32)]
+        result = sharded.handle(self.spool, dict(action="getObjects", hashes=keys))
+        self.assertGreater(len(result["objects"]), 0)
+        self.assertLess(len(result["objects"]), len(keys))
+        self.assertLessEqual(len(json.dumps(result, separators=(",", ":"))), 160000)
+        self.assertEqual([obj["hash"] for obj in result["objects"]], keys[:len(result["objects"])])
+
+    def test_offer_rejects_oversized_control_before_writing(self):
+        objects = self.store.objects([self.root]) * 32
+        objects[0]["parts"] = ['"' * 4096] * 4
+        with self.assertRaises(ValueError):
+            sharded.handle(self.spool, dict(action="putObjects", objects=objects))
 
     def test_repeated_windows_reuse_the_claimed_incarnation(self):
         with patch.object(sharded.subprocess, "Popen") as launch:
@@ -124,12 +177,13 @@ class ShardedTests(unittest.TestCase):
             sharded.handle(self.spool, self.request)
 
     def test_controller_refuses_native_work_without_its_own_lease(self):
-        output = self.spool / "not-started"
-        result = subprocess.run([sys.executable, str(HERE / "qualify-sharded.py"), "--project", str(self.spool),
-            "--bvc", "/usr/bin/false", "--executable", "/usr/bin/false", "--fixtures", str(self.spool),
-            "--output", str(output), "--lease-release", str(self.spool / "release")], capture_output=True)
-        self.assertNotEqual(result.returncode, 0)
-        self.assertFalse(output.exists())
+        for script in ("qualify-sharded.py", "qualify-typed.py"):
+            output = self.spool / (script + "-not-started")
+            result = subprocess.run([sys.executable, str(HERE / script), "--project", str(self.spool),
+                "--bvc", "/usr/bin/false", "--executable", "/usr/bin/false", "--fixtures", str(self.spool),
+                "--output", str(output), "--lease-release", str(self.spool / "release")], capture_output=True)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertFalse(output.exists())
 
 
 if __name__ == "__main__":

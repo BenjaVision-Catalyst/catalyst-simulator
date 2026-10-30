@@ -6,7 +6,8 @@ Class {
 		'summaries',
 		'closures',
 		'materializations',
-		'lastValidation'
+		'lastValidation',
+		'typedRestores'
 	],
 	#category : 'BVC-Simulator-Authority',
 	#package : 'BVC-Simulator-Authority'
@@ -17,12 +18,48 @@ CSArtifactStore >> assertHash: hash [
  CSAuthorityChecks require: (hash isString and: [hash size = 64 and: [hash allSatisfy: [:c | '0123456789abcdef' includes: c]]]) code: 'invalid-artifact-hash'
 ]
 
-{ #category : 'sharded checkpoints' }
+{ #category : 'typed scale' }
+CSArtifactStore >> boundedObjects: hashes [
+ | result object candidate |
+ result := OrderedCollection new.
+ hashes do: [:hash |
+  object := (self objects: {hash}) first. candidate := result asArray copyWith: object.
+  (CSCanonicalCodec encode: candidate) size > 60000 ifTrue: [^ result asArray].
+  result add: object].
+ ^ result asArray
+]
+
+{ #category : 'typed scale' }
+CSArtifactStore >> cacheComplete: root [
+ | active visit |
+ (closures isKindOf: Dictionary) ifFalse: [closures := Dictionary new].
+ active := Set new.
+ visit := [:hash :depth | | height complete childHeight |
+  CSAuthorityChecks require: depth <= 64 code: 'artifact-depth'.
+  height := closures at: hash ifAbsent: [nil].
+  (height isNil and: [self includes: hash]) ifTrue: [
+   CSAuthorityChecks require: (active includes: hash) not code: 'artifact-cycle'.
+   active add: hash. height := 0. complete := true.
+   (self references: (self objectAt: hash)) do: [:child |
+    childHeight := visit value: child value: depth + 1.
+    childHeight ifNil: [complete := false] ifNotNil: [height := height max: childHeight + 1]].
+   active remove: hash.
+   complete
+    ifTrue: [CSAuthorityChecks require: depth + height <= 64 code: 'artifact-depth'. closures at: hash put: height]
+    ifFalse: [height := nil]].
+  height ifNotNil: [CSAuthorityChecks require: depth + height <= 64 code: 'artifact-depth'].
+  height].
+ ^ visit value: root value: 0
+]
+
+{ #category : 'typed population' }
 CSArtifactStore >> checkpoint: snapshot [
- | entities projection grouped |
+ | entities projection grouped population |
+ population := snapshot at: 'entities'.
  entities := Dictionary new. projection := Dictionary new. grouped := Dictionary new.
- (snapshot at: 'entities') keysAndValuesDo: [:id :row | (grouped at: (id last: 2) ifAbsentPut: [Dictionary new]) at: id put: row].
- grouped keysAndValuesDo: [:bucket :rows | | poses |
+ population keys do: [:id | (grouped at: (id last: 2) ifAbsentPut: [OrderedCollection new]) add: id].
+ grouped keysAndValuesDo: [:bucket :ids | | poses rows |
+  rows := Dictionary new. ids do: [:id | rows at: id put: (population at: id)].
   poses := Dictionary new. rows keysAndValuesDo: [:id :row | poses at: id put: {row first. row second. row third. row sixth}].
   entities at: bucket put: (self rows: rows suffix: bucket projection: false).
   projection at: bucket put: (self rows: poses suffix: bucket projection: true)].
@@ -46,13 +83,14 @@ CSArtifactStore >> closure: root [
  ^ seen
 ]
 
-{ #category : 'sharded checkpoints' }
+{ #category : 'typed population' }
 CSArtifactStore >> collectKeeping: roots [
  | keep removed |
  keep := Set new. roots do: [:root | keep addAll: (self closure: root)].
  removed := self count - keep size.
  buckets keys asArray do: [:prefix | | bucket |
-  bucket := (buckets at: prefix) select: [:raw | keep includes: (CSSha256 hexDigestOf: raw)].
+  bucket := buckets at: prefix.
+  bucket keys asArray do: [:hash | (keep includes: hash) ifFalse: [bucket removeKey: hash]].
   bucket isEmpty ifTrue: [buckets removeKey: prefix] ifFalse: [buckets at: prefix put: bucket]].
  summaries keys asArray do: [:hash | (keep includes: hash) ifFalse: [summaries removeKey: hash]].
  (closures isKindOf: Dictionary)
@@ -188,14 +226,14 @@ CSArtifactStore >> put: node [
  | raw | raw := CSCanonicalCodec encode: node. ^ self putRaw: raw hash: (CSSha256 hexDigestOf: raw)
 ]
 
-{ #category : 'sharded checkpoints' }
+{ #category : 'typed scale' }
 CSArtifactStore >> putRaw: raw hash: hash [
  | bucket |
  self assertHash: hash.
  CSAuthorityChecks require: (raw size <= 16384 and: [(CSSha256 hexDigestOf: raw) = hash]) code: 'artifact-integrity'.
  self validateNode: (CSCanonicalCodec decode: raw).
  bucket := buckets at: (hash first: 2) ifAbsentPut: [Dictionary new].
- (bucket includesKey: hash) ifTrue: [CSAuthorityChecks require: (bucket at: hash) = raw code: 'artifact-collision'] ifFalse: [bucket at: hash copy put: raw copy].
+ (bucket includesKey: hash) ifTrue: [CSAuthorityChecks require: (bucket at: hash) = raw code: 'artifact-collision'] ifFalse: [CSAuthorityChecks require: self count < 65536 code: 'artifact-capacity-collect-required'. bucket at: hash copy put: raw copy].
  ^ hash
 ]
 
@@ -291,10 +329,28 @@ CSArtifactStore >> summaryFor: hash suffix: suffix projection: projection [
  summaries at: hash put: cached. ^ cached
 ]
 
-{ #category : 'sharded checkpoints' }
+{ #category : 'typed population' }
+CSArtifactStore >> typedBackendAt: root [
+ | node state population |
+ node := self objectAt: root.
+ population := CSTypedPopulation capacity: ((node at: 'entityCount') max: 1).
+ (self indexAt: (node at: 'entities')) values do: [:hash |
+  (self rowsAt: hash) keysAndValuesDo: [:id :row | population at: id put: row]].
+ state := Dictionary new at: 'version' put: 2; at: 'model' put: (self valueAt: (node at: 'model')); at: 'modelDigest' put: (node at: 'modelDigest');
+ at: 'tick' put: (node at: 'tick'); at: 'seed' put: (node at: 'seed'); at: 'entities' put: population;
+ at: 'resources' put: (self valueAt: (node at: 'resources')); at: 'events' put: (self valueAt: (node at: 'events')); at: 'outcomes' put: (self valueAt: (node at: 'outcomes')); yourself.
+ typedRestores := self typedRestores + 1.
+ ^ CSTypedSmalltalkBackend fromPopulationState: state
+]
+
+{ #category : 'typed population' }
+CSArtifactStore >> typedRestores [ ^ typedRestores ifNil: [0]
+]
+
+{ #category : 'typed scale' }
 CSArtifactStore >> upload: objects [
  | decoded missing |
- CSAuthorityChecks require: (objects class == Array and: [objects size between: 1 and: 8]) code: 'artifact-batch-budget'.
+ CSAuthorityChecks require: (objects class == Array and: [objects size between: 1 and: 32]) code: 'artifact-batch-budget'.
  CSAuthorityChecks require: (CSCanonicalCodec encode: objects) size <= 196608 code: 'artifact-byte-budget'.
  decoded := objects collect: [:object | | raw hash |
   CSAuthorityChecks keys: object exactly: #('hash' 'parts'). hash := object at: 'hash'. self assertHash: hash.
@@ -305,12 +361,13 @@ CSArtifactStore >> upload: objects [
  missing := decoded count: [:pair | (self includes: pair first) not].
  CSAuthorityChecks require: self count + missing <= 65536 code: 'artifact-capacity-collect-required'.
  decoded do: [:pair | self putRaw: pair second hash: pair first].
+ decoded do: [:pair | self cacheComplete: pair first].
  ^ decoded collect: #first
 ]
 
-{ #category : 'sharded checkpoints' }
+{ #category : 'typed population' }
 CSArtifactStore >> validateCheckpoint: root base: prior [
- | node model backend entities projection oldEntities oldProjection header index resources count summary poseSummary oldSummary oldNode newClosures checkedRows unchanged |
+ | node model backend entities projection oldEntities oldProjection header index resources count summary poseSummary oldSummary oldNode newClosures checkedRows unchanged stateRows poseRows |
  self assertHash: root.
  CSAuthorityChecks require: (self missingFor: root limit: 1) isEmpty code: 'artifact-unavailable'.
  newClosures := self newClosuresFor: root.
@@ -340,8 +397,9 @@ CSArtifactStore >> validateCheckpoint: root base: prior [
    CSAuthorityChecks require: (summary at: 'ids') = (oldSummary at: 'ids') code: 'profile-fixed-population'].
   unchanged ifFalse: [
    checkedRows := checkedRows + (summary at: 'ids') size.
+   stateRows := self rowsAt: hash. poseRows := self rowsAt: (projection at: bucket).
    (summary at: 'ids') do: [:id | | row pose |
-    row := self row: id at: hash. pose := self row: id at: (projection at: bucket).
+    row := stateRows at: id. pose := poseRows at: id.
     CSAuthorityChecks require: pose = {row first. row second. row third. row sixth} code: 'projection-state-mismatch']]].
  CSAuthorityChecks require: count = (node at: 'entityCount') code: 'artifact-entity-count'.
  index := CSArtifactEntityIndex new store: self index: entities count: count; yourself.

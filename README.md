@@ -12,6 +12,13 @@ accepted windows. The optional sharded mode publishes accepted roots and bounded
 projection pages, reusing unchanged checkpoint/projection objects. A GT placement
 action and production population benchmarks remain later gates.
 
+The [`typed-1` profile](contracts/typed-1/README.md) adds packed Smalltalk population
+columns and fixed-width native records, with shard-based local reconstruction.
+See [typed population qualification](conformance/Typed-Population.md) for the
+100,000-entity workload, rank-count and Runtime durability evidence. Legacy profiles
+keep their existing limits; admission capacity is separate from tested workload
+capacity.
+
 Ecosystems are the first domain; NPCs and automation remain deferred. The
 intended workflow is to author a model once in Smalltalk, run it entirely in
 GemStone or GT, then move the same supported model to a configured external
@@ -40,8 +47,8 @@ records Runtime-owned GemStone → Repast → GemStone switching and recovery on
 whole-state transport limit. Select `repastMode: 'sharded'` for the
 [`checkpoint-1`](contracts/checkpoint-1/README.md) and
 [`projection-1`](contracts/projection-1/README.md) contracts. The existing graph
-capacity and local materialization limits remain; this is not a 100,000-entity
-qualification.
+capacity and local materialization limits remain for the legacy profiles. The
+subsequent typed profile has its own population and switching qualification.
 
 Clients always use the Simulation service hosted by CatalystRuntime through
 CatalystConnect. Selecting an external simulator changes execution placement;

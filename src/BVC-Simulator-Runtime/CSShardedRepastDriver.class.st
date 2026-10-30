@@ -28,7 +28,7 @@ CSShardedRepastDriver >> bindingFor: view [
  ^ binding
 ]
 
-{ #category : 'sharded runtime' }
+{ #category : 'typed scale' }
 CSShardedRepastDriver >> ensureRemote: view [
  | root observation missing objects |
  remoteRoots ifNil: [remoteRoots := Set new].
@@ -36,12 +36,12 @@ CSShardedRepastDriver >> ensureRemote: view [
  observation := transport invoke: (Dictionary new at: 'action' put: 'missing'; at: 'root' put: root; yourself) configuration: configuration.
  missing := observation at: 'missing'.
  missing isEmpty ifTrue: [remoteRoots add: root. ^ true].
- objects := (self artifactsFor: view) objects: missing.
+ objects := (self artifactsFor: view) boundedObjects: missing.
  transport invoke: (Dictionary new at: 'action' put: 'putObjects'; at: 'objects' put: objects; yourself) configuration: configuration.
  ^ false
 ]
 
-{ #category : 'sharded runtime' }
+{ #category : 'typed scale' }
 CSShardedRepastDriver >> nextFor: view [
  | pending observation payload root missing objects |
  CSAuthorityChecks require: (view at: 'schemaVersion') = 2 code: 'sharded-profile-required'.
@@ -64,10 +64,10 @@ CSShardedRepastDriver >> nextFor: view [
  (view at: 'phase') = 'handover' ifTrue: [
   CSAuthorityChecks require: root = (view at: 'checkpointDigest') code: 'restore-mutated-checkpoint'.
   ^ self activationFor: view].
- missing := (self artifactsFor: view) missingFor: root limit: 4.
+ missing := (self artifactsFor: view) missingFor: root limit: 32.
  missing notEmpty ifTrue: [
   objects := (transport invoke: (Dictionary new at: 'action' put: 'getObjects'; at: 'hashes' put: missing; yourself) configuration: configuration) at: 'objects'.
-  CSAuthorityChecks require: (objects collect: [:object | object at: 'hash']) asSet = missing asSet code: 'artifact-fetch-mismatch'.
+  CSAuthorityChecks require: (objects notEmpty and: [(objects collect: [:object | object at: 'hash']) asSet size = objects size and: [objects allSatisfy: [:object | missing includes: (object at: 'hash')]]]) code: 'artifact-fetch-mismatch'.
   payload at: 'root' put: root; at: 'objects' put: objects.
   ^ self transition: 'stage' payload: payload].
  remoteRoots ifNil: [remoteRoots := Set new]. remoteRoots add: root.
