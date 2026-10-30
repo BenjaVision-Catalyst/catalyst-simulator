@@ -121,14 +121,14 @@ CSSimulationService >> query: kind request: request group: group [
  ^ group recoveryPlan
 ]
 
-{ #category : 'repast integration' }
+{ #category : 'resident Repast' }
 CSSimulationService >> start [
  (configuration isKindOf: CSSimulationConfiguration) ifFalse: [CSAuthorityError signal: 'simulation-configuration-required'].
  super start.
  port := self capability: CRServiceActivationCapability.
  routing := self capability: CRRoutingCapability. identity := self capability: CRWorkerIdentityCapability.
  drivePending := Dictionary new. externalDriver := nil.
- configuration repastEnabled ifTrue: [externalDriver := CSRepastBatchDriver new configuration: configuration transport: CSGemStoneRepastTransport new; yourself].
+ configuration repastEnabled ifTrue: [externalDriver := (configuration repastMode = 'resident' ifTrue: [CSRepastResidentDriver new] ifFalse: [CSRepastBatchDriver new]) configuration: configuration transport: CSGemStoneRepastTransport new; yourself].
  port activateRecords: 4 bytes: 262144.
  self provideCapability: CSSimulationCapability instance: (CSSimulationCapability service: self).
  (configuration driveThroughTick > 0 or: [configuration repastEnabled]) ifTrue: [driveSchedule := port scheduleProgress: CSSimulationDriveWork new key: #simulationDrive idleIntervalMillis: configuration driveIntervalMillis].

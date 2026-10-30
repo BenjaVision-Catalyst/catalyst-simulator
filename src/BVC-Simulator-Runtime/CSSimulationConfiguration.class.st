@@ -14,7 +14,8 @@ Class {
 		'repastExecutable',
 		'repastMpi',
 		'repastDirectory',
-		'repastRanks'
+		'repastRanks',
+		'repastMode'
 	],
 	#category : 'BVC-Simulator-Runtime',
 	#package : 'BVC-Simulator-Runtime'
@@ -88,6 +89,12 @@ CSSimulationConfiguration >> descriptionRepastExecutable [
 CSSimulationConfiguration >> descriptionRepastLauncher [
  <magritteDescription>
  ^ MAStringDescription new accessor: #repastLauncher; label: 'launcher script'; cfSerializable: true; yourself
+]
+
+{ #category : 'resident Repast' }
+CSSimulationConfiguration >> descriptionRepastMode [
+ <magritteDescription>
+ ^ MAStringDescription new accessor: #repastMode; label: 'Repast mode'; cfSerializable: true; yourself
 ]
 
 { #category : 'repast integration' }
@@ -216,6 +223,16 @@ CSSimulationConfiguration >> repastLauncher: value [
  repastLauncher := value
 ]
 
+{ #category : 'resident Repast' }
+CSSimulationConfiguration >> repastMode [
+ ^ repastMode ifNil: ['batch']
+]
+
+{ #category : 'resident Repast' }
+CSSimulationConfiguration >> repastMode: value [
+ repastMode := value
+]
+
 { #category : 'repast integration' }
 CSSimulationConfiguration >> repastMpi [
  ^ repastMpi ifNil: ['']
@@ -226,9 +243,9 @@ CSSimulationConfiguration >> repastMpi: value [
  repastMpi := value
 ]
 
-{ #category : 'repast integration' }
+{ #category : 'resident Repast' }
 CSSimulationConfiguration >> repastPolicyDigest [
- ^ CSSha256 hexDigestOf: (CSCanonicalCodec encode: {self drivePolicyDigest. self repastLauncher. self repastExecutable. self repastMpi. self repastDirectory. self repastRanks})
+ ^ CSSha256 hexDigestOf: (CSCanonicalCodec encode: {self drivePolicyDigest. self repastLauncher. self repastExecutable. self repastMpi. self repastDirectory. self repastRanks. self repastMode})
 ]
 
 { #category : 'repast integration' }
@@ -251,13 +268,14 @@ CSSimulationConfiguration >> repositoryName: value [
  repositoryName := value
 ]
 
-{ #category : 'repast integration' }
+{ #category : 'resident Repast' }
 CSSimulationConfiguration >> validateRepastOn: result [
  | paths |
  paths := {self repastLauncher. self repastExecutable. self repastMpi. self repastDirectory}.
  [(paths allSatisfy: [:path | path isEmpty]) ifFalse: [
   CSAuthorityChecks require: (paths allSatisfy: [:path | path isString and: [path notEmpty and: [path first = $/]]]) code: 'absolute-repast-paths-required'].
- CSAuthorityChecks require: (#(1 2 4) includes: self repastRanks) code: 'unqualified-repast-ranks']
+ CSAuthorityChecks require: (#(1 2 4) includes: self repastRanks) code: 'unqualified-repast-ranks'.
+ CSAuthorityChecks require: (#('batch' 'resident') includes: self repastMode) code: 'unknown-repast-mode']
  on: CSKernelError do: [:error | result addError: error messageText]
 ]
 

@@ -6,8 +6,9 @@ adapters. P0/P1 now includes a headless portable graph interpreter, versioned
 operation registry, model digests and compatibility checks, qualified in GT and
 GemStone. The P2 Repast adapter passes native macOS feasibility, and the P3 Runtime
 service now provides accepted revisions, placement fencing and GemStone recovery.
-The live native batch adapter connects Runtime to Repast and queries durable
-receipts across restarts. Resident external populations and a GT placement action
+The live native batch and resident adapters connect Runtime to Repast and query
+durable receipts across restarts. Resident ranks retain graphs and agents between
+accepted windows. Population-scale accepted projections and a GT placement action
 remain later gates.
 
 Ecosystems are the first domain; NPCs and automation remain deferred. The
@@ -96,6 +97,11 @@ conflicts and return of the actual P2 Repast checkpoint through the service.
 The [live Repast integration](conformance/Live-Repast.md) adds Runtime-owned
 native launches, paused restore validation, result acceptance and recovery of a
 lost reply. Client reads continue through the same named Simulation service.
+The [resident backend](conformance/Resident-Repast.md) retains one MPI incarnation
+across consecutive advances and Runtime restarts, requires acceptance acknowledgment,
+and fences launch/retirement effects by placement generation. Its
+[`resident-1` contract](contracts/resident-1/README.md) preserves the same portable
+models and GemStone switch/recovery operations.
 
 Core loads without Runtime, GT UI or ecosystem dependencies. Load Metacello
 baseline `CatalystSimulator` from this repository's `src`, group `Core` (default),

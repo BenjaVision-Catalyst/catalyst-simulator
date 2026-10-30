@@ -21,6 +21,7 @@ phase = 'configure' ifTrue: [
   repastLauncher: (System gemEnvironmentVariable: 'CS_LIVE_LAUNCHER');
   repastExecutable: (System gemEnvironmentVariable: 'CS_LIVE_EXECUTABLE'); repastMpi: '/opt/homebrew/bin/mpirun';
   repastDirectory: directory, '/spool'; repastRanks: (System gemEnvironmentVariable: 'CS_LIVE_RANKS') asInteger; yourself.
+ serviceCfg repastMode: ((System gemEnvironmentVariable: 'CS_REPAST_MODE') ifNil: ['batch']).
  cfg services: {orchestrator. serviceCfg}.
  controlHost := CRHostConfiguration new identifier: #control; label: 'Control'; address: 'localhost'; maxProcesses: 1; services: {CRRuntime orchestratorIdentifier}; yourself.
  simulationHost := CRHostConfiguration new identifier: #simulationHost; label: 'Simulation'; address: 'localhost'; maxProcesses: 1; services: {#simulation}; yourself.
@@ -58,7 +59,7 @@ phase = 'configure' ifFalse: [
   submitRequest value: (CSCreateSimulationWorkUnit request: helper createRequest principal: 'admin').
   wait value: [(CSSimulationRepository named: runtimeName) notNil].
   repository := CSSimulationRepository named: runtimeName. group := repository groupFor: helper createRequest].
- (#('advance1' 'advance6' 'advance12') includes: phase) ifTrue: [
+ (phase beginsWith: 'advance') ifTrue: [
   target := (phase copyFrom: 8 to: phase size) asInteger.
   submit value: CSAdvanceSimulationWorkUnit value: (helper target: target) value: 'admin'.
   wait value: [((group view at: 'checkpoint') at: 'tick') = target]].
@@ -68,13 +69,13 @@ phase = 'configure' ifFalse: [
   submit value: CSMigrateSimulationWorkUnit value: payload value: 'admin'.
   wait value: [(group view at: 'generation') > (before at: 'generation') and: [(group view at: 'phase') = 'active']].
   check value: (group view at: 'checkpoint') = (before at: 'checkpoint') value: 'Switch advanced or changed simulation state'].
- (#('run4' 'run8') includes: phase) ifTrue: [
+ (phase beginsWith: 'run') ifTrue: [
   target := (phase copyFrom: 4 to: phase size) asInteger.
   submit value: CSPrepareSimulationBatchWorkUnit value: (helper target: target) value: 'admin'.
-  phase = 'run4'
+  target ~= ((System gemEnvironmentVariable: 'CS_DROP_TARGET') ifNil: [8] ifNotNil: [:value | value asInteger])
    ifTrue: [wait value: [((group view at: 'checkpoint') at: 'tick') = target]]
    ifFalse: [wait value: [(group view at: 'pending') notNil and: [((group view at: 'pending') at: 'phase') = 'uncertain']]]].
- (#('drive4' 'drive12') includes: phase) ifTrue: [
+ (phase beginsWith: 'drive') ifTrue: [
   target := (phase copyFrom: 6 to: phase size) asInteger.
   cfg := runtime configuration. (cfg serviceConfigurationNamed: #simulation) driveThroughTick: target.
   runtime configure: cfg.
@@ -85,16 +86,19 @@ phase = 'configure' ifFalse: [
    handle := publication serviceHandleForIdentifier: #simulation.
    handle notNil and: [handle appliedConfigurationVersion = runtime configuration version]]]].
   report at: 'scheduledProgression' put: true].
- phase = 'recover' ifTrue: [
+ (phase beginsWith: 'recover') ifTrue: [
   before := group view.
   payload := helper placement: 'external' owner: 9. payload at: 'reason' put: 'Lost native receipt across managed Runtime restart'.
+  payload at: 'owner' put: ((CSSha256 hexDigestOf: phase, runtimeName, (before at: 'generation') printString) copyFrom: 1 to: 32).
   submit value: CSRecoverSimulationWorkUnit value: payload value: 'admin'.
-  wait value: [(group view at: 'phase') = 'reconciling'].
+  wait value: [(group view at: 'generation') > (before at: 'generation') and: [(group view at: 'phase') = ((before at: 'pending') ifNil: ['active'] ifNotNil: ['reconciling'])]].
   check value: (group view at: 'pending') = (before at: 'pending') value: 'Recovery discarded uncertain batch'].
- phase = 'accepted8' ifTrue: [wait value: [((group view at: 'checkpoint') at: 'tick') = 8 and: [(group view at: 'pending') isNil]]].
+ (phase beginsWith: 'accepted') ifTrue: [
+  target := (phase copyFrom: 9 to: phase size) asInteger.
+  wait value: [((group view at: 'checkpoint') at: 'tick') = target and: [(group view at: 'pending') isNil]]].
  phase = 'stale-result' ifTrue: [
   before := group view.
-  file := GsFile openReadOnServer: directory, '/oracle-8.canon'.
+  file := GsFile openReadOnServer: directory, '/oracle-', ((before at: 'pending') at: 'targetTick') printString, '.canon'.
   [payload := helper batchPayloadFor: group checkpoint: (CSCanonicalCodec decode: file contents)] ensure: [file close].
   request := helper requestFor: group id: phase payload: payload.
   request at: 'generation' put: ((before at: 'pending') at: 'generation'); at: 'owner' put: ((before at: 'pending') at: 'owner').

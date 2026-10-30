@@ -1,5 +1,10 @@
 # Native Repast HPC feasibility
 
+The same interpreter now also implements the optional
+[`resident-1` session](../../contracts/resident-1/README.md). Batch behaviour is
+retained; resident mode keeps the compiled graph and distributed agents across
+advance windows. See [resident qualification](../../conformance/Resident-Repast.md).
+
 P2 passes on macOS arm64 with the same normalized `graph-1` bundles used by GT
 and GemStone. This directory contains an experimental execution adapter and a
 bounded qualification controller. Ecosystem behaviour stays in CatalystEcosystem.

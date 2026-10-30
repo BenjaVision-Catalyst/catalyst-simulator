@@ -28,7 +28,7 @@ struct Exchange {
 class Probe {
  mpi::communicator& world;repast::SharedContext<Agent> context;Exchange exchange;
  Value accepted,model;std::vector<Value> plan;std::map<std::string,Value> byId;
- std::string output;int layout,holdTick;unsigned long migrations=0,remoteRequests=0;
+ std::string output;int layout,holdTick;bool resident;unsigned long migrations=0,remoteRequests=0,snapshots=0;
  int owner(const Value& row)const{Integer r=(floorDiv(row.at(1).at(0).integer(),Integer(1))+layout)%world.size();if(r<0)r+=world.size();return r.convert_to<int>();}
  Value rows()const{Value out=Value::dict();for(auto it=context.localBegin();it!=context.localEnd();++it)out.map[(*it)->row.at(0).text()]=(*it)->row;return out;}
  void consensus(const std::string& error){int count=0;mpi::all_reduce(world,error.empty()?0:1,count,std::plus<int>());if(count){std::vector<std::string> errors;mpi::all_gather(world,error,errors);for(auto& e:errors)if(!e.empty())throw std::runtime_error(e);}}
@@ -100,17 +100,23 @@ class Probe {
   for(auto& g:data.at(1).array){auto it=state.at("entities").map.find(g.at(2).text());if(it!=state.at("entities").map.end())it->second.at(4)=Value(0);}
  }
 public:
- Probe(mpi::communicator& comm,const std::string& checkpoint,const std::string& bundle,const std::string& directory,int offset,int hold):
-  world(comm),context(&comm),exchange{context},accepted(decode(checkpoint)),model(decode(bundle)),output(directory),layout(offset),holdTick(hold){
+ Probe(mpi::communicator& comm,const std::string& checkpoint,const std::string& bundle,const std::string& directory,int offset,int hold,bool staysResident=false):
+  world(comm),context(&comm),exchange{context},accepted(decode(checkpoint)),model(decode(bundle)),output(directory),layout(offset),holdTick(hold),resident(staysResident){
   plan=compileGraph(model);for(auto& n:plan)byId[nodeText(n,"id")]=n;validate(accepted,true);
   int ordinal=0;for(auto& kv:accepted.at("entities").map){int rank=owner(kv.second);if(rank==world.rank())context.addAgent(new Agent(repast::AgentId(ordinal,0,0,rank),kv.second));++ordinal;}
-  accepted.at("entities")=rows();if(world.rank()==0)std::filesystem::create_directories(output);writeAccepted();
+  accepted.at("entities")=rows();if(world.rank()==0)std::filesystem::create_directories(output);if(!resident)writeAccepted();
  }
- void writeAccepted(){
+ Integer tick()const{return accepted.at("tick").integer();}
+ unsigned long snapshotCount()const{return snapshots;}
+ std::string checkpoint(){
+  ++snapshots;std::string bytes;
   std::vector<std::string> shards;mpi::gather(world,encode(rows()),shards,0);
   collectively([&]{if(world.rank()!=0)return;Value all=accepted;all.at("entities")=Value::dict();
    for(auto& shard:shards)for(auto& kv:decode(shard).map)require(all.at("entities").map.emplace(kv.first,kv.second).second,"Duplicate owned entity");
-   validate(all,true);auto bytes=encode(all),tick=all.at("tick").integer().convert_to<std::string>();publish(output+"/tick-"+tick+".canon",bytes);publish(output+"/accepted.canon",bytes);});
+   validate(all,true);bytes=encode(all);});return bytes;
+ }
+ void writeAccepted(){
+  auto bytes=checkpoint();collectively([&]{if(world.rank()!=0)return;auto logicalTick=tick().convert_to<std::string>();publish(output+"/tick-"+logicalTick+".canon",bytes);publish(output+"/accepted.canon",bytes);});
  }
  void advance(){
   Value candidate=accepted;candidate.at("entities")=rows();candidate.at("outcomes")=Value::list();
@@ -132,7 +138,7 @@ public:
   accepted=std::move(candidate);for(auto it=context.localBegin();it!=context.localEnd();++it)(*it)->row=accepted.at("entities").at((*it)->row.at(0).text());
   for(auto it=context.localBegin();it!=context.localEnd();++it){int target=owner((*it)->row);if(target!=world.rank()){repast::RepastProcess::instance()->moveAgent((*it)->id,target);++migrations;}}
   repast::RepastProcess::instance()->synchronizeAgentStatus<Agent,Package,Exchange,Exchange,Exchange>(context,exchange,exchange,exchange);
-  accepted.at("entities")=rows();writeAccepted();
+  accepted.at("entities")=rows();if(!resident)writeAccepted();
  }
  void finish(){
   unsigned long moves=0,requests=0;mpi::reduce(world,migrations,moves,std::plus<unsigned long>(),0);mpi::reduce(world,remoteRequests,requests,std::plus<unsigned long>(),0);
@@ -140,6 +146,7 @@ public:
   if(world.rank()==0){Value array=Value::list();for(int n:counts)array.array.emplace_back(n);publish(output+"/execution.canon",encode(Value::dict({{"ranks",Value(world.size())},{"migrations",Value(Integer(moves))},{"remoteRequests",Value(Integer(requests))},{"localCounts",array}})));}
  }
 };
+#include "resident.hpp"
 int main(int argc,char** argv){
  mpi::environment env(argc,argv);mpi::communicator world;
  try{
@@ -150,9 +157,10 @@ int main(int argc,char** argv){
   require(sha256("CatalystSimulation-Registry-1:"+catalog)=="710502049ac1f485589d81eb27482360017ed9d048afb0452694792bf23fc367","Unqualified operation catalog");
   registry=decode(catalog);if(opt.count("--disable-operation"))registry.map.erase(opt.at("--disable-operation"));
   if(opt.count("--validate-only")){compileGraph(decode(bundle));return 0;}
-  int steps=std::stoi(opt.at("--steps"));require(steps>=0&&steps<=1000,"Step budget");
+  bool resident=opt.count("--resident");int steps=resident?0:std::stoi(opt.at("--steps"));require(steps>=0&&steps<=1000,"Step budget");
   repast::RepastProcess::init("",&world);
-  {Probe probe(world,input,bundle,opt.at("--output"),opt.count("--layout")?std::stoi(opt.at("--layout")):0,opt.count("--hold-tick")?std::stoi(opt.at("--hold-tick")):-1);
+  {Probe probe(world,input,bundle,opt.at("--output"),opt.count("--layout")?std::stoi(opt.at("--layout")):0,opt.count("--hold-tick")?std::stoi(opt.at("--hold-tick")):-1,resident);
+   if(resident)runResident(world,probe,opt.at("--resident"));
    if(steps){auto& runner=repast::RepastProcess::instance()->getScheduleRunner();runner.scheduleEvent(1,1,repast::Schedule::FunctorPtr(new repast::MethodFunctor<Probe>(&probe,&Probe::advance)));runner.scheduleStop(steps+0.5);runner.run();}
    probe.finish();}
   repast::RepastProcess::instance()->done();return 0;

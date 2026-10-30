@@ -1,0 +1,7 @@
+{
+  "platform": "macOS-26.6.1-arm64-arm-64bit-Mach-O",
+  "machine": "arm64",
+  "executableDigest": "d2efe6d838e552f98a908f6e889c280bc6d069db09efc9feb0fc83197a7381b5",
+  "repastRevision": "a96c15f99589d15352523a0a710362af8997852a",
+  "build": "native/p2 CMake Release, Homebrew MPI/Boost/OpenSSL; no containers"
+}

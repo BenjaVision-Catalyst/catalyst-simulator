@@ -23,7 +23,7 @@ run
 | results report file |
 System abortTransaction. System transactionMode: #manualBegin.
 results := OrderedCollection new.
-#(CSKernelExamples CSGraphExamples CSAuthorityExamples CSRepastBatchExamples) do: [:className | | cls |
+#(CSKernelExamples CSGraphExamples CSAuthorityExamples CSRepastBatchExamples CSRepastResidentExamples) do: [:className | | cls |
  cls := Smalltalk at: className.
  (cls selectors select: [:selector | selector asString beginsWith: 'test']) asArray sort do: [:selector |
   cls new perform: selector. results add: className asString, '>>', selector asString]].
