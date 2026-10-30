@@ -1,0 +1,7 @@
+RwSimpleProjectLoadComponentV2 {
+ #name : 'RuntimeTests',
+ #projectNames : [ 'CatalystRuntimeTests' ],
+ #componentNames : [ 'Runtime', 'Tests' ],
+ #packageNames : [ 'BVC-Simulator-Tests-Runtime' ],
+ #comment : 'Optional Runtime fixtures and tests; use managed native qualification for GemStone'
+}

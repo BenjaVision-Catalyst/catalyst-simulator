@@ -14,7 +14,8 @@ full-width random-address vector. The same 32 contracts now pass after a fresh
 GT rebuild and GemStone 3.7.5 `--with-seaside` rebuild; see the workspace
 [fresh-load record](https://github.com/BenjaVisionPro/catalyst-workspace/blob/main/Simulation/evidence/rebuild-2026-10-30.md).
 Current devkit stones do not use Rowan; that migration is deferred to GemStone 4
-in 2027. Repast, Runtime service routing and scale remain open.
+in 2027. This opening record describes P0/P1. Later P2/P3 evidence is linked below;
+production external execution and scale remain open.
 
 The GT image is authoritative for shared source. Author/compile/test through GT
 MCP, then export with TonelWriter and compare every class/method definition with
@@ -48,8 +49,8 @@ python3 conformance/check_probe.py
 python3 conformance/check_graph.py
 ```
 
-These are conformance oracles rather than supported execution backends. MPI
-rank-count independence remains unqualified.
+These are conformance oracles rather than supported execution backends. P2 now
+qualifies bounded native MPI rank-count independence in its separate record.
 
 ## Native GemStone
 
@@ -104,6 +105,17 @@ parses decimal digits explicitly and accesses that record field by index. No
 GemStone-specific fork of the kernel was introduced.
 
 The [rebuild record](../docs/Rebuild-Readiness.md) explains the next clean-load gate.
+
+## Runtime acceptance and durability
+
+The [P3 record and reproduction](P3-Runtime.md) cover the named Simulation service,
+accepted revisions, retry windows, placement fencing and uncertain-batch recovery.
+GT passes 52 tests; native portable qualification passes 43. A configured
+`bvc_simulator_native` Runtime proves real routing, commit/rollback from another
+Gem, scheduled transactional progression, restart/reconciliation and two
+independent-session writer conflicts. Source exports and actual native bvc install
+recipes match the running stone. P0/P1's older JSON/source-hash files remain
+historical; the P3 directory records the current source set.
 
 ## Native Repast feasibility
 

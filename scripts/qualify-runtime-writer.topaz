@@ -1,0 +1,36 @@
+expectvalue true
+run
+| repository group helper directory role round kind payload request file deadline committed conflicts report |
+System abortTransaction. System transactionMode: #manualBegin.
+directory := System gemEnvironmentVariable: 'CS_P3_DIRECTORY'.
+role := System gemEnvironmentVariable: 'CS_P3_WRITER'.
+round := System gemEnvironmentVariable: 'CS_P3_ROUND'.
+(#('A' 'B') includes: role) ifFalse: [self error: 'Unknown writer'].
+(#('1' '2') includes: round) ifFalse: [self error: 'Unknown conflict round'].
+helper := CSAuthorityExamples new.
+System beginTransaction.
+repository := CSSimulationRepository named: (System gemEnvironmentVariable: 'CS_P3_REPOSITORY').
+group := repository groupFor: helper createRequest.
+kind := (round = '2' and: [role = 'A']) ifTrue: ['transfer'] ifFalse: ['advance'].
+payload := kind = 'transfer'
+ ifTrue: [helper placement: 'smalltalk' owner: 8]
+ ifFalse: [helper target: (role = 'A' ifTrue: [11] ifFalse: [12])].
+request := helper requestFor: group id: 'conflict-', round, '-', role payload: payload.
+group apply: kind request: request principal: 'admin' maxSteps: 4.
+file := GsFile openWriteOnServer: directory, '/writer-', round, '-', role, '-ready'.
+[file nextPutAll: 'candidate prepared, uncommitted'] ensure: [file close].
+deadline := CRPlatform current currentMillis + 60000.
+[ (GsFile existsOnServer: directory, '/writer-', round, '-', role, '-release')
+ or: [CRPlatform current currentMillis >= deadline] ] whileFalse: [(Delay forMilliseconds: 10) wait].
+(GsFile existsOnServer: directory, '/writer-', round, '-', role, '-release') ifFalse: [
+ System abortTransaction. self error: 'Writer barrier timeout'].
+committed := System commitTransaction.
+conflicts := committed ifTrue: [Dictionary new] ifFalse: [System transactionConflicts].
+report := Dictionary new at: 'role' put: role; at: 'round' put: round; at: 'committed' put: committed;
+ at: 'bodyExecutions' put: 1; at: 'commitResult' put: (conflicts at: #commitResult ifAbsent: [#success]) asString;
+ at: 'writeWriteConflicts' put: (conflicts at: #'Write-Write' ifAbsent: [#()]) size; yourself.
+committed ifFalse: [System abortTransaction].
+file := GsFile openWriteOnServer: directory, '/writer-', round, '-', role, '.json'.
+[file nextPutAll: (STON toJsonString: report)] ensure: [file close].
+true
+%

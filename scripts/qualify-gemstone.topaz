@@ -7,7 +7,7 @@ source isNil ifTrue: [self error: 'Source directory is required'].
  (Smalltalk includesKey: name) ifFalse: [self error: 'Missing prerequisite: ', name asString]].
 GsDeployer deploy: [| directory expected pending ready |
  directory := MetacelloPlatform current fileHandleOn: source.
- #('BaselineOfCatalystSimulator' 'BVC-Simulator-Core' 'BVC-Simulator-Tests') do: [:name |
+ #('BaselineOfCatalystSimulator' 'BVC-Simulator-Core' 'BVC-Simulator-Authority' 'BVC-Simulator-Tests' 'BVC-Simulator-Tests-Authority') do: [:name |
   expected := (TonelMCReader on: directory fileName: name) snapshot definitions reject: [:d | d isOrganizationDefinition].
   pending := (expected select: [:d | d isClassDefinition]) asOrderedCollection.
   [pending notEmpty] whileTrue: [
@@ -20,18 +20,21 @@ true
 commit
 expectvalue true
 run
-| source directory selectors proofs expected actual fixture graphFixture input report file backend root version metadata text tests worlds graphWorlds |
+| source directory selectors proofs expected actual classNames fixture graphFixture input report file backend root version metadata text tests worlds graphWorlds |
 System abortTransaction. System transactionMode: #manualBegin.
 source := System gemEnvironmentVariable: 'BVC_SIMULATOR_SOURCE'.
 directory := MetacelloPlatform current fileHandleOn: source.
 proofs := OrderedCollection new.
-#('BaselineOfCatalystSimulator' 'BVC-Simulator-Core' 'BVC-Simulator-Tests') do: [:name |
+#('BaselineOfCatalystSimulator' 'BVC-Simulator-Core' 'BVC-Simulator-Authority' 'BVC-Simulator-Tests' 'BVC-Simulator-Tests-Authority') do: [:name |
  expected := (TonelMCReader on: directory fileName: name) snapshot definitions reject: [:d | d isOrganizationDefinition].
  actual := (MCPackage named: name) snapshot definitions reject: [:d | d isOrganizationDefinition].
+ "Native Monticello includes optional subpackages; compare every definition of the selected classes."
+ classNames := (expected select: #isClassDefinition) collect: [:d | d className asString].
+ actual := actual select: [:d | classNames includes: d className asString].
  (expected size = actual size and: [expected allSatisfy: [:d | actual includes: d]]) ifFalse: [self error: 'Native source mismatch: ', name].
  proofs add: {name. expected size}].
 tests := OrderedCollection new.
-#(CSKernelExamples CSGraphExamples) do: [:className | | testClass |
+#(CSKernelExamples CSGraphExamples CSAuthorityExamples) do: [:className | | testClass |
  testClass := Smalltalk at: className.
  selectors := (testClass selectors select: [:s | s asString beginsWith: 'test']) asArray sort.
  selectors do: [:selector | testClass new perform: selector. tests add: className asString, '>>', selector asString]].
@@ -62,7 +65,7 @@ metadata := Dictionary new.
  [text := input contents] ensure: [input close].
  metadata at: path put: (STON fromString: (text copyFrom: (text indexOf: ${) to: text size))].
 ((metadata at: 'rowan/components/Core.ston') at: #packageNames) = #('BVC-Simulator-Core') ifFalse: [self error: 'Core package selection differs'].
-((metadata at: 'rowan/components/Tests.ston') at: #componentNames) = #('Core') ifFalse: [self error: 'Tests require Core'].
+((metadata at: 'rowan/components/Tests.ston') at: #componentNames) = #('Authority') ifFalse: [self error: 'Tests require Authority and its Core dependency'].
 version := BaselineOfCatalystSimulator new project version.
 ((version packagesForSpecNamed: 'default') collect: [:spec | spec name]) asArray = #('BVC-Simulator-Core') ifFalse: [self error: 'Default must load Core only'].
 root := (System gemEnvironmentVariable: 'BVC_SIMULATOR_ROOT') asSymbol.

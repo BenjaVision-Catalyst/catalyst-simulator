@@ -1,0 +1,40 @@
+expectvalue true
+run
+| proofs expected actual key source packages directory read simulatorExpected simulatorActual |
+System abortTransaction. System transactionMode: #manualBegin.
+proofs := OrderedCollection new.
+key := [:definition | definition isClassDefinition
+ ifTrue: [{'class'. definition className asString}]
+ ifFalse: [{'method'. definition className asString. definition classIsMeta. definition selector asString}]].
+simulatorExpected := Dictionary new. simulatorActual := Dictionary new.
+source := System gemEnvironmentVariable: 'CS_P3_SOURCE'.
+source isNil ifTrue: [self error: 'CS_P3_SOURCE is required'].
+directory := MetacelloPlatform current fileHandleOn: source.
+#('BaselineOfCatalystSimulator' 'BVC-Simulator-Core' 'BVC-Simulator-Tests' 'BVC-Simulator-Authority' 'BVC-Simulator-Runtime' 'BVC-Simulator-Tests-Authority' 'BVC-Simulator-Tests-Runtime') do: [:package |
+ read := (TonelMCReader on: directory fileName: package) snapshot definitions reject: [:d |
+  d isOrganizationDefinition or: [(d isClassDefinition or: [d isMethodDefinition]) and: [d className asString = 'CSSimulationRuntimeExamples']]].
+ read do: [:d | simulatorExpected at: (key value: d) put: d].
+ ((MCPackage named: package) snapshot definitions reject: #isOrganizationDefinition) do: [:d | simulatorActual at: (key value: d) put: d]].
+simulatorExpected keysAndValuesDo: [:definitionKey :definition |
+ (simulatorActual at: definitionKey ifAbsent: [nil]) = definition ifFalse: [self error: 'Simulator source mismatch: ', definitionKey printString]].
+simulatorExpected size = simulatorActual size ifFalse: [self error: 'Simulator source definition count differs'].
+proofs add: {'Simulator composed definitions (native Monticello includes subpackages)'. simulatorExpected size}.
+expected := Dictionary new. actual := Dictionary new.
+key := [:definition | definition isClassDefinition
+ ifTrue: [{'class'. definition className asString}]
+ ifFalse: [{'method'. definition className asString. definition classIsMeta. definition selector asString}]].
+packages := #('BVC-Runtime-Announcements' 'BVC-Runtime-Worker-Core' 'BVC-Runtime-Services' 'BVC-Runtime-Kernel-Core' 'BVC-Runtime-Configuration' 'BVC-Runtime-Configuration-Magritte' 'BVC-Runtime-Worker-GemStone' 'BVC-Runtime-Kernel-GemStone').
+directory := MetacelloPlatform current fileHandleOn: (System gemEnvironmentVariable: 'CS_P3_RUNTIME_SOURCE').
+packages do: [:package |
+ read := (TonelMCReader on: directory fileName: package) snapshot definitions reject: #isOrganizationDefinition.
+ read do: [:d | expected at: (key value: d) put: d].
+ ((MCPackage named: package) snapshot definitions reject: #isOrganizationDefinition) do: [:d | actual at: (key value: d) put: d]].
+expected keysAndValuesDo: [:definitionKey :definition |
+ (actual at: definitionKey ifAbsent: [nil]) = definition ifFalse: [self error: 'Runtime source mismatch: ', definitionKey printString]].
+expected size = actual size ifFalse: [self error: 'Runtime source definition count differs'].
+proofs add: {'Runtime composed native definitions'. expected size}.
+(GsFile openWriteOnServer: (System gemEnvironmentVariable: 'CS_P3_SOURCE_REPORT'))
+ nextPutAll: (STON toJsonString: (Dictionary new at: 'passed' put: true; at: 'definitions' put: proofs asArray;
+ at: 'runtimeOverridesComposed' put: true; at: 'excludedTestClass' put: 'CSSimulationRuntimeExamples'; yourself)); close.
+true
+%

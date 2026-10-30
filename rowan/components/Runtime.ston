@@ -1,0 +1,7 @@
+RwSimpleProjectLoadComponentV2 {
+ #name : 'Runtime',
+ #projectNames : [ 'CatalystRuntime' ],
+ #componentNames : [ 'Authority' ],
+ #packageNames : [ 'BVC-Simulator-Runtime' ],
+ #comment : 'Named authoritative Runtime Simulation service; no domain or presentation dependencies'
+}

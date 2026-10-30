@@ -1,0 +1,1132 @@
+{
+  "runtime": "simulation_p3_b1f73142013c",
+  "stone": "bvc_simulator_native",
+  "phases": {
+    "configure": {
+      "passed": true,
+      "phase": "configure"
+    },
+    "create": {
+      "passed": true,
+      "acceptedRevision": 1,
+      "view": {
+        "group": "00000000000000000000000000000002",
+        "backend": "smalltalk",
+        "retryFloor": 1,
+        "schemaVersion": 1,
+        "placement": null,
+        "generation": 1,
+        "revision": 1,
+        "world": "00000000000000000000000000000001",
+        "owner": "00000000000000000000000000000003",
+        "sequence": 1,
+        "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+        "pending": null,
+        "phase": "active",
+        "checkpointDigest": "8663af8e29cf9c77df07952a811ae983cba310c56a4bc0a7f4bc2a3e90e9a0fa"
+      },
+      "phase": "create",
+      "nativeRoute": true
+    },
+    "advance": {
+      "passed": true,
+      "phase": "advance",
+      "view": {
+        "group": "00000000000000000000000000000002",
+        "backend": "smalltalk",
+        "retryFloor": 1,
+        "schemaVersion": 1,
+        "placement": null,
+        "generation": 1,
+        "revision": 2,
+        "world": "00000000000000000000000000000001",
+        "owner": "00000000000000000000000000000003",
+        "sequence": 2,
+        "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+        "pending": null,
+        "phase": "active",
+        "checkpointDigest": "6a4de7dd068430750a29cb3f6c20a42b92d18ea825dcd07f0512ebfc8e99261d"
+      }
+    },
+    "rollback": {
+      "independentGemRollback": true,
+      "passed": true,
+      "phase": "rollback",
+      "view": {
+        "group": "00000000000000000000000000000002",
+        "backend": "smalltalk",
+        "retryFloor": 1,
+        "schemaVersion": 1,
+        "placement": null,
+        "generation": 1,
+        "revision": 2,
+        "world": "00000000000000000000000000000001",
+        "owner": "00000000000000000000000000000003",
+        "sequence": 2,
+        "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+        "pending": null,
+        "phase": "active",
+        "checkpointDigest": "6a4de7dd068430750a29cb3f6c20a42b92d18ea825dcd07f0512ebfc8e99261d"
+      }
+    },
+    "recover-local": {
+      "passed": true,
+      "phase": "recover-local",
+      "view": {
+        "group": "00000000000000000000000000000002",
+        "backend": "smalltalk",
+        "retryFloor": 1,
+        "schemaVersion": 1,
+        "placement": null,
+        "generation": 2,
+        "revision": 3,
+        "world": "00000000000000000000000000000001",
+        "owner": "00000000000000000000000000000004",
+        "sequence": 3,
+        "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+        "pending": null,
+        "phase": "active",
+        "checkpointDigest": "6a4de7dd068430750a29cb3f6c20a42b92d18ea825dcd07f0512ebfc8e99261d"
+      }
+    },
+    "enable-drive": {
+      "passed": true,
+      "scheduledNativeTransaction": true,
+      "phase": "enable-drive",
+      "view": {
+        "group": "00000000000000000000000000000002",
+        "backend": "smalltalk",
+        "retryFloor": 1,
+        "schemaVersion": 1,
+        "placement": null,
+        "generation": 2,
+        "revision": 4,
+        "world": "00000000000000000000000000000001",
+        "owner": "00000000000000000000000000000004",
+        "sequence": 4,
+        "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+        "pending": null,
+        "phase": "active",
+        "checkpointDigest": "bbac348cad1e618f05e48cb694e6d2f8af759d2ecd0236a95a24d58cd5526fab"
+      }
+    },
+    "disable-drive": {
+      "passed": true,
+      "phase": "disable-drive",
+      "view": {
+        "group": "00000000000000000000000000000002",
+        "backend": "smalltalk",
+        "retryFloor": 1,
+        "schemaVersion": 1,
+        "placement": null,
+        "generation": 2,
+        "revision": 4,
+        "world": "00000000000000000000000000000001",
+        "owner": "00000000000000000000000000000004",
+        "sequence": 4,
+        "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+        "pending": null,
+        "phase": "active",
+        "checkpointDigest": "bbac348cad1e618f05e48cb694e6d2f8af759d2ecd0236a95a24d58cd5526fab"
+      }
+    },
+    "obsolete": {
+      "passed": true,
+      "phase": "obsolete",
+      "view": {
+        "group": "00000000000000000000000000000002",
+        "backend": "smalltalk",
+        "retryFloor": 1,
+        "schemaVersion": 1,
+        "placement": null,
+        "generation": 2,
+        "revision": 4,
+        "world": "00000000000000000000000000000001",
+        "owner": "00000000000000000000000000000004",
+        "sequence": 4,
+        "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+        "pending": null,
+        "phase": "active",
+        "checkpointDigest": "bbac348cad1e618f05e48cb694e6d2f8af759d2ecd0236a95a24d58cd5526fab"
+      }
+    },
+    "external": {
+      "passed": true,
+      "phase": "external",
+      "view": {
+        "group": "00000000000000000000000000000002",
+        "backend": "external",
+        "retryFloor": 2,
+        "schemaVersion": 1,
+        "placement": {
+          "previousBackend": "smalltalk",
+          "sourceDigest": "bbac348cad1e618f05e48cb694e6d2f8af759d2ecd0236a95a24d58cd5526fab",
+          "previousOwner": "00000000000000000000000000000004"
+        },
+        "generation": 3,
+        "revision": 5,
+        "world": "00000000000000000000000000000001",
+        "owner": "00000000000000000000000000000005",
+        "sequence": 5,
+        "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+        "pending": null,
+        "phase": "handover",
+        "checkpointDigest": "bbac348cad1e618f05e48cb694e6d2f8af759d2ecd0236a95a24d58cd5526fab"
+      }
+    },
+    "activate": {
+      "passed": true,
+      "phase": "activate",
+      "view": {
+        "group": "00000000000000000000000000000002",
+        "backend": "smalltalk",
+        "retryFloor": 13,
+        "schemaVersion": 1,
+        "placement": null,
+        "generation": 6,
+        "revision": 16,
+        "world": "00000000000000000000000000000001",
+        "owner": "00000000000000000000000000000008",
+        "sequence": 16,
+        "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+        "pending": null,
+        "phase": "active",
+        "checkpointDigest": "704236d9ae6ed697bbafa608c6ddd6e599cb6d7e1b76ca6e79255a49e089e779"
+      }
+    },
+    "prepare": {
+      "passed": true,
+      "phase": "prepare",
+      "view": {
+        "group": "00000000000000000000000000000002",
+        "backend": "external",
+        "retryFloor": 4,
+        "schemaVersion": 1,
+        "placement": null,
+        "generation": 3,
+        "revision": 7,
+        "world": "00000000000000000000000000000001",
+        "owner": "00000000000000000000000000000005",
+        "sequence": 7,
+        "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+        "pending": {
+          "targetTick": 8,
+          "fromTick": 6,
+          "inputRevision": 6,
+          "batch": "1e8179bf11cef145d2f9c226df8703dfd3c4cffca4c1a740907f3288170664a1",
+          "generation": 3,
+          "owner": "00000000000000000000000000000005",
+          "inputDigest": "1e8179bf11cef145d2f9c226df8703dfd3c4cffca4c1a740907f3288170664a1",
+          "phase": "prepared"
+        },
+        "phase": "active",
+        "checkpointDigest": "bbac348cad1e618f05e48cb694e6d2f8af759d2ecd0236a95a24d58cd5526fab"
+      }
+    },
+    "dispatch": {
+      "passed": true,
+      "phase": "dispatch",
+      "view": {
+        "group": "00000000000000000000000000000002",
+        "backend": "external",
+        "retryFloor": 5,
+        "schemaVersion": 1,
+        "placement": null,
+        "generation": 3,
+        "revision": 8,
+        "world": "00000000000000000000000000000001",
+        "owner": "00000000000000000000000000000005",
+        "sequence": 8,
+        "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+        "pending": {
+          "targetTick": 8,
+          "fromTick": 6,
+          "inputRevision": 6,
+          "batch": "1e8179bf11cef145d2f9c226df8703dfd3c4cffca4c1a740907f3288170664a1",
+          "generation": 3,
+          "owner": "00000000000000000000000000000005",
+          "inputDigest": "1e8179bf11cef145d2f9c226df8703dfd3c4cffca4c1a740907f3288170664a1",
+          "phase": "uncertain"
+        },
+        "phase": "active",
+        "checkpointDigest": "bbac348cad1e618f05e48cb694e6d2f8af759d2ecd0236a95a24d58cd5526fab"
+      }
+    },
+    "recover-external": {
+      "passed": true,
+      "phase": "recover-external",
+      "view": {
+        "group": "00000000000000000000000000000002",
+        "backend": "external",
+        "retryFloor": 6,
+        "schemaVersion": 1,
+        "placement": null,
+        "generation": 4,
+        "revision": 9,
+        "world": "00000000000000000000000000000001",
+        "owner": "00000000000000000000000000000006",
+        "sequence": 9,
+        "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+        "pending": {
+          "targetTick": 8,
+          "fromTick": 6,
+          "inputRevision": 6,
+          "batch": "1e8179bf11cef145d2f9c226df8703dfd3c4cffca4c1a740907f3288170664a1",
+          "generation": 3,
+          "owner": "00000000000000000000000000000005",
+          "inputDigest": "1e8179bf11cef145d2f9c226df8703dfd3c4cffca4c1a740907f3288170664a1",
+          "phase": "uncertain"
+        },
+        "phase": "reconciling",
+        "checkpointDigest": "bbac348cad1e618f05e48cb694e6d2f8af759d2ecd0236a95a24d58cd5526fab"
+      }
+    },
+    "late-result": {
+      "passed": true,
+      "phase": "late-result",
+      "view": {
+        "group": "00000000000000000000000000000002",
+        "backend": "external",
+        "retryFloor": 6,
+        "schemaVersion": 1,
+        "placement": null,
+        "generation": 4,
+        "revision": 9,
+        "world": "00000000000000000000000000000001",
+        "owner": "00000000000000000000000000000006",
+        "sequence": 9,
+        "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+        "pending": {
+          "targetTick": 8,
+          "fromTick": 6,
+          "inputRevision": 6,
+          "batch": "1e8179bf11cef145d2f9c226df8703dfd3c4cffca4c1a740907f3288170664a1",
+          "generation": 3,
+          "owner": "00000000000000000000000000000005",
+          "inputDigest": "1e8179bf11cef145d2f9c226df8703dfd3c4cffca4c1a740907f3288170664a1",
+          "phase": "uncertain"
+        },
+        "phase": "reconciling",
+        "checkpointDigest": "bbac348cad1e618f05e48cb694e6d2f8af759d2ecd0236a95a24d58cd5526fab"
+      }
+    },
+    "reconcile": {
+      "passed": true,
+      "phase": "reconcile",
+      "view": {
+        "group": "00000000000000000000000000000002",
+        "backend": "external",
+        "retryFloor": 7,
+        "schemaVersion": 1,
+        "placement": null,
+        "generation": 4,
+        "revision": 10,
+        "world": "00000000000000000000000000000001",
+        "owner": "00000000000000000000000000000006",
+        "sequence": 10,
+        "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+        "pending": null,
+        "phase": "active",
+        "checkpointDigest": "e50877525d7754a8ae5be0f5caa5cd6e4b8d323d580e25d3bf7ac02ec3fa28f7"
+      }
+    },
+    "local": {
+      "passed": true,
+      "phase": "local",
+      "view": {
+        "group": "00000000000000000000000000000002",
+        "backend": "smalltalk",
+        "retryFloor": 8,
+        "schemaVersion": 1,
+        "placement": {
+          "previousBackend": "external",
+          "sourceDigest": "e50877525d7754a8ae5be0f5caa5cd6e4b8d323d580e25d3bf7ac02ec3fa28f7",
+          "previousOwner": "00000000000000000000000000000006"
+        },
+        "generation": 5,
+        "revision": 11,
+        "world": "00000000000000000000000000000001",
+        "owner": "00000000000000000000000000000007",
+        "sequence": 11,
+        "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+        "pending": null,
+        "phase": "handover",
+        "checkpointDigest": "e50877525d7754a8ae5be0f5caa5cd6e4b8d323d580e25d3bf7ac02ec3fa28f7"
+      }
+    },
+    "advance10": {
+      "passed": true,
+      "phase": "advance10",
+      "view": {
+        "group": "00000000000000000000000000000002",
+        "backend": "smalltalk",
+        "retryFloor": 10,
+        "schemaVersion": 1,
+        "placement": null,
+        "generation": 5,
+        "revision": 13,
+        "world": "00000000000000000000000000000001",
+        "owner": "00000000000000000000000000000007",
+        "sequence": 13,
+        "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+        "pending": null,
+        "phase": "active",
+        "checkpointDigest": "7c85e584a0356708a797f688bf8ff3684b2ca93a0d43fdaff520f80634a2e525"
+      }
+    },
+    "uncommitted-1": {
+      "passed": true,
+      "phase": "uncommitted-1",
+      "view": {
+        "group": "00000000000000000000000000000002",
+        "backend": "smalltalk",
+        "retryFloor": 10,
+        "schemaVersion": 1,
+        "placement": null,
+        "generation": 5,
+        "revision": 13,
+        "world": "00000000000000000000000000000001",
+        "owner": "00000000000000000000000000000007",
+        "sequence": 13,
+        "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+        "pending": null,
+        "phase": "active",
+        "checkpointDigest": "7c85e584a0356708a797f688bf8ff3684b2ca93a0d43fdaff520f80634a2e525"
+      }
+    },
+    "uncommitted-2": {
+      "passed": true,
+      "phase": "uncommitted-2",
+      "view": {
+        "group": "00000000000000000000000000000002",
+        "backend": "smalltalk",
+        "retryFloor": 11,
+        "schemaVersion": 1,
+        "placement": null,
+        "generation": 5,
+        "revision": 14,
+        "world": "00000000000000000000000000000001",
+        "owner": "00000000000000000000000000000007",
+        "sequence": 14,
+        "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+        "pending": null,
+        "phase": "active",
+        "checkpointDigest": "704236d9ae6ed697bbafa608c6ddd6e599cb6d7e1b76ca6e79255a49e089e779"
+      }
+    },
+    "advance12": {
+      "passed": true,
+      "phase": "advance12",
+      "view": {
+        "group": "00000000000000000000000000000002",
+        "backend": "smalltalk",
+        "retryFloor": 14,
+        "schemaVersion": 1,
+        "placement": null,
+        "generation": 6,
+        "revision": 17,
+        "world": "00000000000000000000000000000001",
+        "owner": "00000000000000000000000000000008",
+        "sequence": 17,
+        "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+        "pending": null,
+        "phase": "active",
+        "checkpointDigest": "483452a978d4439064b1143a9cc66fb727a61c4894c5d8d5a98a39ac4db019f0"
+      }
+    },
+    "retention": {
+      "passed": true,
+      "phase": "retention",
+      "view": {
+        "group": "00000000000000000000000000000002",
+        "backend": "smalltalk",
+        "retryFloor": 14,
+        "schemaVersion": 1,
+        "placement": null,
+        "generation": 6,
+        "revision": 17,
+        "world": "00000000000000000000000000000001",
+        "owner": "00000000000000000000000000000008",
+        "sequence": 17,
+        "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+        "pending": null,
+        "phase": "active",
+        "checkpointDigest": "483452a978d4439064b1143a9cc66fb727a61c4894c5d8d5a98a39ac4db019f0"
+      }
+    },
+    "cleanup": {
+      "passed": true,
+      "fixtureRemoved": true,
+      "phase": "cleanup"
+    }
+  },
+  "conflicts": [
+    {
+      "round": "1",
+      "role": "A",
+      "committed": true,
+      "bodyExecutions": 1,
+      "commitResult": "success",
+      "writeWriteConflicts": 0
+    },
+    {
+      "round": "1",
+      "role": "B",
+      "committed": false,
+      "bodyExecutions": 1,
+      "commitResult": "retryFailure",
+      "writeWriteConflicts": 1
+    },
+    {
+      "round": "2",
+      "role": "A",
+      "committed": true,
+      "bodyExecutions": 1,
+      "commitResult": "success",
+      "writeWriteConflicts": 0
+    },
+    {
+      "round": "2",
+      "role": "B",
+      "committed": false,
+      "bodyExecutions": 1,
+      "commitResult": "retryFailure",
+      "writeWriteConflicts": 1
+    }
+  ],
+  "passed": true,
+  "configure-2": {
+    "runtimeIdentifier": "3gnu38vlf1sy6wct3u17r906z",
+    "configurationVersion": 1,
+    "desiredState": "stopped",
+    "name": "simulation_p3_b1f73142013c",
+    "topologyRevision": 1,
+    "state": "stopped",
+    "workers": []
+  },
+  "start-3": {
+    "runtimeIdentifier": "3gnu38vlf1sy6wct3u17r906z",
+    "configurationVersion": 1,
+    "desiredState": "running",
+    "name": "simulation_p3_b1f73142013c",
+    "topologyRevision": 5,
+    "state": "starting",
+    "workers": [
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_1",
+        "process": {
+          "pid": 20777,
+          "live": true,
+          "nativeState": "running",
+          "state": "running",
+          "token": "7a1f6ecf-313e-4b3b-b1a4-ea561f783de5"
+        },
+        "hostIdentifier": "control",
+        "publishedState": "running",
+        "services": [
+          {
+            "appliedConfigurationVersion": null,
+            "state": "running",
+            "identifier": "runtimeOrchestrator"
+          }
+        ]
+      }
+    ]
+  },
+  "status-4": {
+    "runtimeIdentifier": "3gnu38vlf1sy6wct3u17r906z",
+    "configurationVersion": 1,
+    "desiredState": "running",
+    "name": "simulation_p3_b1f73142013c",
+    "topologyRevision": 13,
+    "state": "starting",
+    "workers": [
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_2",
+        "process": {
+          "pid": 20832,
+          "live": true,
+          "nativeState": "running",
+          "state": "running",
+          "token": "d3e3aeee-6c4c-4133-b510-760bfb9a48bc"
+        },
+        "hostIdentifier": "simulationHost",
+        "publishedState": "running",
+        "services": [
+          {
+            "appliedConfigurationVersion": null,
+            "state": "startingUp",
+            "identifier": "simulation"
+          }
+        ]
+      },
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_1",
+        "process": {
+          "pid": 20777,
+          "live": true,
+          "nativeState": "running",
+          "state": "running",
+          "token": "7a1f6ecf-313e-4b3b-b1a4-ea561f783de5"
+        },
+        "hostIdentifier": "control",
+        "publishedState": "running",
+        "services": [
+          {
+            "appliedConfigurationVersion": 1,
+            "state": "running",
+            "identifier": "runtimeOrchestrator"
+          }
+        ]
+      }
+    ]
+  },
+  "status-5": {
+    "runtimeIdentifier": "3gnu38vlf1sy6wct3u17r906z",
+    "configurationVersion": 1,
+    "desiredState": "running",
+    "name": "simulation_p3_b1f73142013c",
+    "topologyRevision": 13,
+    "state": "running",
+    "workers": [
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_2",
+        "process": {
+          "pid": 20832,
+          "live": true,
+          "nativeState": "running",
+          "state": "running",
+          "token": "d3e3aeee-6c4c-4133-b510-760bfb9a48bc"
+        },
+        "hostIdentifier": "simulationHost",
+        "publishedState": "running",
+        "services": [
+          {
+            "appliedConfigurationVersion": 1,
+            "state": "running",
+            "identifier": "simulation"
+          }
+        ]
+      },
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_1",
+        "process": {
+          "pid": 20777,
+          "live": true,
+          "nativeState": "running",
+          "state": "running",
+          "token": "7a1f6ecf-313e-4b3b-b1a4-ea561f783de5"
+        },
+        "hostIdentifier": "control",
+        "publishedState": "running",
+        "services": [
+          {
+            "appliedConfigurationVersion": 1,
+            "state": "running",
+            "identifier": "runtimeOrchestrator"
+          }
+        ]
+      }
+    ]
+  },
+  "stop-9": {
+    "runtimeIdentifier": "3gnu38vlf1sy6wct3u17r906z",
+    "configurationVersion": 1,
+    "desiredState": "stopped",
+    "name": "simulation_p3_b1f73142013c",
+    "topologyRevision": 25,
+    "state": "stopped",
+    "workers": [
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_2",
+        "process": {
+          "pid": 20832,
+          "live": false,
+          "nativeState": "stopped",
+          "state": "stopped",
+          "token": "d3e3aeee-6c4c-4133-b510-760bfb9a48bc"
+        },
+        "hostIdentifier": "simulationHost",
+        "publishedState": "stopped",
+        "services": []
+      },
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_1",
+        "process": {
+          "pid": 20777,
+          "live": false,
+          "nativeState": "stopped",
+          "state": "stopped",
+          "token": "7a1f6ecf-313e-4b3b-b1a4-ea561f783de5"
+        },
+        "hostIdentifier": "control",
+        "publishedState": "stopped",
+        "services": []
+      }
+    ]
+  },
+  "start-10": {
+    "runtimeIdentifier": "3gnu38vlf1sy6wct3u17r906z",
+    "configurationVersion": 1,
+    "desiredState": "running",
+    "name": "simulation_p3_b1f73142013c",
+    "topologyRevision": 29,
+    "state": "starting",
+    "workers": [
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_3",
+        "process": {
+          "pid": 21245,
+          "live": true,
+          "nativeState": "running",
+          "state": "running",
+          "token": "c53e67d7-46f9-42cc-a71f-73e24335b178"
+        },
+        "hostIdentifier": "control",
+        "publishedState": "running",
+        "services": [
+          {
+            "appliedConfigurationVersion": null,
+            "state": "running",
+            "identifier": "runtimeOrchestrator"
+          }
+        ]
+      },
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_2",
+        "process": {
+          "pid": 20832,
+          "live": false,
+          "nativeState": "stopped",
+          "state": "stopped",
+          "token": "d3e3aeee-6c4c-4133-b510-760bfb9a48bc"
+        },
+        "hostIdentifier": "simulationHost",
+        "publishedState": "stopped",
+        "services": []
+      },
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_1",
+        "process": {
+          "pid": 20777,
+          "live": false,
+          "nativeState": "stopped",
+          "state": "stopped",
+          "token": "7a1f6ecf-313e-4b3b-b1a4-ea561f783de5"
+        },
+        "hostIdentifier": "control",
+        "publishedState": "stopped",
+        "services": []
+      }
+    ]
+  },
+  "status-11": {
+    "runtimeIdentifier": "3gnu38vlf1sy6wct3u17r906z",
+    "configurationVersion": 1,
+    "desiredState": "running",
+    "name": "simulation_p3_b1f73142013c",
+    "topologyRevision": 37,
+    "state": "running",
+    "workers": [
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_3",
+        "process": {
+          "pid": 21245,
+          "live": true,
+          "nativeState": "running",
+          "state": "running",
+          "token": "c53e67d7-46f9-42cc-a71f-73e24335b178"
+        },
+        "hostIdentifier": "control",
+        "publishedState": "running",
+        "services": [
+          {
+            "appliedConfigurationVersion": 1,
+            "state": "running",
+            "identifier": "runtimeOrchestrator"
+          }
+        ]
+      },
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_2",
+        "process": {
+          "pid": 20832,
+          "live": false,
+          "nativeState": "stopped",
+          "state": "stopped",
+          "token": "d3e3aeee-6c4c-4133-b510-760bfb9a48bc"
+        },
+        "hostIdentifier": "simulationHost",
+        "publishedState": "stopped",
+        "services": []
+      },
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_4",
+        "process": {
+          "pid": 21314,
+          "live": true,
+          "nativeState": "running",
+          "state": "running",
+          "token": "b75f43a1-ef87-46b3-91ac-e8398e37bffc"
+        },
+        "hostIdentifier": "simulationHost",
+        "publishedState": "running",
+        "services": [
+          {
+            "appliedConfigurationVersion": 1,
+            "state": "running",
+            "identifier": "simulation"
+          }
+        ]
+      },
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_1",
+        "process": {
+          "pid": 20777,
+          "live": false,
+          "nativeState": "stopped",
+          "state": "stopped",
+          "token": "7a1f6ecf-313e-4b3b-b1a4-ea561f783de5"
+        },
+        "hostIdentifier": "control",
+        "publishedState": "stopped",
+        "services": []
+      }
+    ]
+  },
+  "stop-20": {
+    "runtimeIdentifier": "3gnu38vlf1sy6wct3u17r906z",
+    "configurationVersion": 3,
+    "desiredState": "stopped",
+    "name": "simulation_p3_b1f73142013c",
+    "topologyRevision": 67,
+    "state": "stopped",
+    "workers": [
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_3",
+        "process": {
+          "pid": 21245,
+          "live": false,
+          "nativeState": "stopped",
+          "state": "stopped",
+          "token": "c53e67d7-46f9-42cc-a71f-73e24335b178"
+        },
+        "hostIdentifier": "control",
+        "publishedState": "stopped",
+        "services": []
+      },
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_2",
+        "process": {
+          "pid": 20832,
+          "live": false,
+          "nativeState": "stopped",
+          "state": "stopped",
+          "token": "d3e3aeee-6c4c-4133-b510-760bfb9a48bc"
+        },
+        "hostIdentifier": "simulationHost",
+        "publishedState": "stopped",
+        "services": []
+      },
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_4",
+        "process": {
+          "pid": 21314,
+          "live": false,
+          "nativeState": "stopped",
+          "state": "stopped",
+          "token": "b75f43a1-ef87-46b3-91ac-e8398e37bffc"
+        },
+        "hostIdentifier": "simulationHost",
+        "publishedState": "stopped",
+        "services": []
+      },
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_1",
+        "process": {
+          "pid": 20777,
+          "live": false,
+          "nativeState": "stopped",
+          "state": "stopped",
+          "token": "7a1f6ecf-313e-4b3b-b1a4-ea561f783de5"
+        },
+        "hostIdentifier": "control",
+        "publishedState": "stopped",
+        "services": []
+      }
+    ]
+  },
+  "start-21": {
+    "runtimeIdentifier": "3gnu38vlf1sy6wct3u17r906z",
+    "configurationVersion": 3,
+    "desiredState": "running",
+    "name": "simulation_p3_b1f73142013c",
+    "topologyRevision": 76,
+    "state": "starting",
+    "workers": [
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_3",
+        "process": {
+          "pid": 21245,
+          "live": false,
+          "nativeState": "stopped",
+          "state": "stopped",
+          "token": "c53e67d7-46f9-42cc-a71f-73e24335b178"
+        },
+        "hostIdentifier": "control",
+        "publishedState": "stopped",
+        "services": []
+      },
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_2",
+        "process": {
+          "pid": 20832,
+          "live": false,
+          "nativeState": "stopped",
+          "state": "stopped",
+          "token": "d3e3aeee-6c4c-4133-b510-760bfb9a48bc"
+        },
+        "hostIdentifier": "simulationHost",
+        "publishedState": "stopped",
+        "services": []
+      },
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_4",
+        "process": {
+          "pid": 21314,
+          "live": false,
+          "nativeState": "stopped",
+          "state": "stopped",
+          "token": "b75f43a1-ef87-46b3-91ac-e8398e37bffc"
+        },
+        "hostIdentifier": "simulationHost",
+        "publishedState": "stopped",
+        "services": []
+      },
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_1",
+        "process": {
+          "pid": 20777,
+          "live": false,
+          "nativeState": "stopped",
+          "state": "stopped",
+          "token": "7a1f6ecf-313e-4b3b-b1a4-ea561f783de5"
+        },
+        "hostIdentifier": "control",
+        "publishedState": "stopped",
+        "services": []
+      },
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_5",
+        "process": {
+          "pid": 21950,
+          "live": true,
+          "nativeState": "running",
+          "state": "running",
+          "token": "683094d5-2a76-4696-9afb-4f4e23f01b69"
+        },
+        "hostIdentifier": "control",
+        "publishedState": "running",
+        "services": [
+          {
+            "appliedConfigurationVersion": null,
+            "state": "startingUp",
+            "identifier": "runtimeOrchestrator"
+          }
+        ]
+      }
+    ]
+  },
+  "status-22": {
+    "runtimeIdentifier": "3gnu38vlf1sy6wct3u17r906z",
+    "configurationVersion": 3,
+    "desiredState": "running",
+    "name": "simulation_p3_b1f73142013c",
+    "topologyRevision": 79,
+    "state": "running",
+    "workers": [
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_3",
+        "process": {
+          "pid": 21245,
+          "live": false,
+          "nativeState": "stopped",
+          "state": "stopped",
+          "token": "c53e67d7-46f9-42cc-a71f-73e24335b178"
+        },
+        "hostIdentifier": "control",
+        "publishedState": "stopped",
+        "services": []
+      },
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_4",
+        "process": {
+          "pid": 21314,
+          "live": false,
+          "nativeState": "stopped",
+          "state": "stopped",
+          "token": "b75f43a1-ef87-46b3-91ac-e8398e37bffc"
+        },
+        "hostIdentifier": "simulationHost",
+        "publishedState": "stopped",
+        "services": []
+      },
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_1",
+        "process": {
+          "pid": 20777,
+          "live": false,
+          "nativeState": "stopped",
+          "state": "stopped",
+          "token": "7a1f6ecf-313e-4b3b-b1a4-ea561f783de5"
+        },
+        "hostIdentifier": "control",
+        "publishedState": "stopped",
+        "services": []
+      },
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_5",
+        "process": {
+          "pid": 21950,
+          "live": true,
+          "nativeState": "running",
+          "state": "running",
+          "token": "683094d5-2a76-4696-9afb-4f4e23f01b69"
+        },
+        "hostIdentifier": "control",
+        "publishedState": "running",
+        "services": [
+          {
+            "appliedConfigurationVersion": 3,
+            "state": "running",
+            "identifier": "runtimeOrchestrator"
+          }
+        ]
+      },
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_2",
+        "process": {
+          "pid": 20832,
+          "live": false,
+          "nativeState": "stopped",
+          "state": "stopped",
+          "token": "d3e3aeee-6c4c-4133-b510-760bfb9a48bc"
+        },
+        "hostIdentifier": "simulationHost",
+        "publishedState": "stopped",
+        "services": []
+      },
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_6",
+        "process": {
+          "pid": 22014,
+          "live": true,
+          "nativeState": "running",
+          "state": "running",
+          "token": "d006bd8c-3d46-416e-88f0-1bc19e7d3c20"
+        },
+        "hostIdentifier": "simulationHost",
+        "publishedState": "running",
+        "services": [
+          {
+            "appliedConfigurationVersion": 3,
+            "state": "running",
+            "identifier": "simulation"
+          }
+        ]
+      }
+    ]
+  },
+  "stop-34": {
+    "runtimeIdentifier": "3gnu38vlf1sy6wct3u17r906z",
+    "configurationVersion": 3,
+    "desiredState": "stopped",
+    "name": "simulation_p3_b1f73142013c",
+    "topologyRevision": 91,
+    "state": "stopped",
+    "workers": [
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_3",
+        "process": {
+          "pid": 21245,
+          "live": false,
+          "nativeState": "stopped",
+          "state": "stopped",
+          "token": "c53e67d7-46f9-42cc-a71f-73e24335b178"
+        },
+        "hostIdentifier": "control",
+        "publishedState": "stopped",
+        "services": []
+      },
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_4",
+        "process": {
+          "pid": 21314,
+          "live": false,
+          "nativeState": "stopped",
+          "state": "stopped",
+          "token": "b75f43a1-ef87-46b3-91ac-e8398e37bffc"
+        },
+        "hostIdentifier": "simulationHost",
+        "publishedState": "stopped",
+        "services": []
+      },
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_1",
+        "process": {
+          "pid": 20777,
+          "live": false,
+          "nativeState": "stopped",
+          "state": "stopped",
+          "token": "7a1f6ecf-313e-4b3b-b1a4-ea561f783de5"
+        },
+        "hostIdentifier": "control",
+        "publishedState": "stopped",
+        "services": []
+      },
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_5",
+        "process": {
+          "pid": 21950,
+          "live": false,
+          "nativeState": "stopped",
+          "state": "stopped",
+          "token": "683094d5-2a76-4696-9afb-4f4e23f01b69"
+        },
+        "hostIdentifier": "control",
+        "publishedState": "stopped",
+        "services": []
+      },
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_2",
+        "process": {
+          "pid": 20832,
+          "live": false,
+          "nativeState": "stopped",
+          "state": "stopped",
+          "token": "d3e3aeee-6c4c-4133-b510-760bfb9a48bc"
+        },
+        "hostIdentifier": "simulationHost",
+        "publishedState": "stopped",
+        "services": []
+      },
+      {
+        "workerIdentifier": "3gnu38vlf1sy6wct3u17r906z_worker_6",
+        "process": {
+          "pid": 22014,
+          "live": false,
+          "nativeState": "stopped",
+          "state": "stopped",
+          "token": "d006bd8c-3d46-416e-88f0-1bc19e7d3c20"
+        },
+        "hostIdentifier": "simulationHost",
+        "publishedState": "stopped",
+        "services": []
+      }
+    ]
+  },
+  "remove-36": {
+    "state": "removed",
+    "name": "simulation_p3_b1f73142013c"
+  }
+}

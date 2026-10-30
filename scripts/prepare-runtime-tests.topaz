@@ -1,0 +1,38 @@
+expectvalue true
+run
+| source definitions pending ready |
+#(CSSimulationService TonelMCReader) do: [:name |
+ (Smalltalk includesKey: name) ifFalse: [self error: 'Install Simulator Runtime before its qualification fixtures']].
+source := System gemEnvironmentVariable: 'CS_P3_SOURCE'.
+source isNil ifTrue: [self error: 'CS_P3_SOURCE must name the verified src directory'].
+definitions := OrderedCollection new.
+#('BVC-Simulator-Tests' 'BVC-Simulator-Tests-Authority' 'BVC-Simulator-Tests-Runtime') do: [:name |
+ definitions addAll: ((TonelMCReader on: (MetacelloPlatform current fileHandleOn: source) fileName: name) snapshot definitions reject: [:definition |
+  definition isOrganizationDefinition or: [(definition isClassDefinition or: [definition isMethodDefinition])
+   and: [definition className asString = 'CSSimulationRuntimeExamples']]])].
+GsDeployer deploy: [
+ pending := (definitions select: #isClassDefinition) asOrderedCollection.
+ [pending notEmpty] whileTrue: [
+  ready := pending reject: [:definition | pending anySatisfy: [:parent | parent className asString = definition superclassName asString]].
+  ready isEmpty ifTrue: [self error: 'Cyclic test fixtures'].
+  ready do: [:definition | definition load]. pending removeAll: ready].
+ (definitions select: #isMethodDefinition) do: [:definition | definition load]].
+true
+%
+commit
+expectvalue true
+run
+| results report file |
+System abortTransaction. System transactionMode: #manualBegin.
+results := OrderedCollection new.
+#(CSKernelExamples CSGraphExamples CSAuthorityExamples) do: [:className | | exampleClass |
+ exampleClass := Smalltalk at: className.
+ (exampleClass selectors select: [:selector | selector asString beginsWith: 'test']) asArray sort do: [:selector |
+  exampleClass new perform: selector. results add: className asString, '>>', selector asString]].
+report := Dictionary new at: 'passed' put: results size; at: 'tests' put: results asArray;
+ at: 'runtimeTests' put: 'Managed native Runtime route; GT direct-worker fixture excluded'; yourself.
+file := GsFile openWriteOnServer: (System gemEnvironmentVariable: 'CS_P3_PREPARE_REPORT').
+[file nextPutAll: (STON toJsonString: report)] ensure: [file close].
+System abortTransaction.
+true
+%

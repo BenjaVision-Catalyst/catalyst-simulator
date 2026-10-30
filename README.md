@@ -4,8 +4,9 @@ Catalyst Simulator is the home of the GemStone-first CatalystSimulation kernel,
 its Runtime service, portable model contracts and future external execution
 adapters. P0/P1 now includes a headless portable graph interpreter, versioned
 operation registry, model digests and compatibility checks, qualified in GT and
-GemStone. The P2 Repast adapter now passes native macOS feasibility; Runtime
-service integration and a production external backend remain planned.
+GemStone. The P2 Repast adapter passes native macOS feasibility, and the P3 Runtime
+service now provides accepted revisions, placement fencing and GemStone recovery.
+A production external executor and one-click placement remain later gates.
 
 Models cover ecosystems, NPC behaviour, circuits and factory automation. The
 intended workflow is to author a model once in Smalltalk, run it entirely in
@@ -83,9 +84,19 @@ actual agent migration and cross-rank resource contention. All 24 tested externa
 checkpoints round-trip through the dedicated `bvc_simulator_native` stone and
 continue identically. Full P0/P1 gates and one-click migration remain open.
 
+The [authority-1 contract](contracts/authority-1/README.md) implements the stable
+Runtime endpoint for both placements. It accepts bounded canonical WorkUnits,
+atomically records revisions/checkpoints/outcomes, fences obsolete placements,
+preserves uncertain external batches and exposes accepted reads and retry receipts.
+The [P3 qualification](conformance/P3-Runtime.md) covers 52 GT tests, 43 native
+portable tests, managed Runtime routing/restarts/rollback, real two-session write
+conflicts and return of the actual P2 Repast checkpoint through the service.
+
 Core loads without Runtime, GT UI or ecosystem dependencies. Load Metacello
-baseline `CatalystSimulator` from this repository's `src`, group `Core` (default)
-or optional group `Tests`. Rowan Core/Tests specifications are also supplied.
+baseline `CatalystSimulator` from this repository's `src`, group `Core` (default),
+`Authority`, `Runtime`, `Tests` or `RuntimeTests`. Core and Authority remain
+independent of Runtime. `Tests` covers the portable kernel/authority, while
+`RuntimeTests` adds Runtime integration. Rowan specifications are also supplied.
 See [qualification and usage](conformance/README.md) for the SUnit suite, native
 runner, inspectable models and independent Python fixture oracles. The
 [rebuild record](docs/Rebuild-Readiness.md) records the passing fresh GT/devkit
@@ -100,8 +111,8 @@ the live GT image; exported files must not be edited externally.
 
 | Area | Responsibility |
 | --- | --- |
-| `src/` | Headless portable kernel, graph builder/interpreter, registry, digests and optional tests; Runtime adapters/GT tools follow; sources authored/exported through GT |
-| `contracts/` | Probe and graph model/state/numeric/capability contracts and fixtures; service/read/migration protocols follow |
+| `src/` | Portable kernel, acceptance authority, Runtime service/WorkUnits and optional tests; sources authored/exported through GT |
+| `contracts/` | Probe, graph and authority model/state/numeric/capability/service/recovery contracts |
 | `native/` | Shared C++ operations/codecs and external adapters, starting with a Repast feasibility probe |
 | `conformance/` | GT, native GemStone, external-backend, migration and scale evidence |
 

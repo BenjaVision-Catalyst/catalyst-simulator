@@ -1,0 +1,7 @@
+RwSimpleProjectLoadComponentV2 {
+ #name : 'Authority',
+ #projectNames : [],
+ #componentNames : [ 'Core' ],
+ #packageNames : [ 'BVC-Simulator-Authority' ],
+ #comment : 'Portable accepted revisions, placement guard, bounded receipts and recovery'
+}
