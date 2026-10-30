@@ -9,7 +9,12 @@ Class {
 		'journalLimit',
 		'maximumSteps',
 		'driveThroughTick',
-		'driveIntervalMillis'
+		'driveIntervalMillis',
+		'repastLauncher',
+		'repastExecutable',
+		'repastMpi',
+		'repastDirectory',
+		'repastRanks'
 	],
 	#category : 'BVC-Simulator-Runtime',
 	#package : 'BVC-Simulator-Runtime'
@@ -65,6 +70,36 @@ CSSimulationConfiguration >> descriptionMaximumGroups [
 CSSimulationConfiguration >> descriptionMaximumSteps [
  <magritteDescription>
  ^ MANumberDescription new accessor: #maximumSteps; label: 'maximumSteps'; kind: Integer; min: 0; beRequired; cfSerializable: true; yourself
+]
+
+{ #category : 'repast integration' }
+CSSimulationConfiguration >> descriptionRepastDirectory [
+ <magritteDescription>
+ ^ MAStringDescription new accessor: #repastDirectory; label: 'durable spool'; cfSerializable: true; yourself
+]
+
+{ #category : 'repast integration' }
+CSSimulationConfiguration >> descriptionRepastExecutable [
+ <magritteDescription>
+ ^ MAStringDescription new accessor: #repastExecutable; label: 'native executable'; cfSerializable: true; yourself
+]
+
+{ #category : 'repast integration' }
+CSSimulationConfiguration >> descriptionRepastLauncher [
+ <magritteDescription>
+ ^ MAStringDescription new accessor: #repastLauncher; label: 'launcher script'; cfSerializable: true; yourself
+]
+
+{ #category : 'repast integration' }
+CSSimulationConfiguration >> descriptionRepastMpi [
+ <magritteDescription>
+ ^ MAStringDescription new accessor: #repastMpi; label: 'MPI launcher'; cfSerializable: true; yourself
+]
+
+{ #category : 'repast integration' }
+CSSimulationConfiguration >> descriptionRepastRanks [
+ <magritteDescription>
+ ^ MANumberDescription new accessor: #repastRanks; label: 'Repast ranks'; kind: Integer; cfSerializable: true; yourself
 ]
 
 { #category : 'simulation runtime' }
@@ -146,6 +181,66 @@ CSSimulationConfiguration >> maximumSteps: value [
  maximumSteps := value
 ]
 
+{ #category : 'repast integration' }
+CSSimulationConfiguration >> repastDirectory [
+ ^ repastDirectory ifNil: ['']
+]
+
+{ #category : 'repast integration' }
+CSSimulationConfiguration >> repastDirectory: value [
+ repastDirectory := value
+]
+
+{ #category : 'repast integration' }
+CSSimulationConfiguration >> repastEnabled [
+ ^ self repastLauncher notEmpty
+]
+
+{ #category : 'repast integration' }
+CSSimulationConfiguration >> repastExecutable [
+ ^ repastExecutable ifNil: ['']
+]
+
+{ #category : 'repast integration' }
+CSSimulationConfiguration >> repastExecutable: value [
+ repastExecutable := value
+]
+
+{ #category : 'repast integration' }
+CSSimulationConfiguration >> repastLauncher [
+ ^ repastLauncher ifNil: ['']
+]
+
+{ #category : 'repast integration' }
+CSSimulationConfiguration >> repastLauncher: value [
+ repastLauncher := value
+]
+
+{ #category : 'repast integration' }
+CSSimulationConfiguration >> repastMpi [
+ ^ repastMpi ifNil: ['']
+]
+
+{ #category : 'repast integration' }
+CSSimulationConfiguration >> repastMpi: value [
+ repastMpi := value
+]
+
+{ #category : 'repast integration' }
+CSSimulationConfiguration >> repastPolicyDigest [
+ ^ CSSha256 hexDigestOf: (CSCanonicalCodec encode: {self drivePolicyDigest. self repastLauncher. self repastExecutable. self repastMpi. self repastDirectory. self repastRanks})
+]
+
+{ #category : 'repast integration' }
+CSSimulationConfiguration >> repastRanks [
+ ^ repastRanks ifNil: [1]
+]
+
+{ #category : 'repast integration' }
+CSSimulationConfiguration >> repastRanks: value [
+ repastRanks := value
+]
+
 { #category : 'simulation runtime' }
 CSSimulationConfiguration >> repositoryName [
  ^ repositoryName
@@ -156,7 +251,17 @@ CSSimulationConfiguration >> repositoryName: value [
  repositoryName := value
 ]
 
-{ #category : 'simulation runtime' }
+{ #category : 'repast integration' }
+CSSimulationConfiguration >> validateRepastOn: result [
+ | paths |
+ paths := {self repastLauncher. self repastExecutable. self repastMpi. self repastDirectory}.
+ [(paths allSatisfy: [:path | path isEmpty]) ifFalse: [
+  CSAuthorityChecks require: (paths allSatisfy: [:path | path isString and: [path notEmpty and: [path first = $/]]]) code: 'absolute-repast-paths-required'].
+ CSAuthorityChecks require: (#(1 2 4) includes: self repastRanks) code: 'unqualified-repast-ranks']
+ on: CSKernelError do: [:error | result addError: error messageText]
+]
+
+{ #category : 'validation' }
 CSSimulationConfiguration >> validateSemanticsOn: result [
  super validateSemanticsOn: result.
  [CSAuthorityChecks text: repositoryName. CSAuthorityChecks text: controlPrincipal. CSAuthorityChecks text: executorPrincipal.
@@ -166,5 +271,6 @@ CSSimulationConfiguration >> validateSemanticsOn: result [
  CSAuthorityChecks require: (maximumSteps isInteger and: [maximumSteps between: 1 and: 64]) code: 'invalid-step-limit'.
  CSKernelMath nonnegative: driveThroughTick.
  CSAuthorityChecks require: (driveIntervalMillis isInteger and: [driveIntervalMillis between: 10 and: 60000]) code: 'invalid-drive-interval']
- on: CSKernelError do: [:error | result addError: error messageText]
+ on: CSKernelError do: [:error | result addError: error messageText].
+ self validateRepastOn: result
 ]

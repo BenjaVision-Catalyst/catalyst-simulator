@@ -105,7 +105,7 @@ phase = 'configure' ifFalse: [
    wait value: [((group view at: 'checkpoint') at: 'tick') = 6].
    verifyTick value: 6.
    check value: (runtime nativeHosts values anySatisfy: [:each | each executionMetrics samples anySatisfy: [:sample |
-    sample workUnitClass == CSScheduledSimulationAdvanceWorkUnit and: [sample isSuccessful and: [sample transactionOutcome = #committed]]]]) value: 'Scheduled progression did not use a committed native WorkUnit'.
+    (#(CSScheduledSimulationAdvanceWorkUnit CSScheduledSimulationTransitionWorkUnit) includes: sample workUnitClass name) and: [sample isSuccessful and: [sample transactionOutcome = #committed]]]]) value: 'Scheduled progression did not use a committed native WorkUnit'.
    report at: 'scheduledNativeTransaction' put: true]].
  phase = 'obsolete' ifTrue: [
   before := group view. request := helper requestFor: group id: phase payload: (helper target: 7).

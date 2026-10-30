@@ -1,0 +1,119 @@
+expectvalue true
+run
+| phase runtimeName directory runtime cfg orchestrator serviceCfg controlHost simulationHost file helper check wait report repository group router submitRequest submit query before payload result request target |
+System abortTransaction. System transactionMode: #manualBegin.
+phase := System gemEnvironmentVariable: 'CS_LIVE_PHASE'.
+runtimeName := System gemEnvironmentVariable: 'CS_P3_RUNTIME'.
+directory := System gemEnvironmentVariable: 'CS_P3_DIRECTORY'.
+helper := CSAuthorityExamples new.
+check := [:condition :message | condition ifFalse: [self error: message]].
+wait := [:predicate | | deadline |
+ deadline := CRPlatform current currentMillis + 45000.
+ [System abortTransaction. predicate value or: [CRPlatform current currentMillis >= deadline]] whileFalse: [(Delay forMilliseconds: 25) wait].
+ check value: predicate value value: 'Live Repast qualification timeout'].
+report := Dictionary new at: 'phase' put: phase; yourself.
+phase = 'configure' ifTrue: [
+ cfg := CRRuntimeConfiguration new label: 'Live native Repast qualification'; yourself.
+ orchestrator := CROrchestrationConfiguration default heartbeatIntervalMillis: 1000; reconcileIntervalMillis: 100; yourself.
+ serviceCfg := CSSimulationConfiguration new identifier: #simulation; label: 'Simulation'; authoritative: true;
+  repositoryName: runtimeName; controlPrincipal: 'admin'; executorPrincipal: 'executor'; maximumSteps: 4;
+  journalLimit: 64; driveThroughTick: 0; driveIntervalMillis: 100;
+  repastLauncher: (System gemEnvironmentVariable: 'CS_LIVE_LAUNCHER');
+  repastExecutable: (System gemEnvironmentVariable: 'CS_LIVE_EXECUTABLE'); repastMpi: '/opt/homebrew/bin/mpirun';
+  repastDirectory: directory, '/spool'; repastRanks: (System gemEnvironmentVariable: 'CS_LIVE_RANKS') asInteger; yourself.
+ cfg services: {orchestrator. serviceCfg}.
+ controlHost := CRHostConfiguration new identifier: #control; label: 'Control'; address: 'localhost'; maxProcesses: 1; services: {CRRuntime orchestratorIdentifier}; yourself.
+ simulationHost := CRHostConfiguration new identifier: #simulationHost; label: 'Simulation'; address: 'localhost'; maxProcesses: 1; services: {#simulation}; yourself.
+ cfg topology: (CRTopologyConfiguration new hosts: {controlHost. simulationHost}; placementStrategyConfiguration: CRRoundRobinPlacementStrategyConfiguration new; yourself).
+ cfg deployment serviceDeployments: {
+  CRServiceDeploymentConfiguration new serviceIdentifier: CRRuntime orchestratorIdentifier; label: 'Orchestrator'; initialCount: 1; yourself.
+  CRServiceDeploymentConfiguration new serviceIdentifier: #simulation; label: 'Simulation'; initialCount: 1; yourself}.
+ cfg failureEvidenceConfiguration captureDebugArtifacts: false.
+ check value: cfg validate isValid value: 'Invalid live Repast configuration'.
+ file := GsFile openWriteOnServer: directory, '/runtime.ston'.
+ [file nextPutAll: (CRRuntimeConfigurationCodec toString: cfg)] ensure: [file close]].
+phase = 'configure' ifFalse: [
+ runtime := CRRuntimeRegistry default runtimeNamed: runtimeName.
+ check value: runtime notNil value: 'Managed Runtime missing'.
+ repository := CSSimulationRepository named: runtimeName.
+ repository ifNotNil: [group := repository groupFor: helper createRequest].
+ router := CRWorkRouter deploymentTopology: runtime activation deploymentTopology.
+ submitRequest := [:work | | envelope |
+  envelope := work asEnvelope serviceIdentifier: #simulation; yourself.
+  envelope context add: (CRDeploymentVersionContext new version: runtime configuration version; yourself).
+  CRApplicationWorkSubmissionPolicy new validateWorkUnit: work.
+  CRGemStoneRuntime duringTransaction: [router enqueue: envelope]].
+ submit := [:workClass :data :identity |
+  request := helper requestFor: group id: phase payload: data.
+  submitRequest value: (workClass request: request principal: identity)].
+ query := [:label | | readRequest |
+  readRequest := Dictionary new at: 'world' put: (helper id: 1); at: 'group' put: (helper id: 2); at: 'minimumRevision' put: 0; at: 'argument' put: nil; yourself.
+  submitRequest value: (CSSimulationCaptureWorkUnit operation: 'checkpoint' request: readRequest principal: 'admin' evidence: runtimeName, '-', label).
+  wait value: [(CSSimulationEvidence at: runtimeName, '-', label) notNil].
+  result := CSSimulationEvidence at: runtimeName, '-', label.
+  check value: result = group view value: 'Runtime endpoint differs from accepted GemStone state'.
+  result].
+ phase = 'create' ifTrue: [
+  check value: repository isNil value: 'Fixture already exists'.
+  submitRequest value: (CSCreateSimulationWorkUnit request: helper createRequest principal: 'admin').
+  wait value: [(CSSimulationRepository named: runtimeName) notNil].
+  repository := CSSimulationRepository named: runtimeName. group := repository groupFor: helper createRequest].
+ (#('advance1' 'advance6' 'advance12') includes: phase) ifTrue: [
+  target := (phase copyFrom: 8 to: phase size) asInteger.
+  submit value: CSAdvanceSimulationWorkUnit value: (helper target: target) value: 'admin'.
+  wait value: [((group view at: 'checkpoint') at: 'tick') = target]].
+ (#('external1' 'external2' 'local1' 'local2') includes: phase) ifTrue: [
+  before := group view.
+  payload := helper placement: ((phase beginsWith: 'external') ifTrue: ['external'] ifFalse: ['smalltalk']) owner: ((before at: 'generation') + 3).
+  submit value: CSMigrateSimulationWorkUnit value: payload value: 'admin'.
+  wait value: [(group view at: 'generation') > (before at: 'generation') and: [(group view at: 'phase') = 'active']].
+  check value: (group view at: 'checkpoint') = (before at: 'checkpoint') value: 'Switch advanced or changed simulation state'].
+ (#('run4' 'run8') includes: phase) ifTrue: [
+  target := (phase copyFrom: 4 to: phase size) asInteger.
+  submit value: CSPrepareSimulationBatchWorkUnit value: (helper target: target) value: 'admin'.
+  phase = 'run4'
+   ifTrue: [wait value: [((group view at: 'checkpoint') at: 'tick') = target]]
+   ifFalse: [wait value: [(group view at: 'pending') notNil and: [((group view at: 'pending') at: 'phase') = 'uncertain']]]].
+ (#('drive4' 'drive12') includes: phase) ifTrue: [
+  target := (phase copyFrom: 6 to: phase size) asInteger.
+  cfg := runtime configuration. (cfg serviceConfigurationNamed: #simulation) driveThroughTick: target.
+  runtime configure: cfg.
+  wait value: [((group view at: 'checkpoint') at: 'tick') = target].
+  cfg := runtime configuration. (cfg serviceConfigurationNamed: #simulation) driveThroughTick: 0.
+  runtime configure: cfg.
+  wait value: [runtime publications values anySatisfy: [:publication | (publication isKindOf: CRWorkerHandle) and: [| handle |
+   handle := publication serviceHandleForIdentifier: #simulation.
+   handle notNil and: [handle appliedConfigurationVersion = runtime configuration version]]]].
+  report at: 'scheduledProgression' put: true].
+ phase = 'recover' ifTrue: [
+  before := group view.
+  payload := helper placement: 'external' owner: 9. payload at: 'reason' put: 'Lost native receipt across managed Runtime restart'.
+  submit value: CSRecoverSimulationWorkUnit value: payload value: 'admin'.
+  wait value: [(group view at: 'phase') = 'reconciling'].
+  check value: (group view at: 'pending') = (before at: 'pending') value: 'Recovery discarded uncertain batch'].
+ phase = 'accepted8' ifTrue: [wait value: [((group view at: 'checkpoint') at: 'tick') = 8 and: [(group view at: 'pending') isNil]]].
+ phase = 'stale-result' ifTrue: [
+  before := group view.
+  file := GsFile openReadOnServer: directory, '/oracle-8.canon'.
+  [payload := helper batchPayloadFor: group checkpoint: (CSCanonicalCodec decode: file contents)] ensure: [file close].
+  request := helper requestFor: group id: phase payload: payload.
+  request at: 'generation' put: ((before at: 'pending') at: 'generation'); at: 'owner' put: ((before at: 'pending') at: 'owner').
+  submitRequest value: (CSAcceptSimulationResultWorkUnit request: request principal: 'executor').
+  wait value: [runtime nativeHosts values anySatisfy: [:each | each failures asArray anySatisfy: [:failure |
+   failure workUnitClassName asString = 'CSAcceptSimulationResultWorkUnit']]].
+  check value: group view = before value: 'Fenced executor changed the accepted state'.
+  report at: 'fencedResultRejected' put: true].
+ phase = 'cleanup' ifTrue: [
+  check value: runtime status = CRStatus stopped value: 'Stop managed Runtime before cleanup'.
+  CRGemStoneRuntime duringTransaction: [CSSimulationRepository removeNamed: runtimeName. CSSimulationEvidence removePrefix: runtimeName, '-']]
+ ifFalse: [
+  result := query value: phase.
+  file := GsFile openReadOnServer: directory, '/oracle-', ((result at: 'checkpoint') at: 'tick') printString, '.canon'.
+  [check value: (CSCanonicalCodec encode: (result at: 'checkpoint')) = file contents value: 'Live checkpoint differs from GT oracle'] ensure: [file close].
+  report at: 'view' put: (result copy removeKey: 'checkpoint'; yourself); at: 'runtimeEndpoint' put: true.
+  report at: 'failures' put: (runtime nativeHosts values collect: [:each | each failures size]) asArray]].
+report at: 'passed' put: true.
+file := GsFile openWriteOnServer: directory, '/', phase, '.json'.
+[file nextPutAll: (STON toJsonString: report)] ensure: [file close].
+true
+%

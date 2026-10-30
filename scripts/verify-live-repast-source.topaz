@@ -1,0 +1,21 @@
+expectvalue true
+run
+| source expected actual key read proofs file |
+System abortTransaction. System transactionMode: #manualBegin.
+source := MetacelloPlatform current fileHandleOn: (System gemEnvironmentVariable: 'CS_P3_SOURCE').
+expected := Dictionary new. actual := Dictionary new.
+key := [:d | d isClassDefinition ifTrue: [{'class'. d className asString}]
+ ifFalse: [{'method'. d className asString. d classIsMeta. d selector asString}]].
+#('BaselineOfCatalystSimulator' 'BVC-Simulator-Core' 'BVC-Simulator-Authority' 'BVC-Simulator-Runtime' 'BVC-Simulator-Tests' 'BVC-Simulator-Tests-Authority' 'BVC-Simulator-Tests-Runtime') do: [:package |
+ read := (TonelMCReader on: source fileName: package) snapshot definitions reject: [:d |
+  d isOrganizationDefinition or: [(d isClassDefinition or: [d isMethodDefinition]) and: [d className asString = 'CSSimulationRuntimeExamples']]].
+ read do: [:d | expected at: (key value: d) put: d].
+ ((MCPackage named: package) snapshot definitions reject: #isOrganizationDefinition) do: [:d | actual at: (key value: d) put: d]].
+expected keysAndValuesDo: [:k :d | (actual at: k ifAbsent: [nil]) = d ifFalse: [self error: 'Native source mismatch: ', k printString]].
+expected size = actual size ifFalse: [self error: 'Native source definition count differs'].
+proofs := Dictionary new at: 'passed' put: true; at: 'definitions' put: expected size;
+ at: 'excludedTestClass' put: 'CSSimulationRuntimeExamples'; at: 'nativeTransport' put: 'CSGemStoneRepastTransport'; yourself.
+file := GsFile openWriteOnServer: (System gemEnvironmentVariable: 'CS_LIVE_SOURCE_REPORT').
+[file nextPutAll: (STON toJsonString: proofs)] ensure: [file close].
+true
+%

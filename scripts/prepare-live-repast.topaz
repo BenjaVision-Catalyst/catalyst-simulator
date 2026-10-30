@@ -1,0 +1,35 @@
+expectvalue true
+run
+| source definitions pending ready |
+source := System gemEnvironmentVariable: 'CS_P3_SOURCE'.
+source isNil ifTrue: [self error: 'CS_P3_SOURCE required'].
+System abortTransaction.
+definitions := OrderedCollection new.
+#('BVC-Simulator-Runtime' 'BVC-Simulator-Tests' 'BVC-Simulator-Tests-Authority' 'BVC-Simulator-Tests-Runtime') do: [:package |
+ definitions addAll: ((TonelMCReader on: (MetacelloPlatform current fileHandleOn: source) fileName: package) snapshot definitions reject: [:d |
+  d isOrganizationDefinition or: [(d isClassDefinition or: [d isMethodDefinition]) and: [d className asString = 'CSSimulationRuntimeExamples']]])].
+GsDeployer deploy: [
+ pending := (definitions select: #isClassDefinition) asOrderedCollection.
+ [pending notEmpty] whileTrue: [
+  ready := pending reject: [:definition | pending anySatisfy: [:parent | parent className asString = definition superclassName asString]].
+  ready isEmpty ifTrue: [self error: 'Cyclic Simulator definitions'].
+  ready do: [:definition | definition load]. pending removeAll: ready].
+ (definitions select: #isMethodDefinition) do: [:definition | definition load]].
+true
+%
+commit
+expectvalue true
+run
+| results report file |
+System abortTransaction. System transactionMode: #manualBegin.
+results := OrderedCollection new.
+#(CSKernelExamples CSGraphExamples CSAuthorityExamples CSRepastBatchExamples) do: [:className | | cls |
+ cls := Smalltalk at: className.
+ (cls selectors select: [:selector | selector asString beginsWith: 'test']) asArray sort do: [:selector |
+  cls new perform: selector. results add: className asString, '>>', selector asString]].
+report := Dictionary new at: 'passed' put: results size; at: 'tests' put: results asArray; yourself.
+file := GsFile openWriteOnServer: (System gemEnvironmentVariable: 'CS_P3_PREPARE_REPORT').
+[file nextPutAll: (STON toJsonString: report)] ensure: [file close].
+System abortTransaction.
+true
+%

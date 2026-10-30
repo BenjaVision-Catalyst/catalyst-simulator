@@ -6,9 +6,11 @@ adapters. P0/P1 now includes a headless portable graph interpreter, versioned
 operation registry, model digests and compatibility checks, qualified in GT and
 GemStone. The P2 Repast adapter passes native macOS feasibility, and the P3 Runtime
 service now provides accepted revisions, placement fencing and GemStone recovery.
-A production external executor and one-click placement remain later gates.
+The live native batch adapter connects Runtime to Repast and queries durable
+receipts across restarts. Resident external populations and a GT placement action
+remain later gates.
 
-Models cover ecosystems, NPC behaviour, circuits and factory automation. The
+Ecosystems are the first domain; NPCs and automation remain deferred. The
 intended workflow is to author a model once in Smalltalk, run it entirely in
 GemStone or GT, then move the same supported model to a configured external
 backend through one GT action. Repast HPC is the first distributed feasibility
@@ -91,6 +93,9 @@ preserves uncertain external batches and exposes accepted reads and retry receip
 The [P3 qualification](conformance/P3-Runtime.md) covers 52 GT tests, 43 native
 portable tests, managed Runtime routing/restarts/rollback, real two-session write
 conflicts and return of the actual P2 Repast checkpoint through the service.
+The [live Repast integration](conformance/Live-Repast.md) adds Runtime-owned
+native launches, paused restore validation, result acceptance and recovery of a
+lost reply. Client reads continue through the same named Simulation service.
 
 Core loads without Runtime, GT UI or ecosystem dependencies. Load Metacello
 baseline `CatalystSimulator` from this repository's `src`, group `Core` (default),

@@ -1,0 +1,15 @@
+{
+  "artifacts.zip": "8c5d4bf9cb5160706b3146c5742c6906fc3af7d7f6985fd37a8ff80bd7e6a7a9",
+  "gt-mcp-gate.json": "0b625de13e5aad5f8a12df7cbdc9c533d36d9fe4d0f956a466c407d73117c890",
+  "gt.json": "776998de389ff450968d2aa7b0265b09998d87072cddbecccc9537c2e11411cd",
+  "native-tests.json": "0e5a87b49214b1b2f49a55deeb48bc16c5eb7eba1959d42a06201a3a2edc3f27",
+  "qualification.json": "2e10cabbdf65c3efd88b708d5433013d5fed6727531843e94c31b0f174844a73",
+  "scheduled-artifacts.zip": "f544dff78390528c71a52e7c42e374cc3b02db32e7af3b164822e3e1bfec9ef6",
+  "scheduled-mcp-gate.json": "6f24fc2ddf4c6ef42c981c45a2d7c1ff6b12fff1f2362c6c53e5a903faeda517",
+  "scheduled.json": "64f270c7d220e9c901e809f9b3fbc71faf8a9161b25de5098b9232998b9fecbf",
+  "source-gt.json": "631311cf6dacf1f8cc13cb3cc9b47b190e1216d961a2071046b0d3dc2cf43d6b",
+  "source-mcp-gate.json": "7dfe309fc10fbfc616b9ffc1fb6a18650dbdd023577de1471401e598af75737a",
+  "source-native.json": "f7dffe65801a4fd88de49a2b0e91dcd8225d65c3250633ff5e3b716e6b0dedaa",
+  "source-sha256.json": "d80dd2478b0cfc14aab7857037ec1fcacd80fd1c866627e48223bc56e46236fe",
+  "transport-tests.json": "6a7c69d07cac5d45ff8aff22dde437d7c1c0b74ef2b3172aa4c4c77b764f8451"
+}
