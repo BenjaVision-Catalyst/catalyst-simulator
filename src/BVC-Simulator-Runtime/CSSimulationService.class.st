@@ -32,26 +32,25 @@ CSSimulationService >> assertAuthoritative [
  ifFalse: [CRCapabilityDeniedException signal: 'Current authoritative Simulation service required']
 ]
 
-{ #category : 'simulation runtime' }
+{ #category : 'sharded runtime' }
 CSSimulationService >> authorize: principal operation: kind [
  | permitted |
  CSAuthorityChecks text: principal.
- permitted := (#('dispatch' 'result') includes: kind)
-  ifTrue: [principal = configuration executorPrincipal]
-  ifFalse: [(#('view' 'checkpoint' 'changes' 'outcome' 'recovery') includes: kind)
-   ifTrue: [principal = configuration controlPrincipal or: [principal = configuration executorPrincipal]]
-   ifFalse: [principal = configuration controlPrincipal]].
+ permitted := (#('dispatch' 'result' 'stage') includes: kind) ifTrue: [principal = configuration executorPrincipal]
+ ifFalse: [(#('view' 'checkpoint' 'changes' 'outcome' 'recovery' 'projection' 'projectionChanges' 'manifest') includes: kind)
+  ifTrue: [principal = configuration controlPrincipal or: [principal = configuration executorPrincipal]]
+  ifFalse: [principal = configuration controlPrincipal]].
  permitted ifFalse: [CRCapabilityDeniedException signal: 'Simulation principal is not authorized for this operation']
 ]
 
-{ #category : 'repast integration' }
+{ #category : 'sharded runtime' }
 CSSimulationService >> driveIn: context [
  | repository |
  self assertAuthoritative.
  (port verifiesExecution: context) ifFalse: [CRCapabilityDeniedException signal: 'Runtime-owned Simulation progress required'].
  repository := CSSimulationRepository named: configuration repositoryName. repository ifNil: [^ 0].
  repository views do: [:view | | tick key prior transition |
-  tick := (view at: 'checkpoint') at: 'tick'. key := (view at: 'world'), '/', (view at: 'group').
+  tick := view at: 'tick' ifAbsent: [(view at: 'checkpoint') at: 'tick']. key := (view at: 'world'), '/', (view at: 'group').
   prior := drivePending at: key ifAbsent: [nil].
   (prior notNil and: [prior ~= (view at: 'revision')]) ifTrue: [drivePending removeKey: key. prior := nil].
   prior isNil ifTrue: [
@@ -64,7 +63,7 @@ CSSimulationService >> driveIn: context [
  ^ drivePending size
 ]
 
-{ #category : 'repast integration' }
+{ #category : 'sharded runtime' }
 CSSimulationService >> enqueueTransition: transition view: view [
  | request envelope kind |
  kind := transition at: 'kind'.
@@ -73,12 +72,12 @@ CSSimulationService >> enqueueTransition: transition view: view [
   at: 'generation' put: (view at: 'generation'); at: 'owner' put: (view at: 'owner');
   at: 'id' put: 'repast-', (view at: 'generation') printString, '-', (view at: 'revision') printString;
   at: 'payload' put: (Dictionary new at: 'kind' put: kind; at: 'value' put: (transition at: 'payload'); at: 'policyDigest' put: configuration repastPolicyDigest; yourself); yourself.
- envelope := (CSScheduledSimulationTransitionWorkUnit request: request principal: ((#('dispatch' 'result') includes: kind) ifTrue: [configuration executorPrincipal] ifFalse: [configuration controlPrincipal])) asEnvelope serviceIdentifier: port serviceIdentifier; yourself.
+ envelope := (CSScheduledSimulationTransitionWorkUnit request: request principal: ((#('dispatch' 'result' 'stage') includes: kind) ifTrue: [configuration executorPrincipal] ifFalse: [configuration controlPrincipal])) asEnvelope serviceIdentifier: port serviceIdentifier; yourself.
  envelope address: (CRWorkUnitAddress hostIdentifier: identity hostIdentifier workerIdentifier: identity workerIdentifier).
  routing enqueue: envelope
 ]
 
-{ #category : 'repast integration' }
+{ #category : 'sharded runtime' }
 CSSimulationService >> execute: kind request: supplied principal: principal [
  | request repository group actualKind wrapper |
  self assertAuthoritative.
@@ -88,17 +87,19 @@ CSSimulationService >> execute: kind request: supplied principal: principal [
   CSAuthorityChecks keys: wrapper exactly: #('kind' 'value' 'policyDigest').
   CSAuthorityChecks require: (wrapper at: 'policyDigest') = configuration repastPolicyDigest code: 'obsolete-repast-policy'.
   actualKind := wrapper at: 'kind'.
-  CSAuthorityChecks require: (#('advance' 'prepare' 'dispatch' 'result' 'activate' 'reconcile') includes: actualKind) code: 'invalid-scheduled-transition'.
+  CSAuthorityChecks require: (#('advance' 'prepare' 'dispatch' 'result' 'activate' 'reconcile' 'stage') includes: actualKind) code: 'invalid-scheduled-transition'.
   request at: 'payload' put: (wrapper at: 'value').
   (#('advance' 'prepare') includes: actualKind) ifTrue: [CSAuthorityChecks require: ((request at: 'payload') at: 'targetTick') <= configuration driveThroughTick code: 'drive-target-changed']].
  self authorize: principal operation: actualKind.
- actualKind = 'create' ifTrue: [
+ (#('create' 'createSharded' 'upload') includes: actualKind) ifTrue: [
   repository := CSSimulationRepository ensureNamed: configuration repositoryName maximumGroups: configuration maximumGroups retention: configuration journalLimit.
+  actualKind = 'upload' ifTrue: [^ repository upload: request].
+  actualKind = 'createSharded' ifTrue: [^ repository createSharded: request principal: principal].
   ^ repository create: request principal: principal].
  repository := CSSimulationRepository named: configuration repositoryName.
  repository ifNil: [CSAuthorityError signal: 'unknown-repository'].
  group := repository groupFor: request.
- (#('view' 'checkpoint' 'changes' 'outcome' 'recovery') includes: actualKind) ifTrue: [^ self query: actualKind request: request group: group].
+ (#('view' 'checkpoint' 'changes' 'outcome' 'recovery' 'projection' 'projectionChanges' 'manifest') includes: actualKind) ifTrue: [^ self query: actualKind request: request group: group].
  kind = 'scheduledAdvance' ifTrue: [
   CSAuthorityChecks keys: (request at: 'payload') exactly: #('targetTick' 'policyDigest').
   CSAuthorityChecks require: ((request at: 'payload') at: 'policyDigest') = configuration drivePolicyDigest code: 'obsolete-drive-policy'.
@@ -107,28 +108,38 @@ CSSimulationService >> execute: kind request: supplied principal: principal [
  ^ group apply: actualKind request: request principal: principal maxSteps: configuration maximumSteps
 ]
 
-{ #category : 'simulation runtime' }
+{ #category : 'sharded runtime' }
 CSSimulationService >> query: kind request: request group: group [
- | view minimum |
+ | view minimum argument revision result |
  CSAuthorityChecks keys: request exactly: #('world' 'group' 'minimumRevision' 'argument').
  minimum := request at: 'minimumRevision'. CSKernelMath nonnegative: minimum.
- view := group view.
+ view := group view. argument := request at: 'argument'.
  CSAuthorityChecks require: (view at: 'revision') >= minimum code: 'read-view-unavailable'.
- (#('view' 'checkpoint') includes: kind) ifTrue: [CSAuthorityChecks require: (request at: 'argument') isNil code: 'invalid-query'. ^ view].
- kind = 'outcome' ifTrue: [^ group receiptAt: (request at: 'argument')].
- kind = 'changes' ifTrue: [^ group changesAfter: (request at: 'argument')].
- CSAuthorityChecks require: (request at: 'argument') isNil code: 'invalid-query'.
+ (#('view' 'checkpoint') includes: kind) ifTrue: [CSAuthorityChecks require: argument isNil code: 'invalid-query'. ^ view].
+ kind = 'outcome' ifTrue: [^ group receiptAt: argument].
+ kind = 'changes' ifTrue: [^ group changesAfter: argument].
+ (#('projection' 'projectionChanges' 'manifest') includes: kind) ifTrue: [
+  CSAuthorityChecks require: (group isKindOf: CSShardedExecutionGroup) code: 'sharded-profile-required'.
+  kind = 'projection' ifTrue: [^ group projection: argument].
+  kind = 'projectionChanges' ifTrue: [^ group projectionChangesAfter: argument].
+  CSAuthorityChecks keys: argument exactly: #('root').
+  revision := group retainedRoot: (argument at: 'root').
+  result := group artifacts objectAt: (argument at: 'root').
+  ^ Dictionary new at: 'root' put: (argument at: 'root'); at: 'revision' put: revision; at: 'manifest' put: result; yourself].
+ CSAuthorityChecks require: argument isNil code: 'invalid-query'.
  ^ group recoveryPlan
 ]
 
-{ #category : 'resident Repast' }
+{ #category : 'sharded runtime' }
 CSSimulationService >> start [
  (configuration isKindOf: CSSimulationConfiguration) ifFalse: [CSAuthorityError signal: 'simulation-configuration-required'].
  super start.
- port := self capability: CRServiceActivationCapability.
- routing := self capability: CRRoutingCapability. identity := self capability: CRWorkerIdentityCapability.
+ port := self capability: CRServiceActivationCapability. routing := self capability: CRRoutingCapability. identity := self capability: CRWorkerIdentityCapability.
  drivePending := Dictionary new. externalDriver := nil.
- configuration repastEnabled ifTrue: [externalDriver := (configuration repastMode = 'resident' ifTrue: [CSRepastResidentDriver new] ifFalse: [CSRepastBatchDriver new]) configuration: configuration transport: CSGemStoneRepastTransport new; yourself].
+ configuration repastEnabled ifTrue: [
+  externalDriver := (configuration repastMode = 'sharded'
+   ifTrue: [CSShardedRepastDriver new configuration: configuration transport: CSGemStoneArtifactTransport new]
+   ifFalse: [(configuration repastMode = 'resident' ifTrue: [CSRepastResidentDriver new] ifFalse: [CSRepastBatchDriver new]) configuration: configuration transport: CSGemStoneRepastTransport new]) yourself].
  port activateRecords: 4 bytes: 262144.
  self provideCapability: CSSimulationCapability instance: (CSSimulationCapability service: self).
  (configuration driveThroughTick > 0 or: [configuration repastEnabled]) ifTrue: [driveSchedule := port scheduleProgress: CSSimulationDriveWork new key: #simulationDrive idleIntervalMillis: configuration driveIntervalMillis].

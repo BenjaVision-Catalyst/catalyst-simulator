@@ -4,22 +4,26 @@
 // One compiled graph and SharedContext per placement incarnation. Only command
 // boundaries gather a full checkpoint. Private candidates require acceptance
 // acknowledgment before a subsequent advance. The supervisor fsyncs receipts.
-inline void runResident(mpi::communicator& world,Probe& probe,const std::string& directory){
+inline void runResident(mpi::communicator& world,Probe& probe,const std::string& directory,const std::string& objects=""){
+ bool sharded=!objects.empty();
  std::string sessionBytes;if(world.rank()==0)sessionBytes=readFile(directory+"/session.canon");
  mpi::broadcast(world,sessionBytes,0);Value session=decode(sessionBytes);
  require(session.kind==Value::Map&&session.map.size()==7&&session.at("version").integer()==1,"Resident session schema");
  for(auto key:{"world","group","owner","incarnation"})require(identifier(session.at(key).text()),"Resident identity");
  require(session.at("generation").integer()>0&&session.at("modelDigest").text().size()==64,"Resident placement");
  std::vector<int> processIds;mpi::all_gather(world,int(getpid()),processIds);Value pids=Value::list();for(int pid:processIds)pids.array.emplace_back(pid);
- std::string bytes=probe.checkpoint(),checkpointDigest;if(world.rank()==0)checkpointDigest=sha256(bytes);
- if(world.rank()==0)require(decode(bytes).at("modelDigest")==session.at("modelDigest"),"Resident model binding");
+ std::string bytes=sharded?"":probe.checkpoint(),checkpointDigest;
+ if(sharded)checkpointDigest=probe.shardedCheckpoint(objects);else if(world.rank()==0)checkpointDigest=sha256(bytes);
+ if(world.rank()==0)require((sharded?CasStore(objects).get(checkpointDigest):decode(bytes)).at("modelDigest")==session.at("modelDigest"),"Resident model binding");
  mpi::broadcast(world,checkpointDigest,0);bool awaiting=false;int number=0;Integer acceptedRevision=0;unsigned long advanced=0;
  auto reply=[&](const std::string& state){
-  if(world.rank()==0)publish(directory+"/reply.canon",encode(Value::dict({{"version",Value(1)},{"session",session},{"number",Value(number)},
+  if(world.rank()==0){auto response=Value::dict({{"version",Value(1)},{"session",session},{"number",Value(number)},
    {"state",Value(state)},{"tick",Value(probe.tick())},{"checkpointDigest",Value(checkpointDigest)},{"awaitingAcceptance",Value(awaiting)},
-   {"pids",pids},{"snapshots",Value(Integer(probe.snapshotCount()))},{"graphCompilations",Value(1)},{"restores",Value(1)},{"advancedTicks",Value(Integer(advanced))}})));
+   {"pids",pids},{"snapshots",Value(Integer(probe.snapshotCount()))},{"graphCompilations",Value(1)},{"restores",Value(1)},{"advancedTicks",Value(Integer(advanced))}});
+   if(sharded){response.map["profile"]="checkpoint-1";response.map["shardedSnapshots"]=Value(Integer(probe.shardedSnapshotCount()));response.map["rootEntityRowsGathered"]=Value(0);}
+   publish(directory+"/reply.canon",encode(response));}
  };
- if(world.rank()==0)publish(directory+"/candidate.canon",bytes);reply("ready");
+ if(world.rank()==0)publish(directory+(sharded?"/candidate-root":"/candidate.canon"),sharded?checkpointDigest:bytes);reply("ready");
  while(true){
   std::string command;
   if(world.rank()==0){
@@ -48,7 +52,8 @@ inline void runResident(mpi::communicator& world,Probe& probe,const std::string&
   auto target=request.at("targetTick").integer();require(target>probe.tick()&&target-probe.tick()<=64,"Resident advance budget");
   require(request.at("batch").text()==request.at("inputDigest").text()&&request.at("batch").text().size()==64,"Resident batch identity");
   while(probe.tick()<target){probe.advance();++advanced;}
-  bytes=probe.checkpoint();if(world.rank()==0){checkpointDigest=sha256(bytes);publish(directory+"/candidate.canon",bytes);}
+  if(sharded){checkpointDigest=probe.shardedCheckpoint(objects);if(world.rank()==0)publish(directory+"/candidate-root",checkpointDigest);}
+  else{bytes=probe.checkpoint();if(world.rank()==0){checkpointDigest=sha256(bytes);publish(directory+"/candidate.canon",bytes);}}
   mpi::broadcast(world,checkpointDigest,0);awaiting=true;reply("candidate");
  }
 }

@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'groups',
 		'maximumGroups',
-		'journalLimit'
+		'journalLimit',
+		'imports'
 	],
 	#classVars : [
 		'Repositories'
@@ -51,6 +52,18 @@ CSSimulationRepository >> create: request principal: principal [
  ^ created receiptAt: 1
 ]
 
+{ #category : 'sharded authority' }
+CSSimulationRepository >> createSharded: request principal: principal [
+ | key store existing created |
+ key := self keyFor: request. existing := groups at: key ifAbsent: [nil].
+ existing ifNotNil: [^ existing apply: 'createSharded' request: request principal: principal maxSteps: 1].
+ CSAuthorityChecks require: groups size < maximumGroups code: 'group-capacity'.
+ store := imports ifNil: [CSAuthorityError signal: 'import-unavailable'] ifNotNil: [imports at: key ifAbsent: [CSAuthorityError signal: 'import-unavailable']].
+ created := CSShardedExecutionGroup create: request principal: principal retention: journalLimit artifacts: store.
+ groups at: key put: created. imports removeKey: key.
+ ^ created receiptAt: 1
+]
+
 { #category : 'simulation authority' }
 CSSimulationRepository >> groupFor: request [
  ^ groups at: (self keyFor: request) ifAbsent: [CSAuthorityError signal: 'unknown-group']
@@ -75,6 +88,18 @@ CSSimulationRepository >> keyFor: request [
 { #category : 'simulation authority' }
 CSSimulationRepository >> maximumGroups [
  ^ maximumGroups
+]
+
+{ #category : 'sharded authority' }
+CSSimulationRepository >> upload: request [
+ | key store |
+ CSAuthorityChecks keys: request exactly: #('world' 'group' 'objects').
+ key := self keyFor: request.
+ CSAuthorityChecks require: (groups includesKey: key) not code: 'use-fenced-stage-for-existing-group'.
+ imports ifNil: [imports := Dictionary new].
+ CSAuthorityChecks require: ((imports includesKey: key) or: [imports size + groups size < maximumGroups]) code: 'group-capacity'.
+ store := imports at: key ifAbsentPut: [CSArtifactStore new].
+ ^ store upload: (request at: 'objects')
 ]
 
 { #category : 'simulation authority' }

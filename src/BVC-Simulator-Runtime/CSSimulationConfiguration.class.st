@@ -268,14 +268,14 @@ CSSimulationConfiguration >> repositoryName: value [
  repositoryName := value
 ]
 
-{ #category : 'resident Repast' }
+{ #category : 'sharded runtime' }
 CSSimulationConfiguration >> validateRepastOn: result [
  | paths |
  paths := {self repastLauncher. self repastExecutable. self repastMpi. self repastDirectory}.
  [(paths allSatisfy: [:path | path isEmpty]) ifFalse: [
   CSAuthorityChecks require: (paths allSatisfy: [:path | path isString and: [path notEmpty and: [path first = $/]]]) code: 'absolute-repast-paths-required'].
  CSAuthorityChecks require: (#(1 2 4) includes: self repastRanks) code: 'unqualified-repast-ranks'.
- CSAuthorityChecks require: (#('batch' 'resident') includes: self repastMode) code: 'unknown-repast-mode']
+ CSAuthorityChecks require: (#('batch' 'resident' 'sharded') includes: self repastMode) code: 'unknown-repast-mode']
  on: CSKernelError do: [:error | result addError: error messageText]
 ]
 

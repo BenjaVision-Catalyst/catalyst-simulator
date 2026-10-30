@@ -8,8 +8,9 @@ GemStone. The P2 Repast adapter passes native macOS feasibility, and the P3 Runt
 service now provides accepted revisions, placement fencing and GemStone recovery.
 The live native batch and resident adapters connect Runtime to Repast and query
 durable receipts across restarts. Resident ranks retain graphs and agents between
-accepted windows. Population-scale accepted projections and a GT placement action
-remain later gates.
+accepted windows. The optional sharded mode publishes accepted roots and bounded
+projection pages, reusing unchanged checkpoint/projection objects. A GT placement
+action and production population benchmarks remain later gates.
 
 Ecosystems are the first domain; NPCs and automation remain deferred. The
 intended workflow is to author a model once in Smalltalk, run it entirely in
@@ -32,6 +33,15 @@ and rendering mechanisms. See [component boundaries](docs/Component-Boundaries.m
 for the provider contract and acceptance checks.
 
 ## Runtime remains the client endpoint
+
+The [sharded checkpoint and projection qualification](conformance/Sharded-Projections.md)
+records Runtime-owned GemStone → Repast → GemStone switching and recovery on
+1/2/4 native macOS ranks, including a 4,096-entity checkpoint above the old
+whole-state transport limit. Select `repastMode: 'sharded'` for the
+[`checkpoint-1`](contracts/checkpoint-1/README.md) and
+[`projection-1`](contracts/projection-1/README.md) contracts. The existing graph
+capacity and local materialization limits remain; this is not a 100,000-entity
+qualification.
 
 Clients always use the Simulation service hosted by CatalystRuntime through
 CatalystConnect. Selecting an external simulator changes execution placement;
@@ -148,7 +158,7 @@ MCP before any adoption into these repositories.
 The workspace contains the
 [design reference](https://github.com/BenjaVisionPro/catalyst-workspace/blob/main/Simulation/Catalyst-Simulation-Design-Reference.md)
 and [implementation plan](https://github.com/BenjaVisionPro/catalyst-workspace/blob/main/Simulation/Catalyst-Simulation-Implementation-Plan.md).
-The plan defines the native kernel, ecosystem/NPC/automation vertical slices,
+The plan defines the native kernel, the ecosystem slice, deferred NPC/automation work,
 early Repast round-trip test, Runtime read integration and one-click migration.
 
 The [UE projection research](https://github.com/BenjaVisionPro/catalyst-workspace/blob/main/Simulation/UE-Projection-Research-and-Design.md)

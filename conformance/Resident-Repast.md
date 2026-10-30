@@ -1,5 +1,9 @@
 # Resident Repast backend
 
+The subsequent optional [sharded checkpoint/projection profile](Sharded-Projections.md)
+removes this mode's whole-checkpoint transport and acceptance limits. This record
+continues to describe and qualify the retained full-checkpoint resident mode.
+
 The resident adapter retains a compiled portable model graph and Repast
 `SharedContext` across accepted execution windows. Runtime still serves client
 requests and GemStone still owns accepted revisions, checkpoints and placement

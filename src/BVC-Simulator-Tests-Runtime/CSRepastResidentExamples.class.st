@@ -72,3 +72,31 @@ CSRepastResidentExamples >> testPreparedNeverLaunchesResidentIO [
  transition := driver nextFor: group view.
  self assert: (transition at: 'kind') equals: 'dispatch'. self assert: transport requests isEmpty
 ]
+
+{ #category : 'GT fixture export' }
+CSRepastResidentExamples >> writeShardedFixturesTo: directory [
+ "GT reference export; writes only conformance data, never class source."
+ | records helper |
+ records := OrderedCollection new. helper := CSArtifactExamples new.
+ {#('conditional' 2). #('sparse' 4096)} do: [:description | | snapshot backend store root initial initialObjects roots sizes path file catalog flatBytes |
+  snapshot := description first = 'conditional' ifTrue: [helper snapshot] ifFalse: [helper sparseSnapshot: description second].
+  flatBytes := (CSCanonicalCodec encode: snapshot) size.
+  backend := CSSmalltalkBackend fromCheckpoint: (CSCanonicalCodec encode: snapshot).
+  store := CSArtifactStore new. root := store checkpoint: snapshot.
+  store validateCheckpoint: root base: nil.
+  initial := root. initialObjects := store objects: (store closure: root) asArray sorted.
+  roots := Dictionary new at: '0' put: root; yourself.
+  1 to: 12 do: [:tick | backend advance. root := store checkpoint: backend snapshot. roots at: tick printString put: root].
+  path := directory, '/', description first.
+  path asFileReference ensureCreateDirectory.
+  CRPlatform current writeConnectEvidence: initialObjects to: path, '/initial-objects.json'.
+  1 to: initialObjects size by: 8 do: [:start |
+   CRPlatform current writeConnectEvidence: (initialObjects copyFrom: start to: ((start + 7) min: initialObjects size))
+    to: path, '/upload-', ((start - 1) // 8 + 1) printString, '.json'].
+  catalog := Dictionary new at: 'name' put: description first; at: 'entities' put: description second; at: 'initialRoot' put: initial;
+   at: 'modelDigest' put: (snapshot at: 'modelDigest'); at: 'roots' put: roots; at: 'flatBytes' put: flatBytes;
+   at: 'initialObjects' put: initialObjects size; at: 'uploadBatches' put: ((initialObjects size + 7) // 8); yourself.
+  records add: catalog].
+ CRPlatform current writeConnectEvidence: records asArray to: directory, '/fixtures.json'.
+ ^ records asArray
+]

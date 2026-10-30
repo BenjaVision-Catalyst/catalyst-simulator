@@ -1,4 +1,5 @@
 #include "graph.hpp"
+#include "cas.hpp"
 #include <repast_hpc/RepastProcess.h>
 #include <repast_hpc/SharedContext.h>
 #include <repast_hpc/Schedule.h>
@@ -28,7 +29,7 @@ struct Exchange {
 class Probe {
  mpi::communicator& world;repast::SharedContext<Agent> context;Exchange exchange;
  Value accepted,model;std::vector<Value> plan;std::map<std::string,Value> byId;
- std::string output;int layout,holdTick;bool resident;unsigned long migrations=0,remoteRequests=0,snapshots=0;
+ std::string output;int layout,holdTick;bool resident,sharded;unsigned long migrations=0,remoteRequests=0,snapshots=0,shardedSnapshots=0;
  int owner(const Value& row)const{Integer r=(floorDiv(row.at(1).at(0).integer(),Integer(1))+layout)%world.size();if(r<0)r+=world.size();return r.convert_to<int>();}
  Value rows()const{Value out=Value::dict();for(auto it=context.localBegin();it!=context.localEnd();++it)out.map[(*it)->row.at(0).text()]=(*it)->row;return out;}
  void consensus(const std::string& error){int count=0;mpi::all_reduce(world,error.empty()?0:1,count,std::plus<int>());if(count){std::vector<std::string> errors;mpi::all_gather(world,error,errors);for(auto& e:errors)if(!e.empty())throw std::runtime_error(e);}}
@@ -61,7 +62,7 @@ class Probe {
   }
   require(state.at("outcomes").kind==Value::Array&&state.at("outcomes").array.size()<=model.at(3).integer(),"Outcome bound");
   for(auto& o:state.at("outcomes").array){require(o.kind==Value::Array&&o.array.size()==4&&o.at(0)==state.at("tick"),"Outcome time/shape");nonnegative(o.at(3).integer());require(state.at("resources").map.count(o.at(1).text()),"Outcome resource");if(full)require(state.at("entities").map.count(o.at(2).text()),"Outcome entity");}
-  encode(state);
+  if(!sharded)encode(state);else for(auto& kv:state.at("entities").map)encode(kv.second);
  }
  Value valueNode(const Value& n,const std::vector<Value>& in,const Value& read,const std::string& id){
   auto op=nodeText(n,"operation");const auto& p=n.at("parameters");
@@ -101,13 +102,31 @@ class Probe {
  }
 public:
  Probe(mpi::communicator& comm,const std::string& checkpoint,const std::string& bundle,const std::string& directory,int offset,int hold,bool staysResident=false):
-  world(comm),context(&comm),exchange{context},accepted(decode(checkpoint)),model(decode(bundle)),output(directory),layout(offset),holdTick(hold),resident(staysResident){
-  plan=compileGraph(model);for(auto& n:plan)byId[nodeText(n,"id")]=n;validate(accepted,true);
-  int ordinal=0;for(auto& kv:accepted.at("entities").map){int rank=owner(kv.second);if(rank==world.rank())context.addAgent(new Agent(repast::AgentId(ordinal,0,0,rank),kv.second));++ordinal;}
+  Probe(comm,decode(checkpoint),decode(bundle),directory,offset,hold,staysResident,false){}
+ Probe(mpi::communicator& comm,const Value& checkpoint,const Value& bundle,const std::string& directory,int offset,int hold,bool staysResident,bool isSharded):
+  world(comm),context(&comm),exchange{context},accepted(checkpoint),model(bundle),output(directory),layout(offset),holdTick(hold),resident(staysResident),sharded(isSharded){
+  plan=compileGraph(model);for(auto& n:plan)byId[nodeText(n,"id")]=n;validate(accepted,!sharded);
+  int ordinal=0;for(auto& kv:accepted.at("entities").map){int rank=owner(kv.second);if(rank==world.rank())context.addAgent(new Agent(repast::AgentId(ordinal,sharded?world.rank():0,0,rank),kv.second));++ordinal;}
   accepted.at("entities")=rows();if(world.rank()==0)std::filesystem::create_directories(output);if(!resident)writeAccepted();
  }
  Integer tick()const{return accepted.at("tick").integer();}
  unsigned long snapshotCount()const{return snapshots;}
+ unsigned long shardedSnapshotCount()const{return shardedSnapshots;}
+ std::string shardedCheckpoint(const std::string& directory){
+  ++shardedSnapshots;CasStore store(directory);
+  std::vector<std::vector<std::string>> send(world.size()),receive;
+  for(auto it=context.localBegin();it!=context.localEnd();++it){auto& row=(*it)->row;auto id=row.at(0).text();send[std::stoi(id.substr(30),nullptr,16)%world.size()].push_back(encode(row));}
+  mpi::all_to_all(world,send,receive);std::map<std::string,Value> grouped;
+  for(auto& shard:receive)for(auto& bytes:shard){auto row=decode(bytes);auto id=row.at(0).text(),bucket=id.substr(30);auto found=grouped.find(bucket);if(found==grouped.end())found=grouped.emplace(bucket,Value::dict()).first;require(found->second.map.emplace(id,row).second,"Duplicate checkpoint entity");}
+  Value local=Value::list({Value::dict(),Value::dict()});
+  collectively([&]{for(auto& kv:grouped){local.at(0).map[kv.first]=store.rows(kv.second,kv.first,false);Value projection=Value::dict();for(auto& e:kv.second.map)projection.map[e.first]=Value::list({e.second.at(0),e.second.at(1),e.second.at(2),e.second.at(5)});local.at(1).map[kv.first]=store.rows(projection,kv.first,true);}});
+  std::vector<std::string> descriptors;mpi::gather(world,encode(local),descriptors,0);std::string root;
+  unsigned long count=rows().map.size(),total=0;mpi::reduce(world,count,total,std::plus<unsigned long>(),0);
+  collectively([&]{if(world.rank()!=0)return;Value entities=Value::dict(),projection=Value::dict();for(auto& raw:descriptors){auto descriptor=decode(raw);for(auto& kv:descriptor.at(0).map)require(entities.map.emplace(kv).second,"Duplicate checkpoint bucket");for(auto& kv:descriptor.at(1).map)require(projection.map.emplace(kv).second,"Duplicate projection bucket");}
+   root=store.put(Value::dict({{"kind","checkpoint"},{"version",Value(1)},{"model",store.value(model)},{"modelDigest",accepted.at("modelDigest")},{"tick",accepted.at("tick")},{"seed",accepted.at("seed")},
+    {"entities",store.index(entities)},{"projection",store.index(projection)},{"entityCount",Value(Integer(total))},{"resources",store.value(accepted.at("resources"))},{"events",store.value(accepted.at("events"))},{"outcomes",store.value(accepted.at("outcomes"))}}));});
+  mpi::broadcast(world,root,0);return root;
+ }
  std::string checkpoint(){
   ++snapshots;std::string bytes;
   std::vector<std::string> shards;mpi::gather(world,encode(rows()),shards,0);
@@ -147,19 +166,34 @@ public:
  }
 };
 #include "resident.hpp"
+Value restoreSharded(mpi::communicator& world,const std::string& directory,const std::string& root,int layout){
+ CasStore store(directory);auto manifest=store.get(root);require(manifest.at("kind").text()=="checkpoint"&&manifest.at("version").integer()==1,"Sharded checkpoint manifest");
+ Value state=Value::dict({{"version",Value(2)},{"model",store.readValue(manifest.at("model").text())},{"modelDigest",manifest.at("modelDigest")},{"tick",manifest.at("tick")},{"seed",manifest.at("seed")},
+  {"entities",Value::dict()},{"resources",store.readValue(manifest.at("resources").text())},{"events",store.readValue(manifest.at("events").text())},{"outcomes",store.readValue(manifest.at("outcomes").text())}});
+ std::vector<std::vector<std::string>> send(world.size()),receive;
+ for(auto& bucket:store.readIndex(manifest.at("entities").text()).map)if(std::stoi(bucket.first,nullptr,16)%world.size()==world.rank()){
+  for(auto& kv:store.readRows(bucket.second.text()).map){auto& row=kv.second;Integer rank=(floorDiv(row.at(1).at(0).integer(),Integer(1))+layout)%world.size();if(rank<0)rank+=world.size();send[rank.convert_to<int>()].push_back(encode(row));}}
+ mpi::all_to_all(world,send,receive);
+ for(auto& shard:receive)for(auto& raw:shard){auto row=decode(raw);require(state.at("entities").map.emplace(row.at(0).text(),row).second,"Duplicate restored entity");}
+ unsigned long count=state.at("entities").map.size(),total=0;mpi::all_reduce(world,count,total,std::plus<unsigned long>());
+ require(Integer(total)==manifest.at("entityCount").integer()&&Integer(total)<=state.at("model").at(3).integer(),"Restored entity count");return state;
+}
 int main(int argc,char** argv){
  mpi::environment env(argc,argv);mpi::communicator world;
  try{
   std::map<std::string,std::string> opt;for(int i=1;i<argc;i+=2){require(i+1<argc,"Option value required");opt[argv[i]]=argv[i+1];}
+  bool sharded=opt.count("--profile");if(sharded)require(opt.at("--profile")=="checkpoint-1"&&opt.count("--resident"),"Checkpoint profile requires resident execution");
   std::string catalog,bundle,input;
-  if(world.rank()==0){catalog=readFile(opt.at("--registry"));bundle=readFile(opt.at("--model"));if(!opt.count("--validate-only"))input=readFile(opt.at("--input"));}
+  if(world.rank()==0){catalog=readFile(opt.at("--registry"));if(sharded){CasStore store(opt.at("--objects"));bundle=encode(store.readValue(store.get(opt.at("--root")).at("model").text()));}
+   else{bundle=readFile(opt.at("--model"));if(!opt.count("--validate-only"))input=readFile(opt.at("--input"));}}
   mpi::broadcast(world,catalog,0);mpi::broadcast(world,bundle,0);mpi::broadcast(world,input,0);
   require(sha256("CatalystSimulation-Registry-1:"+catalog)=="710502049ac1f485589d81eb27482360017ed9d048afb0452694792bf23fc367","Unqualified operation catalog");
   registry=decode(catalog);if(opt.count("--disable-operation"))registry.map.erase(opt.at("--disable-operation"));
   if(opt.count("--validate-only")){compileGraph(decode(bundle));return 0;}
   bool resident=opt.count("--resident");int steps=resident?0:std::stoi(opt.at("--steps"));require(steps>=0&&steps<=1000,"Step budget");
   repast::RepastProcess::init("",&world);
-  {Probe probe(world,input,bundle,opt.at("--output"),opt.count("--layout")?std::stoi(opt.at("--layout")):0,opt.count("--hold-tick")?std::stoi(opt.at("--hold-tick")):-1,resident);
+  if(sharded){int layout=opt.count("--layout")?std::stoi(opt.at("--layout")):0;Probe probe(world,restoreSharded(world,opt.at("--objects"),opt.at("--root"),layout),decode(bundle),opt.at("--output"),layout,-1,true,true);runResident(world,probe,opt.at("--resident"),opt.at("--objects"));probe.finish();}
+  else{Probe probe(world,input,bundle,opt.at("--output"),opt.count("--layout")?std::stoi(opt.at("--layout")):0,opt.count("--hold-tick")?std::stoi(opt.at("--hold-tick")):-1,resident);
    if(resident)runResident(world,probe,opt.at("--resident"));
    if(steps){auto& runner=repast::RepastProcess::instance()->getScheduleRunner();runner.scheduleEvent(1,1,repast::Schedule::FunctorPtr(new repast::MethodFunctor<Probe>(&probe,&Probe::advance)));runner.scheduleStop(steps+0.5);runner.run();}
    probe.finish();}

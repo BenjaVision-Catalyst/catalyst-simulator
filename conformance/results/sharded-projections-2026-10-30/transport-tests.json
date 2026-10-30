@@ -1,0 +1,17 @@
+{
+  "passed": 31,
+  "suites": [
+    {
+      "script": "scripts/test-sharded.py",
+      "passed": 12
+    },
+    {
+      "script": "scripts/test-repast-resident.py",
+      "passed": 12
+    },
+    {
+      "script": "scripts/test-repast-batch.py",
+      "passed": 7
+    }
+  ]
+}

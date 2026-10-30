@@ -1,0 +1,14 @@
+{
+  "platform": "native macOS arm64",
+  "docker": false,
+  "repastCommit": "a96c15f99589d15352523a0a710362af8997852a",
+  "executableDigest": "a595806764f487e4b21d34dba2bcb4609d9135864276c34dc61e885be4ce9edc",
+  "valueTestsDigest": "38066a84b9d88dfc6dbef03a34582bae14603d8ec04aa9208061e02da36f1b3e",
+  "compiler": "Apple clang version 21.0.0 (clang-2100.1.1.101)\nTarget: arm64-apple-darwin25.6.0\nThread model: posix\nInstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin",
+  "mpi": "mpirun (Open MPI) 5.0.11\n\nReport bugs to https://www.open-mpi.org/community/help/",
+  "os": "ProductName:\t\tmacOS\nProductVersion:\t\t26.6.1\nBuildVersion:\t\t25G76",
+  "machine": "arm64",
+  "buildCommand": "cmake --build /private/tmp/catalyst-repast-build -j6",
+  "provenance": "Same pinned native installation as repast-p2-macos-2026-10-30; application rebuilt for sharded mode. Unit target rebuilt subsequently; application binary unchanged.",
+  "cmakeCacheDigest": "01968b96506d5be4a1bba26e51221acae5d0a00b7d4c9111f57e2ade859cf18f"
+}

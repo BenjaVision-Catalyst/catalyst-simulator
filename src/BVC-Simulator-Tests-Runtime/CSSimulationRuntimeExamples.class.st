@@ -166,6 +166,35 @@ CSSimulationRuntimeExamples >> testRequestCapturesOnlyCanonicalData [
  self assert: work class requiresTransaction. self deny: work class allowsConflictReplay
 ]
 
+{ #category : 'sharded tests' }
+CSSimulationRuntimeExamples >> testShardedUploadAndAcceptedProjectionEndpoint [
+ <gtExample>
+ | helper source root objects request read group bucket response |
+ helper := CSAuthorityExamples new. source := CSArtifactStore new. root := source checkpoint: helper checkpoint.
+ objects := source objects: (source closure: root) asArray sorted.
+ self withWorkerDo: [:worker |
+  request := Dictionary new at: 'world' put: (helper id: 1); at: 'group' put: (helper id: 2); at: 'objects' put: (objects first: 1); yourself.
+  self should: [self execute: (CSUploadSimulationArtifactsWorkUnit request: request principal: 'executor') on: worker named: 'simulation'] raise: CRCapabilityDeniedException.
+  1 to: objects size by: 8 do: [:start |
+   request at: 'objects' put: (objects copyFrom: start to: ((start + 7) min: objects size)).
+   self execute: (CSUploadSimulationArtifactsWorkUnit request: request principal: 'admin') on: worker named: 'simulation'].
+  request := helper createRequest.
+  request at: 'payload' put: ((helper placement: 'smalltalk' owner: 3) at: 'root' put: root; yourself).
+  self execute: (CSCreateShardedSimulationWorkUnit request: request principal: 'admin') on: worker named: 'simulation'.
+  group := (CSSimulationRepository named: 'runtime-example') groupFor: request.
+  read := self queryRequest. read at: 'argument' put: (Dictionary new at: 'root' put: root; yourself).
+  response := self execute: (CSReadSimulationManifestWorkUnit request: read principal: 'admin') on: worker named: 'simulation'.
+  self assert: ((response at: 'manifest') at: 'entityCount') equals: 2.
+  bucket := (helper checkpoint at: 'entities') keys asArray sorted first last: 2.
+  read at: 'argument' put: (Dictionary new at: 'root' put: root; at: 'bucket' put: bucket; at: 'after' put: nil; at: 'limit' put: 64; yourself).
+  response := self execute: (CSReadSimulationProjectionWorkUnit request: read principal: 'executor') on: worker named: 'simulation'.
+  self assert: (response at: 'entities') notEmpty. self assert: group artifacts materializations equals: 0.
+  read at: 'argument' put: 0.
+  response := self execute: (CSReadSimulationProjectionChangesWorkUnit request: read principal: 'admin') on: worker named: 'simulation'.
+  self assert: (response at: 'resnapshot') == true.
+  self should: [self execute: (CSUploadSimulationArtifactsWorkUnit request: (Dictionary new at: 'world' put: (helper id: 1); at: 'group' put: (helper id: 2); at: 'objects' put: (objects first: 1); yourself) principal: 'admin') on: worker named: 'simulation'] raise: CSAuthorityError]
+]
+
 { #category : 'simulation tests' }
 CSSimulationRuntimeExamples >> withWorkerDo: block [
  | worker result other |

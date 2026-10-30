@@ -1,0 +1,1301 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "ranks": 2,
+      "runtime": "simulation_resident_725f0e300b93",
+      "phases": {
+        "configure": {
+          "passed": true,
+          "phase": "configure"
+        },
+        "create": {
+          "runtimeEndpoint": true,
+          "passed": true,
+          "view": {
+            "group": "00000000000000000000000000000002",
+            "backend": "smalltalk",
+            "retryFloor": 1,
+            "schemaVersion": 1,
+            "placement": null,
+            "generation": 1,
+            "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+            "pending": null,
+            "checkpointDigest": "8663af8e29cf9c77df07952a811ae983cba310c56a4bc0a7f4bc2a3e90e9a0fa",
+            "phase": "active",
+            "owner": "00000000000000000000000000000003",
+            "sequence": 1,
+            "revision": 1,
+            "world": "00000000000000000000000000000001"
+          },
+          "phase": "create",
+          "failures": [
+            0,
+            0
+          ]
+        },
+        "advance1": {
+          "runtimeEndpoint": true,
+          "passed": true,
+          "view": {
+            "group": "00000000000000000000000000000002",
+            "backend": "smalltalk",
+            "retryFloor": 1,
+            "schemaVersion": 1,
+            "placement": null,
+            "generation": 1,
+            "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+            "pending": null,
+            "checkpointDigest": "b7a017d452ad54fd8d85e0b23ceab5667ca2c2a3c724697bfe5c44fc23f8e37d",
+            "phase": "active",
+            "owner": "00000000000000000000000000000003",
+            "sequence": 2,
+            "revision": 2,
+            "world": "00000000000000000000000000000001"
+          },
+          "phase": "advance1",
+          "failures": [
+            0,
+            0
+          ]
+        },
+        "external1": {
+          "runtimeEndpoint": true,
+          "passed": true,
+          "view": {
+            "group": "00000000000000000000000000000002",
+            "backend": "external",
+            "retryFloor": 1,
+            "schemaVersion": 1,
+            "placement": null,
+            "generation": 2,
+            "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+            "pending": null,
+            "checkpointDigest": "b7a017d452ad54fd8d85e0b23ceab5667ca2c2a3c724697bfe5c44fc23f8e37d",
+            "phase": "active",
+            "owner": "00000000000000000000000000000004",
+            "sequence": 4,
+            "revision": 4,
+            "world": "00000000000000000000000000000001"
+          },
+          "phase": "external1",
+          "failures": [
+            0,
+            0
+          ]
+        },
+        "run3": {
+          "runtimeEndpoint": true,
+          "passed": true,
+          "view": {
+            "group": "00000000000000000000000000000002",
+            "backend": "external",
+            "retryFloor": 1,
+            "schemaVersion": 1,
+            "placement": null,
+            "generation": 2,
+            "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+            "pending": null,
+            "checkpointDigest": "a5bf5442398bc33c5c361e5407e211328cb96346caa4de1f7c747db9d8abe52a",
+            "phase": "active",
+            "owner": "00000000000000000000000000000004",
+            "sequence": 7,
+            "revision": 7,
+            "world": "00000000000000000000000000000001"
+          },
+          "phase": "run3",
+          "failures": [
+            0,
+            0
+          ]
+        },
+        "run4": {
+          "runtimeEndpoint": true,
+          "passed": true,
+          "view": {
+            "group": "00000000000000000000000000000002",
+            "backend": "external",
+            "retryFloor": 1,
+            "schemaVersion": 1,
+            "placement": null,
+            "generation": 2,
+            "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+            "pending": null,
+            "checkpointDigest": "3dc78abde8db93f1249622e1f154932283f552d06e0674e2f963ad9a9449f1bb",
+            "phase": "active",
+            "owner": "00000000000000000000000000000004",
+            "sequence": 10,
+            "revision": 10,
+            "world": "00000000000000000000000000000001"
+          },
+          "phase": "run4",
+          "failures": [
+            0,
+            0
+          ]
+        },
+        "run6": {
+          "runtimeEndpoint": true,
+          "passed": true,
+          "view": {
+            "group": "00000000000000000000000000000002",
+            "backend": "external",
+            "retryFloor": 1,
+            "schemaVersion": 1,
+            "placement": null,
+            "generation": 2,
+            "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+            "pending": {
+              "targetTick": 6,
+              "fromTick": 4,
+              "inputRevision": 10,
+              "batch": "6ddf060ce5c75419d0cd8426184c124aad699cece4a69fdcb3e11adf8d547035",
+              "generation": 2,
+              "owner": "00000000000000000000000000000004",
+              "inputDigest": "6ddf060ce5c75419d0cd8426184c124aad699cece4a69fdcb3e11adf8d547035",
+              "phase": "uncertain"
+            },
+            "checkpointDigest": "3dc78abde8db93f1249622e1f154932283f552d06e0674e2f963ad9a9449f1bb",
+            "phase": "active",
+            "owner": "00000000000000000000000000000004",
+            "sequence": 12,
+            "revision": 12,
+            "world": "00000000000000000000000000000001"
+          },
+          "phase": "run6",
+          "failures": [
+            0,
+            0
+          ]
+        },
+        "read-held": {
+          "runtimeEndpoint": true,
+          "passed": true,
+          "view": {
+            "group": "00000000000000000000000000000002",
+            "backend": "external",
+            "retryFloor": 1,
+            "schemaVersion": 1,
+            "placement": null,
+            "generation": 2,
+            "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+            "pending": {
+              "targetTick": 6,
+              "fromTick": 4,
+              "inputRevision": 10,
+              "batch": "6ddf060ce5c75419d0cd8426184c124aad699cece4a69fdcb3e11adf8d547035",
+              "generation": 2,
+              "owner": "00000000000000000000000000000004",
+              "inputDigest": "6ddf060ce5c75419d0cd8426184c124aad699cece4a69fdcb3e11adf8d547035",
+              "phase": "uncertain"
+            },
+            "checkpointDigest": "3dc78abde8db93f1249622e1f154932283f552d06e0674e2f963ad9a9449f1bb",
+            "phase": "active",
+            "owner": "00000000000000000000000000000004",
+            "sequence": 12,
+            "revision": 12,
+            "world": "00000000000000000000000000000001"
+          },
+          "phase": "read-held",
+          "failures": [
+            0,
+            0
+          ]
+        },
+        "read-restarted": {
+          "runtimeEndpoint": true,
+          "passed": true,
+          "view": {
+            "group": "00000000000000000000000000000002",
+            "backend": "external",
+            "retryFloor": 1,
+            "schemaVersion": 1,
+            "placement": null,
+            "generation": 2,
+            "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+            "pending": {
+              "targetTick": 6,
+              "fromTick": 4,
+              "inputRevision": 10,
+              "batch": "6ddf060ce5c75419d0cd8426184c124aad699cece4a69fdcb3e11adf8d547035",
+              "generation": 2,
+              "owner": "00000000000000000000000000000004",
+              "inputDigest": "6ddf060ce5c75419d0cd8426184c124aad699cece4a69fdcb3e11adf8d547035",
+              "phase": "uncertain"
+            },
+            "checkpointDigest": "3dc78abde8db93f1249622e1f154932283f552d06e0674e2f963ad9a9449f1bb",
+            "phase": "active",
+            "owner": "00000000000000000000000000000004",
+            "sequence": 12,
+            "revision": 12,
+            "world": "00000000000000000000000000000001"
+          },
+          "phase": "read-restarted",
+          "failures": [
+            0,
+            3,
+            0,
+            0
+          ]
+        },
+        "recover": {
+          "runtimeEndpoint": true,
+          "passed": true,
+          "view": {
+            "group": "00000000000000000000000000000002",
+            "backend": "external",
+            "retryFloor": 1,
+            "schemaVersion": 1,
+            "placement": null,
+            "generation": 3,
+            "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+            "pending": {
+              "targetTick": 6,
+              "fromTick": 4,
+              "inputRevision": 10,
+              "batch": "6ddf060ce5c75419d0cd8426184c124aad699cece4a69fdcb3e11adf8d547035",
+              "generation": 2,
+              "owner": "00000000000000000000000000000004",
+              "inputDigest": "6ddf060ce5c75419d0cd8426184c124aad699cece4a69fdcb3e11adf8d547035",
+              "phase": "uncertain"
+            },
+            "checkpointDigest": "3dc78abde8db93f1249622e1f154932283f552d06e0674e2f963ad9a9449f1bb",
+            "phase": "reconciling",
+            "owner": "0957deab6618de1fc75b08ca195314e7",
+            "sequence": 13,
+            "revision": 13,
+            "world": "00000000000000000000000000000001"
+          },
+          "phase": "recover",
+          "failures": [
+            0,
+            3,
+            0,
+            0
+          ]
+        },
+        "stale-result": {
+          "runtimeEndpoint": true,
+          "passed": true,
+          "view": {
+            "group": "00000000000000000000000000000002",
+            "backend": "external",
+            "retryFloor": 1,
+            "schemaVersion": 1,
+            "placement": null,
+            "generation": 3,
+            "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+            "pending": {
+              "targetTick": 6,
+              "fromTick": 4,
+              "inputRevision": 10,
+              "batch": "6ddf060ce5c75419d0cd8426184c124aad699cece4a69fdcb3e11adf8d547035",
+              "generation": 2,
+              "owner": "00000000000000000000000000000004",
+              "inputDigest": "6ddf060ce5c75419d0cd8426184c124aad699cece4a69fdcb3e11adf8d547035",
+              "phase": "uncertain"
+            },
+            "checkpointDigest": "3dc78abde8db93f1249622e1f154932283f552d06e0674e2f963ad9a9449f1bb",
+            "phase": "reconciling",
+            "owner": "0957deab6618de1fc75b08ca195314e7",
+            "sequence": 13,
+            "revision": 13,
+            "world": "00000000000000000000000000000001"
+          },
+          "phase": "stale-result",
+          "fencedResultRejected": true,
+          "failures": [
+            0,
+            3,
+            1,
+            0
+          ]
+        },
+        "accepted6": {
+          "runtimeEndpoint": true,
+          "passed": true,
+          "view": {
+            "group": "00000000000000000000000000000002",
+            "backend": "external",
+            "retryFloor": 1,
+            "schemaVersion": 1,
+            "placement": null,
+            "generation": 3,
+            "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+            "pending": null,
+            "checkpointDigest": "bbac348cad1e618f05e48cb694e6d2f8af759d2ecd0236a95a24d58cd5526fab",
+            "phase": "active",
+            "owner": "0957deab6618de1fc75b08ca195314e7",
+            "sequence": 14,
+            "revision": 14,
+            "world": "00000000000000000000000000000001"
+          },
+          "phase": "accepted6",
+          "failures": [
+            0,
+            3,
+            1,
+            0
+          ]
+        },
+        "run8": {
+          "runtimeEndpoint": true,
+          "passed": true,
+          "view": {
+            "group": "00000000000000000000000000000002",
+            "backend": "external",
+            "retryFloor": 1,
+            "schemaVersion": 1,
+            "placement": null,
+            "generation": 3,
+            "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+            "pending": null,
+            "checkpointDigest": "e50877525d7754a8ae5be0f5caa5cd6e4b8d323d580e25d3bf7ac02ec3fa28f7",
+            "phase": "active",
+            "owner": "0957deab6618de1fc75b08ca195314e7",
+            "sequence": 17,
+            "revision": 17,
+            "world": "00000000000000000000000000000001"
+          },
+          "phase": "run8",
+          "failures": [
+            0,
+            3,
+            1,
+            0
+          ]
+        },
+        "read-crashed": {
+          "runtimeEndpoint": true,
+          "passed": true,
+          "view": {
+            "group": "00000000000000000000000000000002",
+            "backend": "external",
+            "retryFloor": 1,
+            "schemaVersion": 1,
+            "placement": null,
+            "generation": 3,
+            "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+            "pending": null,
+            "checkpointDigest": "e50877525d7754a8ae5be0f5caa5cd6e4b8d323d580e25d3bf7ac02ec3fa28f7",
+            "phase": "active",
+            "owner": "0957deab6618de1fc75b08ca195314e7",
+            "sequence": 17,
+            "revision": 17,
+            "world": "00000000000000000000000000000001"
+          },
+          "phase": "read-crashed",
+          "failures": [
+            0,
+            3,
+            1,
+            0
+          ]
+        },
+        "recover-idle": {
+          "runtimeEndpoint": true,
+          "passed": true,
+          "view": {
+            "group": "00000000000000000000000000000002",
+            "backend": "external",
+            "retryFloor": 1,
+            "schemaVersion": 1,
+            "placement": null,
+            "generation": 4,
+            "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+            "pending": null,
+            "checkpointDigest": "e50877525d7754a8ae5be0f5caa5cd6e4b8d323d580e25d3bf7ac02ec3fa28f7",
+            "phase": "active",
+            "owner": "0a11d910d706ac614f27cf5813008847",
+            "sequence": 18,
+            "revision": 18,
+            "world": "00000000000000000000000000000001"
+          },
+          "phase": "recover-idle",
+          "failures": [
+            0,
+            3,
+            1,
+            0
+          ]
+        },
+        "drive10": {
+          "runtimeEndpoint": true,
+          "passed": true,
+          "scheduledProgression": true,
+          "view": {
+            "group": "00000000000000000000000000000002",
+            "backend": "external",
+            "retryFloor": 1,
+            "schemaVersion": 1,
+            "placement": null,
+            "generation": 4,
+            "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+            "pending": null,
+            "checkpointDigest": "7c85e584a0356708a797f688bf8ff3684b2ca93a0d43fdaff520f80634a2e525",
+            "phase": "active",
+            "owner": "0a11d910d706ac614f27cf5813008847",
+            "sequence": 21,
+            "revision": 21,
+            "world": "00000000000000000000000000000001"
+          },
+          "phase": "drive10",
+          "failures": [
+            0,
+            3,
+            1,
+            0
+          ]
+        },
+        "local2": {
+          "runtimeEndpoint": true,
+          "passed": true,
+          "view": {
+            "group": "00000000000000000000000000000002",
+            "backend": "smalltalk",
+            "retryFloor": 1,
+            "schemaVersion": 1,
+            "placement": null,
+            "generation": 5,
+            "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+            "pending": null,
+            "checkpointDigest": "7c85e584a0356708a797f688bf8ff3684b2ca93a0d43fdaff520f80634a2e525",
+            "phase": "active",
+            "owner": "00000000000000000000000000000007",
+            "sequence": 23,
+            "revision": 23,
+            "world": "00000000000000000000000000000001"
+          },
+          "phase": "local2",
+          "failures": [
+            0,
+            3,
+            1,
+            0
+          ]
+        },
+        "advance12": {
+          "runtimeEndpoint": true,
+          "passed": true,
+          "view": {
+            "group": "00000000000000000000000000000002",
+            "backend": "smalltalk",
+            "retryFloor": 1,
+            "schemaVersion": 1,
+            "placement": null,
+            "generation": 5,
+            "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+            "pending": null,
+            "checkpointDigest": "483452a978d4439064b1143a9cc66fb727a61c4894c5d8d5a98a39ac4db019f0",
+            "phase": "active",
+            "owner": "00000000000000000000000000000007",
+            "sequence": 24,
+            "revision": 24,
+            "world": "00000000000000000000000000000001"
+          },
+          "phase": "advance12",
+          "failures": [
+            0,
+            3,
+            1,
+            0
+          ]
+        },
+        "cleanup": {
+          "passed": true,
+          "phase": "cleanup"
+        }
+      },
+      "sameProcessAcrossRuntimeRestart": true,
+      "killedRank": 10669,
+      "transportFencing": {
+        "oldReceiptQueryable": true,
+        "staleRetirementRejected": true,
+        "staleLaunchRejected": true
+      },
+      "receipts": [
+        {
+          "binding": {
+            "batch": "8266152f901939b32415eda6cafa97cadb2ce4479a1174fd4efe45cce3e86820",
+            "checkpointDigest": "b7a017d452ad54fd8d85e0b23ceab5667ca2c2a3c724697bfe5c44fc23f8e37d",
+            "fromTick": 1,
+            "generation": 2,
+            "group": "00000000000000000000000000000002",
+            "inputDigest": "b7a017d452ad54fd8d85e0b23ceab5667ca2c2a3c724697bfe5c44fc23f8e37d",
+            "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+            "owner": "00000000000000000000000000000004",
+            "targetTick": 1,
+            "version": 1,
+            "world": "00000000000000000000000000000001"
+          },
+          "checkpointDigest": "b7a017d452ad54fd8d85e0b23ceab5667ca2c2a3c724697bfe5c44fc23f8e37d",
+          "executableDigest": "a595806764f487e4b21d34dba2bcb4609d9135864276c34dc61e885be4ce9edc",
+          "native": {
+            "advancedTicks": 0,
+            "awaitingAcceptance": false,
+            "checkpointDigest": "b7a017d452ad54fd8d85e0b23ceab5667ca2c2a3c724697bfe5c44fc23f8e37d",
+            "graphCompilations": 1,
+            "number": 0,
+            "pids": [
+              9887,
+              9888
+            ],
+            "restores": 1,
+            "session": {
+              "generation": 2,
+              "group": "00000000000000000000000000000002",
+              "incarnation": "dd08922b98174a71be10747898ed5b07",
+              "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+              "owner": "00000000000000000000000000000004",
+              "version": 1,
+              "world": "00000000000000000000000000000001"
+            },
+            "snapshots": 1,
+            "state": "ready",
+            "tick": 1,
+            "version": 1
+          },
+          "ranks": 2,
+          "sessionKey": "590716ae500ba3ca0e059da66d3b3728136c368890b49c3e2285d55f86f6d60f",
+          "state": "complete",
+          "path": "r2/spool/jobs/8266152f901939b32415eda6cafa97cadb2ce4479a1174fd4efe45cce3e86820"
+        },
+        {
+          "binding": {
+            "batch": "8328e739f865cf92f537e8379b46becda035b6436a74e8a084f5f70ec128b662",
+            "checkpointDigest": "a5bf5442398bc33c5c361e5407e211328cb96346caa4de1f7c747db9d8abe52a",
+            "fromTick": 3,
+            "generation": 2,
+            "group": "00000000000000000000000000000002",
+            "inputDigest": "8328e739f865cf92f537e8379b46becda035b6436a74e8a084f5f70ec128b662",
+            "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+            "owner": "00000000000000000000000000000004",
+            "targetTick": 4,
+            "version": 1,
+            "world": "00000000000000000000000000000001"
+          },
+          "checkpointDigest": "3dc78abde8db93f1249622e1f154932283f552d06e0674e2f963ad9a9449f1bb",
+          "executableDigest": "a595806764f487e4b21d34dba2bcb4609d9135864276c34dc61e885be4ce9edc",
+          "native": {
+            "advancedTicks": 3,
+            "awaitingAcceptance": true,
+            "checkpointDigest": "3dc78abde8db93f1249622e1f154932283f552d06e0674e2f963ad9a9449f1bb",
+            "graphCompilations": 1,
+            "number": 3,
+            "pids": [
+              9887,
+              9888
+            ],
+            "restores": 1,
+            "session": {
+              "generation": 2,
+              "group": "00000000000000000000000000000002",
+              "incarnation": "dd08922b98174a71be10747898ed5b07",
+              "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+              "owner": "00000000000000000000000000000004",
+              "version": 1,
+              "world": "00000000000000000000000000000001"
+            },
+            "snapshots": 3,
+            "state": "candidate",
+            "tick": 4,
+            "version": 1
+          },
+          "ranks": 2,
+          "sessionKey": "590716ae500ba3ca0e059da66d3b3728136c368890b49c3e2285d55f86f6d60f",
+          "state": "complete",
+          "path": "r2/spool/jobs/8328e739f865cf92f537e8379b46becda035b6436a74e8a084f5f70ec128b662"
+        },
+        {
+          "binding": {
+            "batch": "f7bc381e37dfa8a70db58e44952032eed8a2caa4a2612edb07b3590cacf06c9f",
+            "checkpointDigest": "e50877525d7754a8ae5be0f5caa5cd6e4b8d323d580e25d3bf7ac02ec3fa28f7",
+            "fromTick": 8,
+            "generation": 4,
+            "group": "00000000000000000000000000000002",
+            "inputDigest": "f7bc381e37dfa8a70db58e44952032eed8a2caa4a2612edb07b3590cacf06c9f",
+            "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+            "owner": "0a11d910d706ac614f27cf5813008847",
+            "targetTick": 10,
+            "version": 1,
+            "world": "00000000000000000000000000000001"
+          },
+          "checkpointDigest": "7c85e584a0356708a797f688bf8ff3684b2ca93a0d43fdaff520f80634a2e525",
+          "executableDigest": "a595806764f487e4b21d34dba2bcb4609d9135864276c34dc61e885be4ce9edc",
+          "native": {
+            "advancedTicks": 2,
+            "awaitingAcceptance": true,
+            "checkpointDigest": "7c85e584a0356708a797f688bf8ff3684b2ca93a0d43fdaff520f80634a2e525",
+            "graphCompilations": 1,
+            "number": 1,
+            "pids": [
+              10812,
+              10813
+            ],
+            "restores": 1,
+            "session": {
+              "generation": 4,
+              "group": "00000000000000000000000000000002",
+              "incarnation": "8faf8e46c73e406d9a38b452d41601f6",
+              "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+              "owner": "0a11d910d706ac614f27cf5813008847",
+              "version": 1,
+              "world": "00000000000000000000000000000001"
+            },
+            "snapshots": 2,
+            "state": "candidate",
+            "tick": 10,
+            "version": 1
+          },
+          "ranks": 2,
+          "sessionKey": "8b69d2155a3845ddac3c066c946fa927679db5a5e7062f20c0da5dd0d1c8c394",
+          "state": "complete",
+          "path": "r2/spool/jobs/f7bc381e37dfa8a70db58e44952032eed8a2caa4a2612edb07b3590cacf06c9f"
+        },
+        {
+          "binding": {
+            "batch": "2ba30983f182fac3afe075ca55ceaad564f0cf086250ca7143eb330df121f47c",
+            "checkpointDigest": "b7a017d452ad54fd8d85e0b23ceab5667ca2c2a3c724697bfe5c44fc23f8e37d",
+            "fromTick": 1,
+            "generation": 2,
+            "group": "00000000000000000000000000000002",
+            "inputDigest": "2ba30983f182fac3afe075ca55ceaad564f0cf086250ca7143eb330df121f47c",
+            "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+            "owner": "00000000000000000000000000000004",
+            "targetTick": 3,
+            "version": 1,
+            "world": "00000000000000000000000000000001"
+          },
+          "checkpointDigest": "a5bf5442398bc33c5c361e5407e211328cb96346caa4de1f7c747db9d8abe52a",
+          "executableDigest": "a595806764f487e4b21d34dba2bcb4609d9135864276c34dc61e885be4ce9edc",
+          "native": {
+            "advancedTicks": 2,
+            "awaitingAcceptance": true,
+            "checkpointDigest": "a5bf5442398bc33c5c361e5407e211328cb96346caa4de1f7c747db9d8abe52a",
+            "graphCompilations": 1,
+            "number": 1,
+            "pids": [
+              9887,
+              9888
+            ],
+            "restores": 1,
+            "session": {
+              "generation": 2,
+              "group": "00000000000000000000000000000002",
+              "incarnation": "dd08922b98174a71be10747898ed5b07",
+              "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+              "owner": "00000000000000000000000000000004",
+              "version": 1,
+              "world": "00000000000000000000000000000001"
+            },
+            "snapshots": 2,
+            "state": "candidate",
+            "tick": 3,
+            "version": 1
+          },
+          "ranks": 2,
+          "sessionKey": "590716ae500ba3ca0e059da66d3b3728136c368890b49c3e2285d55f86f6d60f",
+          "state": "complete",
+          "path": "r2/spool/jobs/2ba30983f182fac3afe075ca55ceaad564f0cf086250ca7143eb330df121f47c"
+        },
+        {
+          "binding": {
+            "batch": "6ddf060ce5c75419d0cd8426184c124aad699cece4a69fdcb3e11adf8d547035",
+            "checkpointDigest": "3dc78abde8db93f1249622e1f154932283f552d06e0674e2f963ad9a9449f1bb",
+            "fromTick": 4,
+            "generation": 2,
+            "group": "00000000000000000000000000000002",
+            "inputDigest": "6ddf060ce5c75419d0cd8426184c124aad699cece4a69fdcb3e11adf8d547035",
+            "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+            "owner": "00000000000000000000000000000004",
+            "targetTick": 6,
+            "version": 1,
+            "world": "00000000000000000000000000000001"
+          },
+          "checkpointDigest": "bbac348cad1e618f05e48cb694e6d2f8af759d2ecd0236a95a24d58cd5526fab",
+          "executableDigest": "a595806764f487e4b21d34dba2bcb4609d9135864276c34dc61e885be4ce9edc",
+          "native": {
+            "advancedTicks": 5,
+            "awaitingAcceptance": true,
+            "checkpointDigest": "bbac348cad1e618f05e48cb694e6d2f8af759d2ecd0236a95a24d58cd5526fab",
+            "graphCompilations": 1,
+            "number": 5,
+            "pids": [
+              9887,
+              9888
+            ],
+            "restores": 1,
+            "session": {
+              "generation": 2,
+              "group": "00000000000000000000000000000002",
+              "incarnation": "dd08922b98174a71be10747898ed5b07",
+              "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+              "owner": "00000000000000000000000000000004",
+              "version": 1,
+              "world": "00000000000000000000000000000001"
+            },
+            "snapshots": 4,
+            "state": "candidate",
+            "tick": 6,
+            "version": 1
+          },
+          "ranks": 2,
+          "sessionKey": "590716ae500ba3ca0e059da66d3b3728136c368890b49c3e2285d55f86f6d60f",
+          "state": "complete",
+          "path": "r2/spool/jobs/6ddf060ce5c75419d0cd8426184c124aad699cece4a69fdcb3e11adf8d547035"
+        },
+        {
+          "binding": {
+            "batch": "5568bae80038a0d7533dd33c74168accacf6fbc186434aeb3f25ded45592ffb4",
+            "checkpointDigest": "bbac348cad1e618f05e48cb694e6d2f8af759d2ecd0236a95a24d58cd5526fab",
+            "fromTick": 6,
+            "generation": 3,
+            "group": "00000000000000000000000000000002",
+            "inputDigest": "5568bae80038a0d7533dd33c74168accacf6fbc186434aeb3f25ded45592ffb4",
+            "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+            "owner": "0957deab6618de1fc75b08ca195314e7",
+            "targetTick": 8,
+            "version": 1,
+            "world": "00000000000000000000000000000001"
+          },
+          "checkpointDigest": "e50877525d7754a8ae5be0f5caa5cd6e4b8d323d580e25d3bf7ac02ec3fa28f7",
+          "executableDigest": "a595806764f487e4b21d34dba2bcb4609d9135864276c34dc61e885be4ce9edc",
+          "native": {
+            "advancedTicks": 2,
+            "awaitingAcceptance": true,
+            "checkpointDigest": "e50877525d7754a8ae5be0f5caa5cd6e4b8d323d580e25d3bf7ac02ec3fa28f7",
+            "graphCompilations": 1,
+            "number": 1,
+            "pids": [
+              10669,
+              10670
+            ],
+            "restores": 1,
+            "session": {
+              "generation": 3,
+              "group": "00000000000000000000000000000002",
+              "incarnation": "b4477e19494e4d1990223dc4e2531bf5",
+              "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+              "owner": "0957deab6618de1fc75b08ca195314e7",
+              "version": 1,
+              "world": "00000000000000000000000000000001"
+            },
+            "snapshots": 2,
+            "state": "candidate",
+            "tick": 8,
+            "version": 1
+          },
+          "ranks": 2,
+          "sessionKey": "de09fe65894a13ac91fff9224b0ae3c2a8262e5ef33ebf5256f2b0e77f3fe9dc",
+          "state": "complete",
+          "path": "r2/spool/jobs/5568bae80038a0d7533dd33c74168accacf6fbc186434aeb3f25ded45592ffb4"
+        }
+      ],
+      "protocol": {
+        "ranks": 2,
+        "entities": 16,
+        "samples": [
+          {
+            "target": 1,
+            "checkpointDigest": "6ad06b3f7e4bf68a9f471b5920f883f44526e02f93a8f4e85e0e2d3d602ed977",
+            "native": {
+              "advancedTicks": 1,
+              "awaitingAcceptance": true,
+              "checkpointDigest": "6ad06b3f7e4bf68a9f471b5920f883f44526e02f93a8f4e85e0e2d3d602ed977",
+              "graphCompilations": 1,
+              "number": 1,
+              "pids": [
+                10966,
+                10967
+              ],
+              "restores": 1,
+              "session": {
+                "generation": 1,
+                "group": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "incarnation": "2b5211f76e5d47cabd952ec9ce6e9ddd",
+                "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+                "owner": "cccccccccccccccccccccccccccccccc",
+                "version": 1,
+                "world": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              "snapshots": 2,
+              "state": "candidate",
+              "tick": 1,
+              "version": 1
+            }
+          },
+          {
+            "target": 2,
+            "checkpointDigest": "33b45ba74723bb3da7e07bbd8afe6c555d0a87bc34e0473fc3131beb840d1a85",
+            "native": {
+              "advancedTicks": 2,
+              "awaitingAcceptance": true,
+              "checkpointDigest": "33b45ba74723bb3da7e07bbd8afe6c555d0a87bc34e0473fc3131beb840d1a85",
+              "graphCompilations": 1,
+              "number": 3,
+              "pids": [
+                10966,
+                10967
+              ],
+              "restores": 1,
+              "session": {
+                "generation": 1,
+                "group": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "incarnation": "2b5211f76e5d47cabd952ec9ce6e9ddd",
+                "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+                "owner": "cccccccccccccccccccccccccccccccc",
+                "version": 1,
+                "world": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              "snapshots": 3,
+              "state": "candidate",
+              "tick": 2,
+              "version": 1
+            }
+          },
+          {
+            "target": 4,
+            "checkpointDigest": "e6bfb67f48049aed397b77932bf8390f3bb3f8b61355254d5324e38cd98da663",
+            "native": {
+              "advancedTicks": 4,
+              "awaitingAcceptance": true,
+              "checkpointDigest": "e6bfb67f48049aed397b77932bf8390f3bb3f8b61355254d5324e38cd98da663",
+              "graphCompilations": 1,
+              "number": 5,
+              "pids": [
+                10966,
+                10967
+              ],
+              "restores": 1,
+              "session": {
+                "generation": 1,
+                "group": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "incarnation": "2b5211f76e5d47cabd952ec9ce6e9ddd",
+                "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+                "owner": "cccccccccccccccccccccccccccccccc",
+                "version": 1,
+                "world": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              "snapshots": 4,
+              "state": "candidate",
+              "tick": 4,
+              "version": 1
+            }
+          },
+          {
+            "target": 8,
+            "checkpointDigest": "b888a451738fc42f4ab6a35629a94a9a69731a151c0a0222a7c66f6afe933a44",
+            "native": {
+              "advancedTicks": 8,
+              "awaitingAcceptance": true,
+              "checkpointDigest": "b888a451738fc42f4ab6a35629a94a9a69731a151c0a0222a7c66f6afe933a44",
+              "graphCompilations": 1,
+              "number": 7,
+              "pids": [
+                10966,
+                10967
+              ],
+              "restores": 1,
+              "session": {
+                "generation": 1,
+                "group": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "incarnation": "2b5211f76e5d47cabd952ec9ce6e9ddd",
+                "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+                "owner": "cccccccccccccccccccccccccccccccc",
+                "version": 1,
+                "world": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              "snapshots": 5,
+              "state": "candidate",
+              "tick": 8,
+              "version": 1
+            }
+          },
+          {
+            "target": 12,
+            "checkpointDigest": "8bd22b823fea9eb88e59b4427d3b0a9580ffe19b6c04529d421195927dda8832",
+            "native": {
+              "advancedTicks": 12,
+              "awaitingAcceptance": true,
+              "checkpointDigest": "8bd22b823fea9eb88e59b4427d3b0a9580ffe19b6c04529d421195927dda8832",
+              "graphCompilations": 1,
+              "number": 9,
+              "pids": [
+                10966,
+                10967
+              ],
+              "restores": 1,
+              "session": {
+                "generation": 1,
+                "group": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "incarnation": "2b5211f76e5d47cabd952ec9ce6e9ddd",
+                "modelDigest": "9ee9151089d345556032cd46385aef563b92e98b8496c90a1301f0a0fe0959c0",
+                "owner": "cccccccccccccccccccccccccccccccc",
+                "version": 1,
+                "world": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              "snapshots": 6,
+              "state": "candidate",
+              "tick": 12,
+              "version": 1
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "stone": "bvc_simulator_native",
+  "docker": false,
+  "lifecycle": [
+    {
+      "runtime": "simulation_resident_725f0e300b93",
+      "action": "configure",
+      "observation": {
+        "runtimeIdentifier": "b4nm7xlbnxvdn17axd41f4yez",
+        "configurationVersion": 1,
+        "desiredState": "stopped",
+        "name": "simulation_resident_725f0e300b93",
+        "topologyRevision": 1,
+        "state": "stopped",
+        "workers": []
+      }
+    },
+    {
+      "runtime": "simulation_resident_725f0e300b93",
+      "action": "start",
+      "observation": {
+        "runtimeIdentifier": "b4nm7xlbnxvdn17axd41f4yez",
+        "configurationVersion": 1,
+        "desiredState": "running",
+        "name": "simulation_resident_725f0e300b93",
+        "topologyRevision": 5,
+        "state": "starting",
+        "workers": [
+          {
+            "workerIdentifier": "b4nm7xlbnxvdn17axd41f4yez_worker_1",
+            "process": {
+              "pid": 9707,
+              "live": true,
+              "nativeState": "running",
+              "state": "running",
+              "token": "9f61e706-f7eb-4609-b477-0d8d28c98504"
+            },
+            "hostIdentifier": "control",
+            "publishedState": "running",
+            "services": [
+              {
+                "appliedConfigurationVersion": null,
+                "state": "running",
+                "identifier": "runtimeOrchestrator"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "runtime": "simulation_resident_725f0e300b93",
+      "action": "status",
+      "observation": {
+        "runtimeIdentifier": "b4nm7xlbnxvdn17axd41f4yez",
+        "configurationVersion": 1,
+        "desiredState": "running",
+        "name": "simulation_resident_725f0e300b93",
+        "topologyRevision": 13,
+        "state": "running",
+        "workers": [
+          {
+            "workerIdentifier": "b4nm7xlbnxvdn17axd41f4yez_worker_1",
+            "process": {
+              "pid": 9707,
+              "live": true,
+              "nativeState": "running",
+              "state": "running",
+              "token": "9f61e706-f7eb-4609-b477-0d8d28c98504"
+            },
+            "hostIdentifier": "control",
+            "publishedState": "running",
+            "services": [
+              {
+                "appliedConfigurationVersion": null,
+                "state": "startingUp",
+                "identifier": "runtimeOrchestrator"
+              }
+            ]
+          },
+          {
+            "workerIdentifier": "b4nm7xlbnxvdn17axd41f4yez_worker_2",
+            "process": {
+              "pid": 9755,
+              "live": true,
+              "nativeState": "running",
+              "state": "running",
+              "token": "0eb2df82-ef84-48a9-88fa-7d495319ea65"
+            },
+            "hostIdentifier": "simulationHost",
+            "publishedState": "running",
+            "services": [
+              {
+                "appliedConfigurationVersion": 1,
+                "state": "running",
+                "identifier": "simulation"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "runtime": "simulation_resident_725f0e300b93",
+      "action": "stop",
+      "observation": {
+        "runtimeIdentifier": "b4nm7xlbnxvdn17axd41f4yez",
+        "configurationVersion": 1,
+        "desiredState": "stopped",
+        "name": "simulation_resident_725f0e300b93",
+        "topologyRevision": 25,
+        "state": "stopped",
+        "workers": [
+          {
+            "workerIdentifier": "b4nm7xlbnxvdn17axd41f4yez_worker_1",
+            "process": {
+              "pid": 9707,
+              "live": false,
+              "nativeState": "stopped",
+              "state": "stopped",
+              "token": "9f61e706-f7eb-4609-b477-0d8d28c98504"
+            },
+            "hostIdentifier": "control",
+            "publishedState": "stopped",
+            "services": []
+          },
+          {
+            "workerIdentifier": "b4nm7xlbnxvdn17axd41f4yez_worker_2",
+            "process": {
+              "pid": 9755,
+              "live": false,
+              "nativeState": "stopped",
+              "state": "stopped",
+              "token": "0eb2df82-ef84-48a9-88fa-7d495319ea65"
+            },
+            "hostIdentifier": "simulationHost",
+            "publishedState": "stopped",
+            "services": []
+          }
+        ]
+      }
+    },
+    {
+      "runtime": "simulation_resident_725f0e300b93",
+      "action": "start",
+      "observation": {
+        "runtimeIdentifier": "b4nm7xlbnxvdn17axd41f4yez",
+        "configurationVersion": 1,
+        "desiredState": "running",
+        "name": "simulation_resident_725f0e300b93",
+        "topologyRevision": 29,
+        "state": "starting",
+        "workers": [
+          {
+            "workerIdentifier": "b4nm7xlbnxvdn17axd41f4yez_worker_3",
+            "process": {
+              "pid": 10334,
+              "live": true,
+              "nativeState": "running",
+              "state": "running",
+              "token": "d798cfac-3f15-4c81-85bb-3eb352898236"
+            },
+            "hostIdentifier": "control",
+            "publishedState": "running",
+            "services": [
+              {
+                "appliedConfigurationVersion": null,
+                "state": "running",
+                "identifier": "runtimeOrchestrator"
+              }
+            ]
+          },
+          {
+            "workerIdentifier": "b4nm7xlbnxvdn17axd41f4yez_worker_1",
+            "process": {
+              "pid": 9707,
+              "live": false,
+              "nativeState": "stopped",
+              "state": "stopped",
+              "token": "9f61e706-f7eb-4609-b477-0d8d28c98504"
+            },
+            "hostIdentifier": "control",
+            "publishedState": "stopped",
+            "services": []
+          },
+          {
+            "workerIdentifier": "b4nm7xlbnxvdn17axd41f4yez_worker_2",
+            "process": {
+              "pid": 9755,
+              "live": false,
+              "nativeState": "stopped",
+              "state": "stopped",
+              "token": "0eb2df82-ef84-48a9-88fa-7d495319ea65"
+            },
+            "hostIdentifier": "simulationHost",
+            "publishedState": "stopped",
+            "services": []
+          }
+        ]
+      }
+    },
+    {
+      "runtime": "simulation_resident_725f0e300b93",
+      "action": "status",
+      "observation": {
+        "runtimeIdentifier": "b4nm7xlbnxvdn17axd41f4yez",
+        "configurationVersion": 1,
+        "desiredState": "running",
+        "name": "simulation_resident_725f0e300b93",
+        "topologyRevision": 37,
+        "state": "running",
+        "workers": [
+          {
+            "workerIdentifier": "b4nm7xlbnxvdn17axd41f4yez_worker_3",
+            "process": {
+              "pid": 10334,
+              "live": true,
+              "nativeState": "running",
+              "state": "running",
+              "token": "d798cfac-3f15-4c81-85bb-3eb352898236"
+            },
+            "hostIdentifier": "control",
+            "publishedState": "running",
+            "services": [
+              {
+                "appliedConfigurationVersion": 1,
+                "state": "running",
+                "identifier": "runtimeOrchestrator"
+              }
+            ]
+          },
+          {
+            "workerIdentifier": "b4nm7xlbnxvdn17axd41f4yez_worker_1",
+            "process": {
+              "pid": 9707,
+              "live": false,
+              "nativeState": "stopped",
+              "state": "stopped",
+              "token": "9f61e706-f7eb-4609-b477-0d8d28c98504"
+            },
+            "hostIdentifier": "control",
+            "publishedState": "stopped",
+            "services": []
+          },
+          {
+            "workerIdentifier": "b4nm7xlbnxvdn17axd41f4yez_worker_4",
+            "process": {
+              "pid": 10398,
+              "live": true,
+              "nativeState": "running",
+              "state": "running",
+              "token": "0442fec4-f35a-4658-992b-e29021c80549"
+            },
+            "hostIdentifier": "simulationHost",
+            "publishedState": "running",
+            "services": [
+              {
+                "appliedConfigurationVersion": 1,
+                "state": "running",
+                "identifier": "simulation"
+              }
+            ]
+          },
+          {
+            "workerIdentifier": "b4nm7xlbnxvdn17axd41f4yez_worker_2",
+            "process": {
+              "pid": 9755,
+              "live": false,
+              "nativeState": "stopped",
+              "state": "stopped",
+              "token": "0eb2df82-ef84-48a9-88fa-7d495319ea65"
+            },
+            "hostIdentifier": "simulationHost",
+            "publishedState": "stopped",
+            "services": []
+          }
+        ]
+      }
+    },
+    {
+      "runtime": "simulation_resident_725f0e300b93",
+      "action": "stop",
+      "observation": {
+        "runtimeIdentifier": "b4nm7xlbnxvdn17axd41f4yez",
+        "configurationVersion": 3,
+        "desiredState": "stopped",
+        "name": "simulation_resident_725f0e300b93",
+        "topologyRevision": 67,
+        "state": "stopped",
+        "workers": [
+          {
+            "workerIdentifier": "b4nm7xlbnxvdn17axd41f4yez_worker_3",
+            "process": {
+              "pid": 10334,
+              "live": false,
+              "nativeState": "stopped",
+              "state": "stopped",
+              "token": "d798cfac-3f15-4c81-85bb-3eb352898236"
+            },
+            "hostIdentifier": "control",
+            "publishedState": "stopped",
+            "services": []
+          },
+          {
+            "workerIdentifier": "b4nm7xlbnxvdn17axd41f4yez_worker_1",
+            "process": {
+              "pid": 9707,
+              "live": false,
+              "nativeState": "stopped",
+              "state": "stopped",
+              "token": "9f61e706-f7eb-4609-b477-0d8d28c98504"
+            },
+            "hostIdentifier": "control",
+            "publishedState": "stopped",
+            "services": []
+          },
+          {
+            "workerIdentifier": "b4nm7xlbnxvdn17axd41f4yez_worker_4",
+            "process": {
+              "pid": 10398,
+              "live": false,
+              "nativeState": "stopped",
+              "state": "stopped",
+              "token": "0442fec4-f35a-4658-992b-e29021c80549"
+            },
+            "hostIdentifier": "simulationHost",
+            "publishedState": "stopped",
+            "services": []
+          },
+          {
+            "workerIdentifier": "b4nm7xlbnxvdn17axd41f4yez_worker_2",
+            "process": {
+              "pid": 9755,
+              "live": false,
+              "nativeState": "stopped",
+              "state": "stopped",
+              "token": "0eb2df82-ef84-48a9-88fa-7d495319ea65"
+            },
+            "hostIdentifier": "simulationHost",
+            "publishedState": "stopped",
+            "services": []
+          }
+        ]
+      }
+    },
+    {
+      "runtime": "simulation_resident_725f0e300b93",
+      "action": "remove",
+      "observation": {
+        "state": "removed",
+        "name": "simulation_resident_725f0e300b93"
+      }
+    }
+  ],
+  "nativeCleanupConfirmed": true
+}

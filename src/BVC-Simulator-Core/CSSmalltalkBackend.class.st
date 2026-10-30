@@ -316,9 +316,35 @@ CSSmalltalkBackend >> tick [
  ^ accepted at: 'tick'
 ]
 
-{ #category : 'portable graph' }
+{ #category : 'sharded checkpoints' }
 CSSmalltalkBackend >> validate: state [
- | entities resources queue expectedKeys |
+ | entities |
+ CSKernelMath require: (state isKindOf: Dictionary) message: 'Invalid state'.
+ CSKernelMath require: (state includesKey: 'entities') message: 'Missing entity collection'.
+ entities := state at: 'entities'.
+ CSKernelMath require: (entities isKindOf: Dictionary) message: 'Invalid entity collection'.
+ self validateHeader: state entities: entities.
+ entities keysAndValuesDo: [:id :entity | self validateEntity: entity id: id resources: (state at: 'resources')].
+ CSCanonicalCodec encode: state
+]
+
+{ #category : 'sharded checkpoints' }
+CSSmalltalkBackend >> validateEntity: entity id: id resources: resources [
+ CSKernelMath identifier: id.
+ CSKernelMath require: (entity class == Array and: [entity size = 9 and: [entity first = id]]) message: 'Invalid entity record'.
+ CSKernelMath vector: entity second. CSKernelMath vector: entity third.
+ CSKernelMath require: entity fourth isString message: 'Invalid resource request'.
+ CSKernelMath nonnegative: entity fifth.
+ CSKernelMath require: (entity fifth = 0 or: [resources includesKey: entity fourth]) message: 'Missing requested resource'.
+ CSKernelMath require: entity sixth isString message: 'Invalid mode'.
+ CSKernelMath uint32: entity seventh. CSKernelMath uint32: entity eighth.
+ CSKernelMath vector: (entity at: 9).
+ CSKernelMath require: ((entity at: 9) allSatisfy: [:r | r between: 0 and: 999]) message: 'Invalid motion remainder'
+]
+
+{ #category : 'sharded checkpoints' }
+CSSmalltalkBackend >> validateHeader: state entities: entities [
+ | resources queue expectedKeys |
  CSKernelMath require: (state isKindOf: Dictionary) message: 'Invalid state'.
  expectedKeys := #('version' 'model' 'tick' 'seed' 'entities' 'resources' 'events' 'outcomes') asSet.
  bundle isGraph ifTrue: [expectedKeys add: 'modelDigest'].
@@ -326,30 +352,16 @@ CSSmalltalkBackend >> validate: state [
  CSKernelMath require: ((state at: 'version') = (bundle isGraph ifTrue: [2] ifFalse: [1]) and: [(state at: 'model') = bundle snapshot]) message: 'Checkpoint version or model mismatch'.
  bundle isGraph ifTrue: [CSKernelMath require: (state at: 'modelDigest') = bundle digest message: 'Checkpoint model digest mismatch'].
  CSKernelMath nonnegative: (state at: 'tick'). CSKernelMath uint64: (state at: 'seed').
- entities := state at: 'entities'. resources := state at: 'resources'.
- CSKernelMath require: ((entities isKindOf: Dictionary) and: [ entities size <= bundle entityLimit ]) message: 'Entity capacity exceeded'.
- CSKernelMath require: ((resources isKindOf: Dictionary) and: [ resources size <= bundle entityLimit ]) message: 'Resource capacity exceeded'.
- resources keysAndValuesDo: [ :key :quantity |
-  CSKernelMath require: (key isString and: [ key notEmpty ]) message: 'Resource name required'. CSKernelMath nonnegative: quantity ].
- entities keysAndValuesDo: [ :id :entity |
-  CSKernelMath identifier: id.
-  CSKernelMath require: (entity class == Array and: [ entity size = 9 and: [ entity first = id ] ]) message: 'Invalid entity record'.
-  CSKernelMath vector: entity second. CSKernelMath vector: entity third.
-  CSKernelMath require: entity fourth isString message: 'Invalid resource request'.
-  CSKernelMath nonnegative: entity fifth.
-  CSKernelMath require: (entity fifth = 0 or: [ resources includesKey: entity fourth ]) message: 'Missing requested resource'.
-  CSKernelMath require: entity sixth isString message: 'Invalid mode'.
-  CSKernelMath uint32: entity seventh. CSKernelMath uint32: entity eighth.
-  CSKernelMath vector: (entity at: 9).
-  CSKernelMath require: ((entity at: 9) allSatisfy: [ :r | r between: 0 and: 999 ]) message: 'Invalid motion remainder' ].
+ CSKernelMath require: entities size <= bundle entityLimit message: 'Entity capacity exceeded'.
+ resources := state at: 'resources'.
+ CSKernelMath require: ((resources isKindOf: Dictionary) and: [resources size <= bundle entityLimit]) message: 'Resource capacity exceeded'.
+ resources keysAndValuesDo: [:key :quantity | CSKernelMath require: (key isString and: [key notEmpty]) message: 'Resource name required'. CSKernelMath nonnegative: quantity].
  queue := CSEventQueue fromSnapshot: (state at: 'events').
  CSKernelMath require: queue snapshot fourth = bundle eventLimit message: 'Event limit mismatch'.
- queue snapshot first do: [ :event |
-  CSKernelMath require: (event first > (state at: 'tick') and: [ entities includesKey: event fourth ]) message: 'Past event or missing target' ].
- CSKernelMath require: ((state at: 'outcomes') class == Array and: [ (state at: 'outcomes') size <= bundle entityLimit ]) message: 'Outcome capacity exceeded'.
- (state at: 'outcomes') do: [ :outcome |
-  CSKernelMath require: (outcome class == Array and: [ outcome size = 4 ]) message: 'Invalid outcome'.
-  CSKernelMath require: (outcome first = (state at: 'tick') and: [ (resources includesKey: outcome second) and: [ entities includesKey: outcome third ] ]) message: 'Invalid outcome references'.
-  CSKernelMath nonnegative: outcome fourth ].
- CSCanonicalCodec encode: state
+ queue snapshot first do: [:event | CSKernelMath require: (event first > (state at: 'tick') and: [entities includesKey: event fourth]) message: 'Past event or missing target'].
+ CSKernelMath require: ((state at: 'outcomes') class == Array and: [(state at: 'outcomes') size <= bundle entityLimit]) message: 'Outcome capacity exceeded'.
+ (state at: 'outcomes') do: [:outcome |
+  CSKernelMath require: (outcome class == Array and: [outcome size = 4]) message: 'Invalid outcome'.
+  CSKernelMath require: (outcome first = (state at: 'tick') and: [(resources includesKey: outcome second) and: [entities includesKey: outcome third]]) message: 'Invalid outcome references'.
+  CSKernelMath nonnegative: outcome fourth]
 ]

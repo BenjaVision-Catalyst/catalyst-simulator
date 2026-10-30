@@ -1,5 +1,10 @@
 # Portable kernel qualification
 
+The latest [sharded checkpoint and accepted projection record](Sharded-Projections.md)
+passes 81 GT tests, 71 native GemStone tests and six Runtime-owned switching and
+recovery cases on native macOS 1/2/4 ranks. The opening P0/P1 record below retains
+its original scope and counts.
+
 30 October 2026: **32/32 GT tests and 32/32 native GemStone tests passed**
 (18 probe contracts plus 14 graph contracts).
 The tested hosts were Pharo 13.1.0SNAPSHOT in the connected GT image and GemStone

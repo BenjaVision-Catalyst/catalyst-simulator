@@ -5,7 +5,7 @@ source := System gemEnvironmentVariable: 'CS_P3_SOURCE'.
 source isNil ifTrue: [self error: 'CS_P3_SOURCE required'].
 System abortTransaction.
 definitions := OrderedCollection new.
-#('BVC-Simulator-Runtime' 'BVC-Simulator-Tests' 'BVC-Simulator-Tests-Authority' 'BVC-Simulator-Tests-Runtime') do: [:package |
+#('BVC-Simulator-Core' 'BVC-Simulator-Authority' 'BVC-Simulator-Runtime' 'BVC-Simulator-Tests' 'BVC-Simulator-Tests-Authority' 'BVC-Simulator-Tests-Runtime') do: [:package |
  definitions addAll: ((TonelMCReader on: (MetacelloPlatform current fileHandleOn: source) fileName: package) snapshot definitions reject: [:d |
   d isOrganizationDefinition or: [(d isClassDefinition or: [d isMethodDefinition]) and: [d className asString = 'CSSimulationRuntimeExamples']]])].
 GsDeployer deploy: [
@@ -23,7 +23,7 @@ run
 | results report file |
 System abortTransaction. System transactionMode: #manualBegin.
 results := OrderedCollection new.
-#(CSKernelExamples CSGraphExamples CSAuthorityExamples CSRepastBatchExamples CSRepastResidentExamples) do: [:className | | cls |
+#(CSKernelExamples CSGraphExamples CSAuthorityExamples CSRepastBatchExamples CSRepastResidentExamples CSArtifactExamples CSShardedAuthorityExamples CSShardedDriverExamples) do: [:className | | cls |
  cls := Smalltalk at: className.
  (cls selectors select: [:selector | selector asString beginsWith: 'test']) asArray sort do: [:selector |
   cls new perform: selector. results add: className asString, '>>', selector asString]].

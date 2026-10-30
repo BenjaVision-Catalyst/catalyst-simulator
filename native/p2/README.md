@@ -5,6 +5,14 @@ The same interpreter now also implements the optional
 retained; resident mode keeps the compiled graph and distributed agents across
 advance windows. See [resident qualification](../../conformance/Resident-Repast.md).
 
+The optional `checkpoint-1` resident profile writes immutable sharded objects,
+exchanges population rows between bucket writers and gathers only descriptors.
+It restores from shard references without a full checkpoint input and keeps full
+snapshot/root-population-gather counters at zero. Runtime remains the client
+endpoint and GemStone publishes accepted roots. See the current
+[sharded qualification and remaining gates](../../conformance/Sharded-Projections.md);
+the original P2 and resident records below describe their respective legacy modes.
+
 P2 passes on macOS arm64 with the same normalized `graph-1` bundles used by GT
 and GemStone. This directory contains an experimental execution adapter and a
 bounded qualification controller. Ecosystem behaviour stays in CatalystEcosystem.
